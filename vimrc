@@ -70,16 +70,14 @@ set title
 set cursorline
 set cursorcolumn
 set nocompatible
+" Time to wait after ESC (default causes an annoying delay)
+set timeoutlen=250 
 " игнорировать регистр при поиске
-set ic
+set ignorecase
 " подсвечивать поиск
 set hlsearch
-" использовать инкрементальный поиск
+" show matches while typing
 set incsearch
-" ширина текста 
-set textwidth=80
-"минимальная высота окна пусть будет 0 (по умолчанию - 1)
-"set winminheight=0
 "" Fix for russian world 
 set iskeyword=@,48-57,_,192-255
 "" Number of visual spaces per TAB
@@ -88,8 +86,18 @@ set tabstop=4
 set softtabstop=4
 "" Tabs replaced on spaces
 set expandtab
-set smartindent
 set smarttab
+
+set showmatch " Show matching brackets.
+
+set autoindent
+set cindent
+set indentkeys-=0# " do not break indent on #
+set cinkeys-=0#
+set cinoptions=:s,ps,ts,cs
+set cinwords=if,else,while,do
+set cinwords+=for,switch,case
+
 "" Show command in bottom bar
 set showcmd 
 " перенос по словам, а не по буквам
@@ -97,11 +105,20 @@ set linebreak
 set dy=lastline
 "" Show line number
 set number
-"set wrap
-set colorcolumn=80
+"" Wrap lines by 80 char 
+set wrap
+set textwidth=80
+set colorcolumn=120
+
 set shiftwidth=4
+" round indent to multiple of 'shiftwidth'
+set shiftround 
 set mouse=a
-set clipboard=unnamedplus
+" Yanks go on clipboard instead
+set clipboard+=unnamed
+
+set modeline
+set modelines=5 " default numbers of lines to read for modeline instructions
 
 set completeopt=menu,menuone,longest
 set pumheight=15
@@ -111,7 +128,7 @@ set wildmenu
 set wildignore+=.git,.svn
 
 if version >= 700
-    set history=64
+    set history=256
     set undolevels=128
     set undodir=~/.vim/undodir/
     set undofile
@@ -205,10 +222,7 @@ augroup ps_nerdtree
     au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
     " au Filety
 "===============================FIX SLOW SCROLL================================
-set ttyfast 
-set ttyscroll=3
 set lazyredraw
-
 set synmaxcol=128
 syntax sync minlines=256
 "================================GUNDO SETTINGS================================
