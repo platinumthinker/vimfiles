@@ -59,11 +59,11 @@ Bundle 'majutsushi/tagbar'
 """Dublicate character (quotes, brackets, ets)
 Bundle 'Raimondi/delimitMate'
 """Seacher
-"Bundle 'kien/ctrlp.vim'
+Bundle 'kien/ctrlp.vim'
 
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
-set shell=/bin/bash
+set shell=/bin/zsh
 
 set helplang=ru,en
 set title
@@ -108,7 +108,7 @@ set number
 "" Wrap lines by 80 char 
 set wrap
 set textwidth=80
-set colorcolumn=120
+set colorcolumn=80
 
 set shiftwidth=4
 " round indent to multiple of 'shiftwidth'
@@ -201,7 +201,7 @@ nnoremap <leader>s :mksession<CR>
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 let g:calendar_first_day = "monday"
-"let g:
+let g:calendar_calendar= "russia"
 "===================================NERDTREE===================================
 let NERDTreeHighlightCursorline = 1
 let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
@@ -209,10 +209,10 @@ let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index
                     \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
                     \ '.*\.midi$']
 
-let NERDTreeMinimalUI = 1
+"let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-let NERDChristmasTree = 1
-let NERDTreeChDirMode = 2
+"let NERDChristmasTree = 1
+"let NERDTreeChDirMode = 2
 
 augroup ps_nerdtree
     au!
@@ -236,12 +236,12 @@ if !has('gui_running')
     let g:Powerline_symbols = 'fancy'
     set t_Co=256
 endif
-syntax enable
-colorscheme solarized
 set background=dark
+colorscheme solarized
 "let g:solarized_termcolors = 256
 let g:solarized_contrast = 'hight'
 let g:solarized_visibility = 'high'
+syntax enable
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
