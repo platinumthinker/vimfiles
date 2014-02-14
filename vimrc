@@ -60,6 +60,8 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'kien/ctrlp.vim'
 """Align
 Bundle 'junegunn/vim-easy-align'
+"""Erlang autocomplite and show error
+Bundle 'oscarh/vimerl'
 
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
@@ -127,6 +129,17 @@ set wildmode=list:longest,full
 set wildmenu 
 set wildignore+=.git,.svn
 
+let g:erlang_folding=1
+"let g:erlangRefactoring=1
+"let erlang_show_errors=0
+let	g:erlangHighlightBif=1 
+let g:erlangCompletionDisplayDoc = 0
+let g:erlangCompletitionGrep = 'ack'
+let g:erlangFoldSplitFunction=1
+let g:erlangManPath="/home/thinker/erlware/man"
+let g:erlangHighlightErrors=0
+
+
 if version >= 700
     set history=256
     set undolevels=128
@@ -172,6 +185,15 @@ let g:UltiSnipsExpandTrigger = "<c-j>"
 
 "let g:UltiSnipsJumpForwardTrigger
 "let g:UltiSnipsJumpBackwardTrigger
+let g:markdown_fold_style = 'nested'
+
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=0
+let g:syntastic_auto_loc_list=1
+let g:syntastic_aggregate_errors=1
+let g:syntastic_loc_list_height=4
+
+let g:tagbar_autofocus = 1
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 "Open/close folds
