@@ -59,7 +59,9 @@ Bundle 'majutsushi/tagbar'
 """Dublicate character (quotes, brackets, ets)
 Bundle 'Raimondi/delimitMate'
 """Seacher
-"Bundle 'kien/ctrlp.vim'
+Bundle 'kien/ctrlp.vim'
+"""Erlang autocomplite and show error
+Bundle 'oscarh/vimerl'
 
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
@@ -127,6 +129,17 @@ set wildmode=list:longest,full
 set wildmenu 
 set wildignore+=.git,.svn
 
+let g:erlang_folding=1
+"let g:erlangRefactoring=1
+"let erlang_show_errors=0
+let	g:erlangHighlightBif=1 
+let g:erlangCompletionDisplayDoc = 0
+let g:erlangCompletitionGrep = 'ack'
+let g:erlangFoldSplitFunction=1
+let g:erlangManPath="/home/thinker/erlware/man"
+let g:erlangHighlightErrors=0
+
+
 if version >= 700
     set history=256
     set undolevels=128
@@ -154,15 +167,13 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
 set foldmethod=syntax
 let g:markdown_fold_style = 'nested'
 
-let g:syntastic_check_on_open=0
+let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-let g:syntastic_c_compiler = 'clang'
-let g:syntastic_c_compiler_options = ' -std=c11 -stdlib=libc'
+let g:syntastic_auto_loc_list=1
+let g:syntastic_aggregate_errors=1
+let g:syntastic_loc_list_height=4
 
 let g:tagbar_autofocus = 1
-let g:hdevtools_options = '-g-isrc -g-Wall'
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 "Open/close folds
@@ -246,7 +257,7 @@ let g:solarized_visibility = 'high'
 set laststatus=2
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized_fix',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
