@@ -105,6 +105,7 @@ set linebreak
 set dy=lastline
 "" Show line number
 set number
+set rnu
 "" Wrap lines by 80 char 
 set wrap
 set textwidth=80
