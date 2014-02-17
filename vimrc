@@ -3,7 +3,6 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-filetype plugin indent on
 "=================================VUNDLE REPO==================================
 """Vundle selfupdate
 Bundle 'gmarik/vundle'
@@ -34,8 +33,6 @@ Bundle 'ctags.vim'
 Bundle 'DrawIt'
 
 """"""Other repos
-"""Haskell dev tool
-Bundle 'bitc/vim-hdevtools'
 """Super syntax
 Bundle 'scrooloose/syntastic'
 """Tree file viwer
@@ -65,7 +62,8 @@ Bundle 'oscarh/vimerl'
 
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
-set shell=/bin/bash
+set shell=/bin/zsh
+filetype plugin indent on
 
 set helplang=ru,en
 set title
@@ -110,7 +108,7 @@ set number
 "" Wrap lines by 80 char 
 set wrap
 set textwidth=80
-set colorcolumn=120
+set colorcolumn=80
 
 set shiftwidth=4
 " round indent to multiple of 'shiftwidth'
@@ -174,27 +172,30 @@ let g:syntastic_aggregate_errors=1
 let g:syntastic_loc_list_height=4
 
 let g:tagbar_autofocus = 1
+
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 "Open/close folds
 nnoremap <Space> za 
 
-map <BS> :NERDTreeToggle<CR>
+map <silent><BS> :NERDTreeToggle<CR>
 
 ""Toggle gundo
-nnoremap <leader>u :GundoToggle<CR>
-inoremap <leader>u :GundoToggle<CR>
+nnoremap <silent><leader>u :GundoToggle<CR>
+inoremap <silent><leader>u :GundoToggle<CR>
 
 nnoremap <tab> <C-w><C-w>  
-"Next error
-nnoremap <F2> :lnext<CR> 
-inoremap <F2> :lnext<CR> 
-"Previous error
-nnoremap <F3> :lprevious<CR>
-inoremap <F3> :lprevious<CR>
 
-nnoremap <F8> :TagbarToggle<CR>
-inoremap <F8> :TagbarToggle<CR>
+nnoremap <silent> <F4> :lclose<CR>
+"Next error
+nnoremap <silent><F2> :lnext<CR> 
+inoremap <silent><F2> :lnext<CR> 
+"Previous error
+nnoremap <silent><F3> :lprevious<CR>
+inoremap <silent><F3> :lprevious<CR>
+
+nnoremap <silent><F8> :TagbarToggle<CR>
+inoremap <silent><F8> :TagbarToggle<CR>
 
 call togglebg#map("<F5>")
 
@@ -208,11 +209,11 @@ nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 ""Save session (load: vim -S)
 nnoremap <leader>s :mksession<CR>
+
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 let g:calendar_first_day = "monday"
-"let g:
 "===================================NERDTREE===================================
 let NERDTreeHighlightCursorline = 1
 let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
@@ -222,12 +223,9 @@ let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index
 
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-let NERDChristmasTree = 1
-let NERDTreeChDirMode = 2
 
 augroup ps_nerdtree
     au!
-
     au Filetype nerdtree setlocal nolist
     au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
     au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
@@ -374,6 +372,6 @@ function! TagbarStatusFunc(current, sort, fname, ...) abort
   return lightline#statusline(0)
 endfunction
 
-let g:unite_force_overwrite_statusline = 0
-let g:vimfiler_force_overwrite_statusline = 0
-let g:vimshell_force_overwrite_statusline = 0
+let g:unite_force_overwrite_statusline = 1
+let g:vimfiler_force_overwrite_statusline = 1
+let g:vimshell_force_overwrite_statusline = 1
