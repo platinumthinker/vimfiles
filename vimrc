@@ -3,7 +3,6 @@ set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-filetype plugin indent on
 "=================================VUNDLE REPO==================================
 """Vundle selfupdate
 Bundle 'gmarik/vundle'
@@ -66,6 +65,7 @@ Bundle 'oscarh/vimerl'
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
 set shell=/bin/zsh
+filetype plugin indent on
 
 set helplang=en
 set title
@@ -194,15 +194,31 @@ let g:syntastic_aggregate_errors=1
 let g:syntastic_loc_list_height=4
 
 let g:tagbar_autofocus = 1
+
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 "Open/close folds
 nnoremap <Space> za 
 
 nnoremap <tab> <C-w><C-w>  
+map <silent><BS> :NERDTreeToggle<CR>
 
-nnoremap <F8> :TagbarToggle<CR>
-inoremap <F8> :TagbarToggle<CR>
+""Toggle gundo
+nnoremap <silent><leader>u :GundoToggle<CR>
+inoremap <silent><leader>u :GundoToggle<CR>
+
+nnoremap <tab> <C-w><C-w>  
+
+nnoremap <silent> <F4> :lclose<CR>
+"Next error
+nnoremap <silent><F2> :lnext<CR> 
+inoremap <silent><F2> :lnext<CR> 
+"Previous error
+nnoremap <silent><F3> :lprevious<CR>
+inoremap <silent><F3> :lprevious<CR>
+
+nnoremap <silent><F8> :TagbarToggle<CR>
+inoremap <silent><F8> :TagbarToggle<CR>
 
 call togglebg#map("<F5>")
 
@@ -214,6 +230,9 @@ nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
+""Save session (load: vim -S)
+nnoremap <leader>s :mksession<CR>
+
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
@@ -239,6 +258,22 @@ let g:syntastic_disabled_filetypes = ['c', 'cpp']
 
 "let g:pymode_rope_complete_on_dot = 1
 "let g:pymode_lint_write = 1
+"===================================NERDTREE===================================
+let NERDTreeHighlightCursorline = 1
+let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
+                    \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
+                    \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
+                    \ '.*\.midi$']
+
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
+augroup ps_nerdtree
+    au!
+    au Filetype nerdtree setlocal nolist
+    au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
+    au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
+    " au Filety
 "===============================FIX SLOW SCROLL================================
 set lazyredraw
 set synmaxcol=128
@@ -372,6 +407,6 @@ function! TagbarStatusFunc(current, sort, fname, ...) abort
   return lightline#statusline(0)
 endfunction
 
-let g:unite_force_overwrite_statusline = 0
-let g:vimfiler_force_overwrite_statusline = 0
-let g:vimshell_force_overwrite_statusline = 0
+let g:unite_force_overwrite_statusline = 1
+let g:vimfiler_force_overwrite_statusline = 1
+let g:vimshell_force_overwrite_statusline = 1
