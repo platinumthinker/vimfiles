@@ -32,6 +32,8 @@ Bundle 'The-NERD-Commenter'
 Bundle 'ctags.vim'
 """Ascii art
 Bundle 'DrawIt'
+"""GDB command interface
+Bundle 'Conque-GDB'
 
 """"""Other repos
 """Haskell dev tool
@@ -50,8 +52,6 @@ Bundle 'sjl/gundo.vim'
 Bundle 'platinumthinker/vim-colors-solarized'
 """Ack supports
 Bundle 'mileszs/ack.vim'
-"""Markdown folding
-Bundle 'nelstrom/vim-markdown-folding'
 """Autocomplite
 Bundle 'Valloric/YouCompleteMe'
 """Bar of function in open file (from ctags)
@@ -60,6 +60,10 @@ Bundle 'majutsushi/tagbar'
 Bundle 'Raimondi/delimitMate'
 """Seacher
 Bundle 'kien/ctrlp.vim'
+"""Vim shell
+Bundle 'shougo/vimshell.vim'
+"""Tomorrow theme
+Bundle 'chriskempson/vim-tomorrow-theme'
 
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
@@ -153,7 +157,6 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
 
 "Folds
 set foldmethod=syntax
-let g:markdown_fold_style = 'nested'
 
 let g:syntastic_check_on_open=0
 let g:syntastic_check_on_wq=0
@@ -203,6 +206,12 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 let g:calendar_first_day = "monday"
 let g:calendar_calendar= "russia"
+"==================================SYNTASTICS==================================
+let g:syntastic_mode_map = { 'mode': 'active',
+            \'active_filetypes': ['c', 'cpp', 'h', 'erl', 'hs'],
+            \'passive_filetypes': ['python']}
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_lint_write = 1
 "===================================NERDTREE===================================
 let NERDTreeHighlightCursorline = 1
 let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
@@ -239,7 +248,6 @@ if !has('gui_running')
 endif
 set background=dark
 colorscheme solarized
-"let g:solarized_termcolors = 256
 let g:solarized_contrast = 'hight'
 let g:solarized_visibility = 'high'
 syntax enable
@@ -250,7 +258,7 @@ let g:lightline = {
       \ 'colorscheme': 'solarized_fix',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
-      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
       \ },
       \ 'component_function': {
       \   'fugitive': 'MyFugitive',
