@@ -44,7 +44,7 @@ Bundle 'itchyny/calendar.vim'
 """Visualize UNDO tree
 Bundle 'sjl/gundo.vim'
 """Color themes
-Bundle 'platinumthinker/vim-colors-solarized'
+Bundle 'altercation/vim-colors-solarized'
 """Ack supports
 Bundle 'mileszs/ack.vim'
 """Markdown folding
@@ -59,7 +59,8 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'kien/ctrlp.vim'
 """Erlang autocomplite and show error
 Bundle 'oscarh/vimerl'
-
+"""Silverseacher-ag supports
+Bundle 'ervandew/ag'
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
 set shell=/bin/zsh
@@ -105,6 +106,7 @@ set linebreak
 set dy=lastline
 "" Show line number
 set number
+set rnu
 "" Wrap lines by 80 char 
 set wrap
 set textwidth=80
@@ -173,10 +175,13 @@ let g:syntastic_loc_list_height=4
 
 let g:tagbar_autofocus = 1
 
+let g:ackprg = 'ag --nogroup --nocolor --column'
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 "Open/close folds
 nnoremap <Space> za 
+
+nmap <leader>g :Ack <cword><CR>
 
 map <silent><BS> :NERDTreeToggle<CR>
 
@@ -214,6 +219,7 @@ nnoremap <leader>s :mksession<CR>
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 let g:calendar_first_day = "monday"
+let g:calendar_calendar= "russia"
 "===================================NERDTREE===================================
 let NERDTreeHighlightCursorline = 1
 let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
@@ -221,7 +227,6 @@ let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index
                     \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
                     \ '.*\.midi$']
 
-let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
 augroup ps_nerdtree
@@ -229,7 +234,6 @@ augroup ps_nerdtree
     au Filetype nerdtree setlocal nolist
     au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
     au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
-    " au Filety
 "===============================FIX SLOW SCROLL================================
 set lazyredraw
 set synmaxcol=128
@@ -244,13 +248,20 @@ let g:gundo_help = 1
 if !has('gui_running')
     let g:Powerline_symbols = 'fancy'
     set t_Co=256
+    let g:solarized_termcolors = 256
 endif
-syntax enable
-colorscheme solarized
 set background=dark
-"let g:solarized_termcolors = 256
+let g:solarized_termcolors = 16
 let g:solarized_contrast = 'hight'
 let g:solarized_visibility = 'high'
+syntax enable
+colorscheme solarized
+"====================================CTRL_P====================================
+let g:ctrlp_custom_ignore = {                                                                                                                                                                                                                
+    \ 'dir':  '(\v[\/]\.(git|hg|svn)$|_\v)',                                          
+    \ 'file': '\v\.(exe|so|dll|dump|core)$',                                              
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',                                        
+    \ }
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
