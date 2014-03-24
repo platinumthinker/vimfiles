@@ -258,7 +258,7 @@ syntax enable
 colorscheme solarized
 "====================================CTRL_P====================================
 let g:ctrlp_custom_ignore = {                                                                                                                                                                                                                
-    \ 'dir':  '(\v[\/]\.(git|hg|svn)$|_\v)',                                          
+    \ 'dir':  '\v[\/]\.(git|hg|svn|build)',                                          
     \ 'file': '\v\.(exe|so|dll|dump|core)$',                                              
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',                                        
     \ }
