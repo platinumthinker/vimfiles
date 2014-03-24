@@ -59,6 +59,8 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'kien/ctrlp.vim'
 """Erlang autocomplite and show error
 Bundle 'oscarh/vimerl'
+"""Erlang motions
+Bundle 'edkolev/erlang-motions.vim'
 """Silverseacher-ag supports
 Bundle 'ervandew/ag'
 "==================================VIM CONFIG==================================
