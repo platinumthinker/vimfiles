@@ -62,6 +62,10 @@ Bundle 'junegunn/vim-easy-align'
 """Erlang autocomplite and show error
 Bundle 'oscarh/vimerl'
 
+"""Erlang motions
+Bundle 'edkolev/erlang-motions.vim'
+"""Silverseacher-ag supports
+Bundle 'ervandew/ag'
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
 set shell=/bin/zsh
