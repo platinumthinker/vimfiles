@@ -291,6 +291,12 @@ let g:solarized_hitrail    = 1
 let g:solarized_termtrans  = 0
 let g:solarized_degrade    = 0
 colorscheme solarized
+"====================================CTRL_P====================================
+let g:ctrlp_custom_ignore = {                                                                                                                                                                                                                
+    \ 'dir':  '\v[\/]\.(git|hg|svn|build)',                                          
+    \ 'file': '\v\.(exe|so|dll|dump|core)$',                                              
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',                                        
+    \ }
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
