@@ -9,6 +9,8 @@ filetype plugin indent on
 Bundle 'gmarik/vundle'
 
 """"""Tpope repos
+"""Comment supports
+Bundle 'tpope/vim-commentary'
 """Git supports
 Bundle 'tpope/vim-fugitive'
 """Date inc/dec (Alt-a/Alt-x)
@@ -36,18 +38,14 @@ Bundle 'DrawIt'
 Bundle 'Conque-GDB'
 
 """"""Other repos
-"""Haskell dev tool
-Bundle 'bitc/vim-hdevtools'
+"""Draw undo tree
+Bundle 'mbbill/undotree'
 """Super syntax
 Bundle 'scrooloose/syntastic'
-"""Tree file viwer
-Bundle 'scrooloose/nerdtree'
 """Status bar
 Bundle 'itchyny/lightline.vim'
 """Google calendar
 Bundle 'itchyny/calendar.vim'
-"""Visualize UNDO tree
-Bundle 'sjl/gundo.vim'
 """Color themes
 Bundle 'platinumthinker/vim-colors-solarized'
 """Ack supports
@@ -60,10 +58,6 @@ Bundle 'majutsushi/tagbar'
 Bundle 'Raimondi/delimitMate'
 """Seacher
 Bundle 'kien/ctrlp.vim'
-"""Vim shell
-Bundle 'shougo/vimshell.vim'
-"""Tomorrow theme
-Bundle 'chriskempson/vim-tomorrow-theme'
 
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
@@ -172,12 +166,6 @@ inoremap jj <ESC>
 "Open/close folds
 nnoremap <Space> za 
 
-map <BS> :NERDTreeToggle<CR>
-
-""Toggle gundo
-nnoremap <leader>u :GundoToggle<CR>
-inoremap <leader>u :GundoToggle<CR>
-
 nnoremap <tab> <C-w><C-w>  
 "Next error
 nnoremap <F2> :lnext<CR> 
@@ -201,6 +189,8 @@ nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 ""Save session (load: vim -S)
 nnoremap <leader>s :mksession<CR>
+
+nnoremap <leader>u :UndotreeToggle<CR>
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
@@ -235,22 +225,20 @@ augroup ps_nerdtree
 set lazyredraw
 set synmaxcol=128
 syntax sync minlines=256
-"================================GUNDO SETTINGS================================
-let g:gundo_disable = 0
-let g:gundo_width = 60
-let g:gundo_preview_height = 40
-let g:gundo_right = 1
-let g:gundo_help = 1
 "==============================SOLORIZED THEME UP==============================
+syntax enable
 if !has('gui_running')
-    let g:Powerline_symbols = 'fancy'
     set t_Co=256
+    let g:Powerline_symbols = 'fancy'
 endif
 set background=dark
+let g:solarized_visibility = "normal"
+let g:solarized_contrast   = "normal"
+let g:solarized_hitrail    = 1
+let g:solarized_termtrans  = 0
+let g:solarized_degrade    = 0
 colorscheme solarized
-let g:solarized_contrast = 'hight'
-let g:solarized_visibility = 'high'
-syntax enable
+"let g:solarized_termcolors = 256
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
