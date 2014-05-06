@@ -243,7 +243,7 @@ colorscheme solarized
 set laststatus=2
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized_fix',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
