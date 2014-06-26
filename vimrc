@@ -27,7 +27,7 @@ Bundle 'tpope/vim-repeat'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'LaTeX-Box'
 """Sniplets
-Bundle 'snipMate'
+Bundle 'SirVer/ultisnips'
 """Fast toggle commets
 Bundle 'The-NERD-Commenter'
 """Ctags supports
@@ -58,16 +58,17 @@ Bundle 'majutsushi/tagbar'
 Bundle 'Raimondi/delimitMate'
 """Seacher
 Bundle 'kien/ctrlp.vim'
+"""Align
+Bundle 'junegunn/vim-easy-align'
 
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
 set shell=/bin/zsh
 
-set helplang=ru,en
+set helplang=en
 set title
 set cursorline
 set cursorcolumn
-set nocompatible
 " Time to wait after ESC (default causes an annoying delay)
 set timeoutlen=250 
 " игнорировать регистр при поиске
@@ -142,9 +143,18 @@ set backupskip=/tmp/*
 set directory=/var/tmp,/tmp
 set writebackup
 
+""Set varible from my envirmoment
+let &path = &path . "," . getcwd()
 let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
 
-"setlocal spell spelllang=en_us
+""Spelli cheker
+setlocal spell spelllang=en_us,ru_yo
+
+""Add russian keyboard for commands
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=0
+highlight lCursor guifg=NONE guibg=Cyan
 
 "Markdown fix
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
@@ -152,27 +162,22 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
 "Folds
 set foldmethod=syntax
 
-let g:syntastic_check_on_open=0
-let g:syntastic_check_on_wq=0
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-let g:syntastic_c_compiler = 'clang'
-let g:syntastic_c_compiler_options = ' -std=c11 -stdlib=libc'
-
 let g:tagbar_autofocus = 1
-let g:hdevtools_options = '-g-isrc -g-Wall'
+
+let g:ycm_min_num_identifier_candidate_chars = 3
+let g:ycm_always_populate_location_list = 1
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+
+let g:UltiSnipsExpandTrigger = "<c-j>"
+
+"let g:UltiSnipsJumpForwardTrigger
+"let g:UltiSnipsJumpBackwardTrigger
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 "Open/close folds
 nnoremap <Space> za 
 
 nnoremap <tab> <C-w><C-w>  
-"Next error
-nnoremap <F2> :lnext<CR> 
-inoremap <F2> :lnext<CR> 
-"Previous error
-nnoremap <F3> :lprevious<CR>
-inoremap <F3> :lprevious<CR>
 
 nnoremap <F8> :TagbarToggle<CR>
 inoremap <F8> :TagbarToggle<CR>
@@ -181,14 +186,10 @@ call togglebg#map("<F5>")
 
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight
 
-inoremap <tab> <C-p>
-
 ""Edit vimrc
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
 ""Load vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
-""Save session (load: vim -S)
-nnoremap <leader>s :mksession<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
 "===============================GOOGLE CALENDAR================================
@@ -196,31 +197,26 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 let g:calendar_first_day = "monday"
 let g:calendar_calendar= "russia"
+"====================================CTRL_P====================================
+let g:ctrlp_max_files = 10000
+let g:ctrlp_max_depth = 10
+let g:ctrlp_custom_ignore = {
+            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+            \ 'file': '\v\.(so|pyc|pdf)$',
+            \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
+            \ }
 "==================================SYNTASTICS==================================
+let g:syntastic_check_on_open=0
+let g:syntastic_check_on_wq=0
 let g:syntastic_mode_map = { 'mode': 'active',
-            \'active_filetypes': ['c', 'cpp', 'h', 'erl', 'hs'],
-            \'passive_filetypes': ['python']}
-let g:pymode_rope_complete_on_dot = 0
-let g:pymode_lint_write = 1
-"===================================NERDTREE===================================
-let NERDTreeHighlightCursorline = 1
-let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
-                    \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
-                    \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
-                    \ '.*\.midi$']
+            \'active_filetypes': ['erl', 'hs'],
+            \'passive_filetypes': ['h', 'c', 'cpp'] }
+let g:syntastic_filetype_map = { 'latex': 'tex',
+            \ 'gentoo-metadata': 'xml' }
+let g:syntastic_disabled_filetypes = ['c', 'cpp']
 
-"let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-"let NERDChristmasTree = 1
-"let NERDTreeChDirMode = 2
-
-augroup ps_nerdtree
-    au!
-
-    au Filetype nerdtree setlocal nolist
-    au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
-    au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
-    " au Filety
+"let g:pymode_rope_complete_on_dot = 1
+"let g:pymode_lint_write = 1
 "===============================FIX SLOW SCROLL================================
 set lazyredraw
 set synmaxcol=128
@@ -238,12 +234,11 @@ let g:solarized_hitrail    = 1
 let g:solarized_termtrans  = 0
 let g:solarized_degrade    = 0
 colorscheme solarized
-"let g:solarized_termcolors = 256
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized_fix',
+      \ 'colorscheme': 'solarized',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
@@ -279,7 +274,6 @@ function! MyFilename()
   let fname = expand('%:t')
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
         \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ 'NERD_tree' ? '' :
         \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
         \ ('' != MyModified() ? ' ' . MyModified() : '')
@@ -309,11 +303,7 @@ function! MyFileencoding()
 endfunction
 
 function! MyMode()
-  let fname = expand('%:t')
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
+    return ' '
 endfunction
 
 function! CtrlPMark()
