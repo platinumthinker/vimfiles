@@ -129,14 +129,14 @@ set pumheight=15
 
 set wildmode=list:longest,full
 set wildmenu 
-set wildignore+=.git,.svn
+set wildignore+=.git,.svn,_build
 
 let g:erlang_folding=1
 "let g:erlangRefactoring=1
 "let erlang_show_errors=0
 let	g:erlangHighlightBif=1 
 let g:erlangCompletionDisplayDoc = 0
-let g:erlangCompletitionGrep = 'ack'
+let g:erlangCompletitionGrep = 'ag'
 let g:erlangFoldSplitFunction=1
 let g:erlangManPath="/home/thinker/erlware/man"
 let g:erlangHighlightErrors=0
@@ -178,6 +178,14 @@ let g:syntastic_loc_list_height=4
 let g:tagbar_autofocus = 1
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
+"=============================DELETE TRAILING SPACES===========================
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 "Open/close folds
@@ -256,11 +264,12 @@ set background=dark
 let g:solarized_termcolors = 16
 let g:solarized_contrast = 'hight'
 let g:solarized_visibility = 'high'
+let g:solarized_underline = 1
 syntax enable
 colorscheme solarized
 "====================================CTRL_P====================================
 let g:ctrlp_custom_ignore = {                                                                                                                                                                                                                
-    \ 'dir':  '\v[\/]\.(git|hg|svn|build)',                                          
+    \ 'dir':  '\v[\/]\.(git|hg|svn|_build)',
     \ 'file': '\v\.(exe|so|dll|dump|core)$',                                              
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',                                        
     \ }
