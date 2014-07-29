@@ -75,7 +75,6 @@ set helplang=en
 set title
 set cursorline
 set cursorcolumn
-set nocompatible
 " Time to wait after ESC (default causes an annoying delay)
 set timeoutlen=250 
 " игнорировать регистр при поиске
@@ -189,7 +188,13 @@ let g:syntastic_loc_list_height=4
 
 let g:tagbar_autofocus = 1
 
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "_build"'
+let g:ackhighlight = 1
+
+let g:ycm_min_num_identifier_candidate_chars = 3
+let g:ycm_always_populate_location_list = 1
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_use_ultisnips_completer = 1
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -198,39 +203,14 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-
-let g:tagbar_autofocus = 1
-
-let g:ycm_min_num_identifier_candidate_chars = 3
-let g:ycm_always_populate_location_list = 1
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-
-let g:UltiSnipsExpandTrigger = "<c-j>"
-
-"let g:UltiSnipsJumpForwardTrigger
-"let g:UltiSnipsJumpBackwardTrigger
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 "Open/close folds
 nnoremap <Space> za 
 
-nmap <leader>g :Ack <cword><CR>
-
-map <silent><BS> :NERDTreeToggle<CR>
-
-""Toggle gundo
-nnoremap <silent><leader>u :GundoToggle<CR>
-inoremap <silent><leader>u :GundoToggle<CR>
-
-nnoremap <tab> <C-w><C-w>  
+nmap <leader>g :LAck <cword><CR>
 
 nnoremap <silent> <F4> :lclose<CR>
-"Next error
-nnoremap <silent><F2> :lnext<CR> 
-inoremap <silent><F2> :lnext<CR> 
-"Previous error
-nnoremap <silent><F3> :lprevious<CR>
-inoremap <silent><F3> :lprevious<CR>
 
 nnoremap <silent><F8> :TagbarToggle<CR>
 inoremap <silent><F8> :TagbarToggle<CR>
@@ -247,33 +227,21 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>s :mksession<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 let g:calendar_first_day = "monday"
 let g:calendar_calendar= "russia"
-"===================================NERDTREE===================================
-let NERDTreeHighlightCursorline = 1
-let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
-                    \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
-                    \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
-                    \ '.*\.midi$']
-
-let NERDTreeDirArrows = 1
-
-augroup ps_nerdtree
-    au!
-    au Filetype nerdtree setlocal nolist
-    au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
-    au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
-"====================================CTRL_P====================================
-let g:ctrlp_max_files = 10000
-let g:ctrlp_max_depth = 10
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-            \ 'file': '\v\.(so|pyc|pdf)$',
-            \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
-            \ }
 "==================================SYNTASTICS==================================
 let g:syntastic_check_on_open=0
 let g:syntastic_check_on_wq=0
@@ -284,8 +252,8 @@ let g:syntastic_filetype_map = { 'latex': 'tex',
             \ 'gentoo-metadata': 'xml' }
 let g:syntastic_disabled_filetypes = ['c', 'cpp']
 
-"let g:pymode_rope_complete_on_dot = 1
-"let g:pymode_lint_write = 1
+let g:pymode_rope_complete_on_dot = 1
+let g:pymode_lint_write = 1
 "===============================FIX SLOW SCROLL================================
 set lazyredraw
 set synmaxcol=128
@@ -301,15 +269,19 @@ let g:solarized_termcolors = 16
 let g:solarized_contrast = 'hight'
 let g:solarized_visibility = 'high'
 let g:solarized_underline = 1
-syntax enable
+let g:solarized_hitrail    = 1
+let g:solarized_termtrans  = 0
+let g:solarized_degrade    = 0
 colorscheme solarized
 "====================================CTRL_P====================================
-let g:ctrlp_custom_ignore = {                                                                                                                                                                                                                
+let g:ctrlp_max_files = 10000
+let g:ctrlp_max_depth = 10
+let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|_build)',
-    \ 'file': '\v\.(exe|so|dll|dump|core)$',                                              
-    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',                                        
+    \ 'file': '\v\.(exe|so|dll|dump|core)$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
     \ }
-    let g:Powerline_symbols = 'fancy'
+let g:Powerline_symbols = 'fancy'
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
@@ -426,6 +398,6 @@ function! TagbarStatusFunc(current, sort, fname, ...) abort
   return lightline#statusline(0)
 endfunction
 
-let g:unite_force_overwrite_statusline = 1
-let g:vimfiler_force_overwrite_statusline = 1
-let g:vimshell_force_overwrite_statusline = 1
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
