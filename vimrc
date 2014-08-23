@@ -163,7 +163,7 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
 set foldmethod=syntax
 
 let g:tagbar_autofocus = 1
-
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_always_populate_location_list = 1
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
