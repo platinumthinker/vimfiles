@@ -203,7 +203,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "_build"'
 let g:ackhighlight = 1
 
 let g:ycm_min_num_identifier_candidate_chars = 3
-let g:ycm_always_populate_location_list = 1
+let g:ycm_always_populate_location_list = 0
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_use_ultisnips_completer = 1
 "=============================DELETE TRAILING SPACES===========================
@@ -255,6 +255,7 @@ let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsListSnippets = "<c-tab>"
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
