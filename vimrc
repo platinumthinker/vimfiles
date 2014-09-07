@@ -12,8 +12,6 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-commentary'
 """Git supports
 Bundle 'tpope/vim-fugitive'
-"""Date inc/dec (Alt-a/Alt-x)
-Bundle 'tpope/vim-speeddating'
 """Surround parenthese, brackets, quotes, XML tags and more
 Bundle 'tpope/vim-surround'
 """Mapping simply short normal mode aliases
@@ -26,15 +24,11 @@ Bundle 'tpope/vim-repeat'
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'LaTeX-Box'
 """Sniplets
-Bundle 'SirVer/ultisnips'
-"""Fast toggle commets
-Bundle 'The-NERD-Commenter'
+Bundle 'msanders/snipmate.vim'
 """Ctags supports
 Bundle 'ctags.vim'
 """Ascii art
 Bundle 'DrawIt'
-"""GDB command interface
-Bundle 'Conque-GDB'
 
 """"""Other repos
 """Draw undo tree
@@ -49,12 +43,8 @@ Bundle 'itchyny/calendar.vim'
 Bundle 'platinumthinker/vim-colors-solarized'
 """Ack supports
 Bundle 'mileszs/ack.vim'
-"""Autocomplite
-Bundle 'Valloric/YouCompleteMe'
 """Bar of function in open file (from ctags)
 Bundle 'majutsushi/tagbar'
-"""Dublicate character (quotes, brackets, ets)
-Bundle 'Raimondi/delimitMate'
 """Seacher
 Bundle 'kien/ctrlp.vim'
 """Align
@@ -67,7 +57,6 @@ Bundle 'edkolev/erlang-motions.vim'
 """Silverseacher-ag supports
 Bundle 'ervandew/ag'
 "==================================VIM CONFIG==================================
-let $BASH_ENV = "~/.bash_profile"
 set shell=/bin/zsh
 filetype plugin indent on
 
@@ -96,12 +85,6 @@ set smarttab
 set showmatch " Show matching brackets.
 
 set autoindent
-set cindent
-set indentkeys-=0# " do not break indent on #
-set cinkeys-=0#
-set cinoptions=:s,ps,ts,cs
-set cinwords=if,else,while,do
-set cinwords+=for,switch,case
 
 "" Show command in bottom bar
 set showcmd 
@@ -122,9 +105,6 @@ set shiftround
 set mouse=a
 " Yanks go on clipboard instead
 set clipboard+=unnamed
-
-set modeline
-set modelines=5 " default numbers of lines to read for modeline instructions
 
 set completeopt=menu,menuone,longest
 set pumheight=15
@@ -191,21 +171,22 @@ let g:UltiSnipsExpandTrigger = "<c-j>"
 "let g:UltiSnipsJumpBackwardTrigger
 let g:markdown_fold_style = 'nested'
 
-let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq=0
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors=1
-let g:syntastic_loc_list_height=4
-
 let g:tagbar_autofocus = 1
 
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "_build"'
 let g:ackhighlight = 1
-
-let g:ycm_min_num_identifier_candidate_chars = 3
-let g:ycm_always_populate_location_list = 0
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_use_ultisnips_completer = 1
+"==================================ERLANG_SUPPORT==============================
+let g:erlang_folding=1
+let g:erlangRefactoring=1
+let erlang_show_errors=0
+let	g:erlangHighlightBif=1 
+let g:erlang_highlight_special_atoms = 1
+let g:erlangCompletitionGrep = 'ag'
+let g:erlangManSuffix='erl\.gz'
+let g:erlangCompletionDisplayDoc=0
+let g:erlangFoldSplitFunction=0
+" let g:erlangManPath="/home/thinker/erlware/man"
+let g:erlangHighlightErrors=0
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -216,8 +197,6 @@ endfun
 autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
-"Open/close folds
-nnoremap <Space> za 
 
 nnoremap <tab> <C-w><C-w>  
 map <silent><BS> :NERDTreeToggle<CR>
@@ -249,16 +228,8 @@ nnoremap <leader>s :mksession<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsListSnippets = "<c-tab>"
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+ino <c-j> <c-r>=TriggerSnippet()<cr>
+snor <c-j> <esc>i<right><c-r>=TriggerSnippet()<cr>
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
@@ -272,15 +243,19 @@ let g:ctrlp_custom_ignore = {
             \ 'file': '\v\.(so|pyc|pdf)$',
             \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
             \ }
+let g:calendar_frame = 'default'
 "==================================SYNTASTICS==================================
-let g:syntastic_check_on_open=0
+let g:syntastic_check_on_openn=0
 let g:syntastic_check_on_wq=0
-let g:syntastic_mode_map = { 'mode': 'active',
-            \'active_filetypes': ['erl', 'hs'],
-            \'passive_filetypes': ['h', 'c', 'cpp'] }
+let g:syntastic_auto_loc_list=1
+let g:syntastic_always_populate_loc_list=1
+" let g:syntastic_mode_map = { 'mode': 'active',
+"             \'active_filetypes': ['erl', 'hs'],
+"             \'passive_filetypes': ['h', 'c', 'cpp'] }
 let g:syntastic_filetype_map = { 'latex': 'tex',
             \ 'gentoo-metadata': 'xml' }
-let g:syntastic_disabled_filetypes = ['c', 'cpp']
+" let g:syntastic_disabled_filetypes = ['c', 'cpp']
+let g:syntastic_cpp_check_header = 1
 
 "let g:pymode_rope_complete_on_dot = 1
 "let g:pymode_lint_write = 1
@@ -302,8 +277,10 @@ augroup ps_nerdtree
     " au Filety
 let g:pymode_rope_complete_on_dot = 1
 let g:pymode_lint_write = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 "===============================FIX SLOW SCROLL================================
-set lazyredraw
+" set lazyredraw
 set synmaxcol=128
 syntax sync minlines=256
 "==============================SOLORIZED THEME UP==============================
@@ -329,7 +306,6 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll|dump|core)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
     \ }
-let g:Powerline_symbols = 'fancy'
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
