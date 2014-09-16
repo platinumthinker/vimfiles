@@ -23,8 +23,6 @@ Bundle 'tpope/vim-repeat'
 """LaTeX
 Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
 Bundle 'LaTeX-Box'
-"""Sniplets
-Bundle 'msanders/snipmate.vim'
 """Ctags supports
 Bundle 'ctags.vim'
 """Ascii art
@@ -37,6 +35,8 @@ Bundle 'mbbill/undotree'
 Bundle 'scrooloose/syntastic'
 """Status bar
 Bundle 'itchyny/lightline.vim'
+"""Sniplets engine
+Bundle 'msanders/snipmate.vim'
 """Google calendar
 Bundle 'itchyny/calendar.vim'
 """Color themes
@@ -49,9 +49,15 @@ Bundle 'majutsushi/tagbar'
 Bundle 'kien/ctrlp.vim'
 """Align
 Bundle 'junegunn/vim-easy-align'
-"""Erlang autocomplite and show error
-Bundle 'oscarh/vimerl'
 
+""""""For erlang
+" """Erlang autocomplite and show error
+" Bundle 'oscarh/vimerl'
+""" Vim erlang collects
+Bundle 'vim-erlang/vim-erlang-runtime.git'
+Bundle 'vim-erlang/vim-erlang-compiler.git'
+Bundle 'vim-erlang/vim-erlang-omnicomplete.git'
+Bundle 'vim-erlang/vim-erlang-tags.git'
 """Erlang motions
 Bundle 'edkolev/erlang-motions.vim'
 """Silverseacher-ag supports
@@ -93,7 +99,7 @@ set linebreak
 set dy=lastline
 "" Show line number
 set number
-set rnu
+set nu
 "" Wrap lines by 80 char 
 set wrap
 set textwidth=80
@@ -173,20 +179,21 @@ let g:markdown_fold_style = 'nested'
 
 let g:tagbar_autofocus = 1
 
-let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "_build"'
+let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "_build"'
 let g:ackhighlight = 1
+let g:snippets_dir = '~/.vim/snippets/'
 "==================================ERLANG_SUPPORT==============================
-let g:erlang_folding=1
-let g:erlangRefactoring=1
-let erlang_show_errors=0
-let	g:erlangHighlightBif=1 
-let g:erlang_highlight_special_atoms = 1
-let g:erlangCompletitionGrep = 'ag'
-let g:erlangManSuffix='erl\.gz'
-let g:erlangCompletionDisplayDoc=0
-let g:erlangFoldSplitFunction=0
-" let g:erlangManPath="/home/thinker/erlware/man"
-let g:erlangHighlightErrors=0
+" let g:erlang_folding=1
+" let g:erlangRefactoring=1
+" let erlang_show_errors=0
+" let	g:erlangHighlightBif=1 
+" let g:erlang_highlight_special_atoms = 1
+" let g:erlangCompletitionGrep = 'ag'
+" let g:erlangManSuffix='erl\.gz'
+" let g:erlangCompletionDisplayDoc=0
+" let g:erlangFoldSplitFunction=0
+" " let g:erlangManPath="/home/thinker/erlware/man"
+" let g:erlangHighlightErrors=0
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -249,13 +256,10 @@ let g:syntastic_check_on_openn=0
 let g:syntastic_check_on_wq=0
 let g:syntastic_auto_loc_list=1
 let g:syntastic_always_populate_loc_list=1
-" let g:syntastic_mode_map = { 'mode': 'active',
-"             \'active_filetypes': ['erl', 'hs'],
-"             \'passive_filetypes': ['h', 'c', 'cpp'] }
 let g:syntastic_filetype_map = { 'latex': 'tex',
             \ 'gentoo-metadata': 'xml' }
-" let g:syntastic_disabled_filetypes = ['c', 'cpp']
 let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
 "let g:pymode_rope_complete_on_dot = 1
 "let g:pymode_lint_write = 1
@@ -277,8 +281,6 @@ augroup ps_nerdtree
     " au Filety
 let g:pymode_rope_complete_on_dot = 1
 let g:pymode_lint_write = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 "===============================FIX SLOW SCROLL================================
 " set lazyredraw
 set synmaxcol=128

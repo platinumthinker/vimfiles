@@ -1,53 +1,87 @@
-priority -50
+# Markdown
 
-###########################
-# Sections and Paragraphs #
-###########################
-snippet sec "Section" b
-# ${1:Section Name} #
-$0
-endsnippet
+# Includes octopress (http://octopress.org/) snippets
 
-snippet ssec "Sub Section" b
-## ${1:Section Name} ##
-$0
-endsnippet
+snippet [
+	[${1:text}](http://${2:address} "${0:title}")
+snippet [*
+	[${1:link}](${2:`@*`} "${3:title}")
 
-snippet sssec "SubSub Section" b
-### ${1:Section Name} ###
-$0
-endsnippet
+snippet [:
+	[${1:id}]: http://${2:url} "${0:title}"
+snippet [:*
+	[${1:id}]: ${2:`@*`} "${0:title}"
 
-snippet par "Paragraph" b
-#### ${1:Paragraph Name} ####
-$0
-endsnippet
+snippet ![
+	![${1:alttext}](${2:/images/image.jpg} "${0:title}")
+snippet ![*
+	![${1:alt}](${2:`@*`} "${3:title}")
 
-snippet spar "Paragraph" b
-##### ${1:Paragraph Name} #####
-$0
-endsnippet
+snippet ![:
+	![${1:id}]: ${2:url} "${0:title}"
+snippet ![:*
+	![${1:id}]: ${2:`@*`} "${0:title}"
 
-################
-# Common stuff #
-################
-snippet link "Link to something"
-[${1:${VISUAL:Text}}](${3:http://${2:www.url.com}})$0
-endsnippet
+snippet ===
+	`repeat('=', strlen(getline(line(".") - 1)) - strlen(getline('.')))`
 
-snippet img "Image"
-![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
-endsnippet
+	${0}
+snippet ---
+	`repeat('-', strlen(getline(line(".") - 1)) - strlen(getline('.')))`
 
-snippet ilc "Inline Code" i
-\`$1\`$0
-endsnippet
+	${0}
 
-snippet cbl "Codeblock" b
-\`\`\`
-$1
-\`\`\`
-$0
-endsnippet
+snippet blockquote
+	{% blockquote %}
+	${0:quote}
+	{% endblockquote %}
 
-# vim:ft=snippets:
+snippet blockquote-author
+	{% blockquote ${1:author}, ${2:title} %}
+	${0:quote}
+	{% endblockquote %}
+
+snippet blockquote-link
+	{% blockquote ${1:author} ${2:URL} ${3:link_text} %}
+	${0:quote}
+	{% endblockquote %}
+
+snippet bt-codeblock-short
+	```
+	${0:code_snippet}
+	```
+
+snippet bt-codeblock-full
+	``` ${1:language} ${2:title} ${3:URL} ${4:link_text}
+	${0:code_snippet}
+	```
+
+snippet codeblock-short
+	{% codeblock %}
+	${0:code_snippet}
+	{% endcodeblock %}
+
+snippet codeblock-full
+	{% codeblock ${1:title} lang:${2:language} ${3:URL} ${4:link_text} %}
+	${0:code_snippet}
+	{% endcodeblock %}
+
+snippet gist-full
+	{% gist ${1:gist_id} ${0:filename} %}
+
+snippet gist-short
+	{% gist ${0:gist_id} %}
+
+snippet img
+	{% img ${1:class} ${2:URL} ${3:width} ${4:height} ${5:title_text} ${0:alt_text} %}
+
+snippet youtube
+	{% youtube ${0:video_id} %}
+
+# The quote should appear only once in the text. It is inherently part of it.
+# See http://octopress.org/docs/plugins/pullquote/ for more info.
+
+snippet pullquote
+	{% pullquote %}
+	${1:text} {" ${2:quote} "} ${0:text}
+	{% endpullquote %}
