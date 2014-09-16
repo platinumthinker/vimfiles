@@ -67,6 +67,15 @@ snippet %s
 # private function marker
 snippet %p
 	%% @private
+#header
+snippet head normal header
+%%% @author `g:snips_author` `g:my_email_addr`
+%%% @copyright (C) © `strftime("%Y")`, `g:snips_author`. All Rights Reserved.
+%%% @doc
+%%% ${1}
+%%% @end
+-module(`Filename()`).
+${2}
 # OTP application
 snippet application
 	-module(${1:`vim_snippets#Filename('', 'my')`}).
@@ -669,3 +678,22 @@ snippet testsuite
 	%%              to be executed).
 	%%--------------------------------------------------------------------
 
+# file template for .app file
+snippet .app
+{application, ${1:Application},
+[
+	{description, "${2:Description}"},
+	{id, "${3:Id}"},
+	{vsn, "${4:Vsn}"},
+	{modules, [${5:Modules}]},
+	{registered, [${6:Names}]},
+	{applications, [
+		kernel,
+		stdlib,
+		${8:Apps}
+		]},
+	{env, [{${9:par}, ${10:val}}]},
+	{mod, {$1_app, [${11:args}]}},
+	{start_phases, [{${11:Phase}, ${12:PhaseArgs}}]}
+]}.
+%% vim: set et ts=2 sw=2
