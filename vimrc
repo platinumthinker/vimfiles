@@ -281,9 +281,24 @@ set synmaxcol=128
 syntax sync minlines=256
 "==============================SOLORIZED THEME UP==============================
 syntax enable
-if !has('gui_running')
-    set t_Co=256
-    let g:Powerline_symbols = 'fancy'
+if $SSH_CONNECTION
+    colorscheme lucius
+else
+    set background=dark
+    if !has('gui_running')
+        set t_Co=256
+        let g:Powerline_symbols = 'fancy'
+        let g:solarized_termcolors = 16
+        let g:solarized_termtrans  = 0
+        let g:solarized_degrade    = 0
+    else
+        let g:solarized_termcolors = 256
+        let g:solarized_contrast = 'hight'
+        let g:solarized_visibility = 'high'
+    endif
+    let g:solarized_underline = 1
+    let g:solarized_hitrail    = 1
+    colorscheme solarized
 endif
 set background=dark
 let g:solarized_visibility = "normal"
