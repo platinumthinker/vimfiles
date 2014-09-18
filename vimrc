@@ -56,8 +56,6 @@ Bundle 'junegunn/vim-easy-align'
 Bundle 'thinca/vim-ref'
 
 """"""For erlang
-" """Erlang autocomplete and show error
-" Bundle 'oscarh/vimerl'
 """ Vim erlang collects
 Bundle 'vim-erlang/vim-erlang-runtime.git'
 Bundle 'vim-erlang/vim-erlang-compiler.git'
@@ -187,18 +185,6 @@ let g:tagbar_autofocus = 1
 let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "_build"'
 let g:ackhighlight = 1
 let g:snippets_dir = '~/.vim/snippets/'
-"==================================ERLANG_SUPPORT==============================
-" let g:erlang_folding=1
-" let g:erlangRefactoring=1
-" let erlang_show_errors=0
-" let	g:erlangHighlightBif=1 
-" let g:erlang_highlight_special_atoms = 1
-" let g:erlangCompletitionGrep = 'ag'
-" let g:erlangManSuffix='erl\.gz'
-" let g:erlangCompletionDisplayDoc=0
-" let g:erlangFoldSplitFunction=0
-" " let g:erlangManPath="/home/thinker/erlware/man"
-" let g:erlangHighlightErrors=0
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
