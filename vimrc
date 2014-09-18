@@ -31,6 +31,8 @@ Bundle 'DrawIt'
 """"""Other repos
 """Draw undo tree
 Bundle 'mbbill/undotree'
+"""Easy change buffers
+Bundle 'troydm/easybuffer.vim'
 """Super syntax
 Bundle 'scrooloose/syntastic'
 """Status bar
