@@ -35,7 +35,7 @@ Bundle 'mbbill/undotree'
 Bundle 'scrooloose/syntastic'
 """Status bar
 Bundle 'itchyny/lightline.vim'
-"""Sniplets engine
+"""Snippets engine
 Bundle 'msanders/snipmate.vim'
 """Google calendar
 Bundle 'itchyny/calendar.vim'
@@ -45,13 +45,15 @@ Bundle 'platinumthinker/vim-colors-solarized'
 Bundle 'mileszs/ack.vim'
 """Bar of function in open file (from ctags)
 Bundle 'majutsushi/tagbar'
-"""Seacher
+"""Searcher
 Bundle 'kien/ctrlp.vim'
 """Align
 Bundle 'junegunn/vim-easy-align'
+"""Doc
+Bundle 'thinca/vim-ref'
 
 """"""For erlang
-" """Erlang autocomplite and show error
+" """Erlang autocomplete and show error
 " Bundle 'oscarh/vimerl'
 """ Vim erlang collects
 Bundle 'vim-erlang/vim-erlang-runtime.git'
