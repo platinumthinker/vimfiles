@@ -57,10 +57,13 @@ Bundle 'thinca/vim-ref'
 
 """"""For erlang
 """ Vim erlang collects
-Bundle 'vim-erlang/vim-erlang-runtime.git'
-Bundle 'vim-erlang/vim-erlang-compiler.git'
-Bundle 'vim-erlang/vim-erlang-omnicomplete.git'
-Bundle 'vim-erlang/vim-erlang-tags.git'
+Bundle 'vim-erlang/vim-erlang-runtime'
+Bundle 'vim-erlang/vim-erlang-compiler'
+Bundle 'vim-erlang/vim-erlang-omnicomplete'
+Bundle 'vim-erlang/vim-erlang-tags'
+"""For rebar
+Bundle 'fishcakez/vim_rebar.git'
+Bundle 'tpope/vim-dispatch'
 """Erlang motions
 Bundle 'edkolev/erlang-motions.vim'
 """Silverseacher-ag supports
