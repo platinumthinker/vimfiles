@@ -313,7 +313,7 @@ set synmaxcol=128
 syntax sync minlines=256
 "==============================SOLORIZED THEME UP==============================
 syntax enable
-if !empty($VIM_DARK_COLOR_DEFAULTS)
+if empty($VIM_LIGHT_COLOR)
     set background=dark
     if !has('gui_running')
         set t_Co=256
