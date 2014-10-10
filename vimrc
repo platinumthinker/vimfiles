@@ -313,9 +313,7 @@ set synmaxcol=128
 syntax sync minlines=256
 "==============================SOLORIZED THEME UP==============================
 syntax enable
-if $SSH_CONNECTION
-    colorscheme lucius
-else
+if !empty($VIM_DARK_COLOR_DEFAULTS)
     set background=dark
     if !has('gui_running')
         set t_Co=256
@@ -331,6 +329,8 @@ else
     let g:solarized_underline = 1
     let g:solarized_hitrail    = 1
     colorscheme solarized
+else
+    colorscheme lucius
 endif
 set background=dark
 let g:solarized_visibility = "normal"
