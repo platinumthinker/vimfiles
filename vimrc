@@ -236,6 +236,10 @@ nnoremap <leader>s :mksession<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
 
+vmap <Enter> <Plug>(EasyAlign)
+
+nmap <Leader>a <Plug>(EasyAlign)
+
 " Toggle netrw like NERDTree
 function! ToggleVExplorer()
   if exists("t:expl_buf_num")
@@ -255,7 +259,7 @@ function! ToggleVExplorer()
       let t:expl_buf_num = bufnr("%")
   endif
 endfunction
-map <silent> <leader>a :call ToggleVExplorer()<CR>
+map <silent> <leader>e :call ToggleVExplorer()<CR>
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
