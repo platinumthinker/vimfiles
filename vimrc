@@ -175,6 +175,8 @@ highlight lCursor guifg=NONE guibg=Cyan
 "Markdown fix
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
 
+au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
+
 "Folds
 set foldmethod=syntax
 
