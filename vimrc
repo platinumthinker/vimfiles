@@ -196,7 +196,7 @@ let g:markdown_fold_style = 'nested'
 
 let g:tagbar_autofocus = 1
 
-let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "_build"'
+let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "release"'
 let g:ackhighlight = 1
 let g:snippets_dir = '~/.vim/snippets/'
 let g:snips_autor = 'andrey.teplyashin'
@@ -221,6 +221,7 @@ inoremap <silent><leader>u :GundoToggle<CR>
 
 nnoremap <tab> <C-w><C-w>  
 nmap <leader>g :LAck <cword><CR>
+nmap <leader>b :EasyBuffer<CR>
 
 nnoremap <silent> <F4> :lclose<CR>
 
@@ -264,6 +265,7 @@ function! ToggleVExplorer()
   endif
 endfunction
 map <silent> <leader>e :call ToggleVExplorer()<CR>
+inoremap \fn <C-R>=expand("%:t:r")<CR>
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
@@ -348,9 +350,10 @@ colorscheme solarized
 "====================================CTRL_P====================================
 let g:ctrlp_max_files = 10000
 let g:ctrlp_max_depth = 10
+let g:ctrlp_working_path_mode=0
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|_build)',
-    \ 'file': '\v\.(exe|so|dll|dump|core)$',
+    \ 'file': '\v\.(beam|exe|so|dll|dump|core)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
     \ }
 "============================STATUS BAR SETTINGS UP============================
