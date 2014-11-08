@@ -39,6 +39,8 @@ Bundle 'scrooloose/syntastic'
 Bundle 'itchyny/lightline.vim'
 """Snippets engine
 Bundle 'msanders/snipmate.vim'
+"""Snippets repo
+Bundle 'honza/vim-snippets'
 """Google calendar
 Bundle 'itchyny/calendar.vim'
 """Color themes
@@ -62,7 +64,7 @@ Bundle 'vim-erlang/vim-erlang-compiler'
 Bundle 'vim-erlang/vim-erlang-omnicomplete'
 Bundle 'vim-erlang/vim-erlang-tags'
 """For rebar
-Bundle 'fishcakez/vim_rebar.git'
+Bundle 'fishcakez/vim_rebar'
 Bundle 'tpope/vim-dispatch'
 """Erlang motions
 Bundle 'edkolev/erlang-motions.vim'
@@ -175,7 +177,7 @@ highlight lCursor guifg=NONE guibg=Cyan
 "Markdown fix
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
 
-au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
+" au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
 
 "Folds
 set foldmethod=syntax
@@ -197,6 +199,8 @@ let g:tagbar_autofocus = 1
 let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "_build"'
 let g:ackhighlight = 1
 let g:snippets_dir = '~/.vim/snippets/'
+let g:snips_autor = 'andrey.teplyashin'
+let g:my_email_addr = 'platinumthinker@gmail.com'
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")

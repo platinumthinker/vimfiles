@@ -2,13 +2,8 @@
 snippet mod
 	-module(${1:`vim_snippets#Filename('', 'my')`}).
 
-	-compile([export_all]).
+	-export([]).
 
-	start() ->
-	    ${0}
-
-	stop() ->
-	    ok.
 # define directive
 snippet def
 	-define(${1:macro}, ${2:body}).
