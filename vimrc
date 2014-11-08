@@ -244,8 +244,6 @@ nnoremap <leader>u :UndotreeToggle<CR>
 
 vmap <Enter> <Plug>(EasyAlign)
 
-nmap <Leader>a <Plug>(EasyAlign)
-
 " Toggle netrw like NERDTree
 function! ToggleVExplorer()
   if exists("t:expl_buf_num")
