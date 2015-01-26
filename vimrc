@@ -221,6 +221,8 @@ inoremap <silent><leader>u :GundoToggle<CR>
 
 nnoremap <tab> <C-w><C-w>  
 nmap <leader>g :LAck <cword><CR>
+nmap <leader>bh :EasyBufferHorizontal<CR>
+nmap <leader>bv :EasyBufferVertical<CR>
 nmap <leader>b :EasyBuffer<CR>
 
 nnoremap <silent> <F4> :lclose<CR>
