@@ -12,6 +12,7 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-commentary'
 """Git supports
 Bundle 'tpope/vim-fugitive'
+Bundle 'idanarye/vim-merginal'
 """Surround parenthese, brackets, quotes, XML tags and more
 Bundle 'tpope/vim-surround'
 """Mapping simply short normal mode aliases
@@ -224,6 +225,7 @@ nmap <leader>g :LAck <cword><CR>
 nmap <leader>bh :EasyBufferHorizontal<CR>
 nmap <leader>bv :EasyBufferVertical<CR>
 nmap <leader>b :EasyBuffer<CR>
+nmap <leader>m :MerginalToogle<CR>
 
 nnoremap <silent> <F4> :lclose<CR>
 
