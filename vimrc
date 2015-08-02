@@ -178,6 +178,7 @@ highlight lCursor guifg=NONE guibg=Cyan
 
 "Markdown fix
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
+au BufRead,BufNewFile *.{tex} set filetype=tex
 
 " au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
 
