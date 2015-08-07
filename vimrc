@@ -180,6 +180,9 @@ highlight lCursor guifg=NONE guibg=Cyan
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
 au BufRead,BufNewFile *.{tex} set filetype=tex
 
+au BufRead,BufNewFile *.{appup,app} set filetype=erlang
+au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
+
 " au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
 
 "Folds
@@ -204,6 +207,9 @@ let g:ackhighlight = 1
 let g:snippets_dir = '~/.vim/snippets/'
 let g:snips_autor = 'andrey.teplyashin'
 let g:my_email_addr = 'platinumthinker@gmail.com'
+
+let g:ref_erlang_man_dir = "/usr/local/lib/erlang/man/"
+let g:ref_erlang_cmd = "/usr/local/lib/erlang/bin/erl"
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -228,6 +234,7 @@ nmap <leader>bh :EasyBufferHorizontal<CR>
 nmap <leader>bv :EasyBufferVertical<CR>
 nmap <leader>b :EasyBuffer<CR>
 nmap <leader>m :MerginalToogle<CR>
+nmap <leader>t :ErlangTags<CR>
 
 nnoremap <silent> <F4> :lclose<CR>
 
