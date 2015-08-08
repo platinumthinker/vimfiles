@@ -19,6 +19,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 """Repeat for surround, speeddating, abolish, unimpaired, commentary
 Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-vinegar'
 
 """"""Vim-scripts repos
 """LaTeX
@@ -65,7 +66,7 @@ Bundle 'vim-erlang/vim-erlang-compiler'
 Bundle 'vim-erlang/vim-erlang-omnicomplete'
 Bundle 'vim-erlang/vim-erlang-tags'
 """For rebar
-Bundle 'fishcakez/vim_rebar'
+Bundle 'fishcakez/vim-rebar'
 Bundle 'tpope/vim-dispatch'
 """Erlang motions
 Bundle 'edkolev/erlang-motions.vim'
