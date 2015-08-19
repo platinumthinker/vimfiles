@@ -167,6 +167,8 @@ let g:netrw_preview = 1
 " file with :vsplit to the right of the browser.
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
+" Recursed delete directory in netrw
+let g:netrw_localrmdir='rm -r'
 
 ""Spelli cheker
 setlocal spell spelllang=en_us,ru_yo
