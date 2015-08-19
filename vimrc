@@ -169,6 +169,12 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 " Recursed delete directory in netrw
 let g:netrw_localrmdir='rm -r'
+" absolute width of netrw window
+let g:netrw_winsize = -23
+" do not display info on the top of window
+let g:netrw_banner = 0
+" tree-view
+let g:netrw_liststyle = 3
 
 ""Spelli cheker
 setlocal spell spelllang=en_us,ru_yo
@@ -262,6 +268,8 @@ nnoremap <leader>u :UndotreeToggle<CR>
 
 vmap <Enter> <Plug>(EasyAlign)
 
+inoremap \fn <C-R>=expand("%:t:r")<CR>
+
 " Toggle netrw like NERDTree
 function! ToggleVExplorer()
   if exists("t:expl_buf_num")
@@ -270,7 +278,6 @@ function! ToggleVExplorer()
           let cur_win_nr = winnr()
           exec expl_win_num . 'wincmd w'
           close
-          exec cur_win_nr . 'wincmd w'
           unlet t:expl_buf_num
       else
           unlet t:expl_buf_num
@@ -281,8 +288,7 @@ function! ToggleVExplorer()
       let t:expl_buf_num = bufnr("%")
   endif
 endfunction
-map <silent> <leader>e :call ToggleVExplorer()<CR>
-inoremap \fn <C-R>=expand("%:t:r")<CR>
+map <silent> - :call ToggleVExplorer()<CR>
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
