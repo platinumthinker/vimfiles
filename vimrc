@@ -219,7 +219,7 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-autocmd FileType erlang :ErlangTags
+" autocmd FileType erlang :ErlangTags
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 
