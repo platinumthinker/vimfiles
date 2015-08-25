@@ -127,7 +127,7 @@ set pumheight=15
 
 set wildmode=list:longest,full
 set wildmenu 
-set wildignore+=.git,.svn,_build,release
+set wildignore+=.git,.svn,_build,release,.eunit
 
 let g:erlang_folding=1
 "let g:erlangRefactoring=1
@@ -139,7 +139,6 @@ let g:erlangFoldSplitFunction=1
 let g:erlangManPath="/home/thinker/erlware/man"
 let g:erlangHighlightErrors=0
 
-set wildignore+=.git,.svn,release
 
 if version >= 700
     set history=256
@@ -384,7 +383,7 @@ let g:ctrlp_max_depth = 8
 let g:ctrlp_lazy_update = 1
 let g:ctrlp_working_path_mode=0
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|_build|release)$',
+    \ 'dir':  '\v[\/]\.(git|hg|svn|_build|release|eunit)$',
     \ 'file': '\v\.(beam|exe|so|dll|dump|core)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
     \ }
