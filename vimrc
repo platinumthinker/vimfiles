@@ -218,7 +218,7 @@ let g:markdown_fold_style = 'nested'
 
 let g:tagbar_autofocus = 1
 
-let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "release"'
+let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "release" --ignore "TAGS" --ignore "tags"'
 let g:ackhighlight = 1
 let g:snippets_dir = '~/.vim/snippets/'
 let g:snips_autor = 'andrey.teplyashin'
