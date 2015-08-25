@@ -185,14 +185,22 @@ set iminsert=0
 set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan
 
-"Markdown fix
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-au BufRead,BufNewFile *.{tex} set filetype=tex
 
-au BufRead,BufNewFile *.{appup,app} set filetype=erlang
-au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
+if has("autocmd")
+    "Markdown fix
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
+    au BufRead,BufNewFile *.{tex} set filetype=tex
 
-" au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
+    au BufRead,BufNewFile *.{appup,app} set filetype=erlang
+    au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
+
+    " au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
+
+
+    " Open file in last place
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g'\"" | endif
+endif
 
 "Folds
 set foldmethod=syntax
