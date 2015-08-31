@@ -347,6 +347,7 @@ let g:syntastic_mode_map = { "mode": "active",
             \ "passive_filetypes": ["erlang"] }
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+let g:syntastic_c_compiler_options = ' -std=c11 -I /usr/src/linux-headers-4.0.0-2-common/include/ '
 
 "let g:pymode_rope_complete_on_dot = 1
 "let g:pymode_lint_write = 1
