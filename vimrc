@@ -29,6 +29,8 @@ Bundle 'LaTeX-Box'
 Bundle 'ctags.vim'
 """Ascii art
 Bundle 'DrawIt'
+"""Bats syntax highlight
+Bundle 'bats.vim'
 
 """"""Other repos
 """Draw undo tree
@@ -70,8 +72,11 @@ Bundle 'fishcakez/vim-rebar'
 Bundle 'tpope/vim-dispatch'
 """Erlang motions
 Bundle 'edkolev/erlang-motions.vim'
-"""Silverseacher-ag supports
-Bundle 'ervandew/ag'
+
+"""" For readmine
+Bundle 'toritori0318/vim-redmine'
+Bundle 'mattn/webapi-vim'
+>>>>>>> 7813af2... Add filetype in lightline and add bats plugins
 "==================================VIM CONFIG==================================
 set shell=/bin/zsh
 filetype plugin indent on
@@ -199,6 +204,10 @@ if has("autocmd")
     " Open file in last place
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
                 \| exe "normal! g'\"" | endif
+
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
+    " au BufRead,BufNewFile *.{sh,bash} set iskeyword+=$
+    au BufRead,BufNewFile *.{bats} set filetype=sh
 endif
 
 "Folds
@@ -224,8 +233,8 @@ let g:snippets_dir = '~/.vim/snippets/'
 let g:snips_autor = 'andrey.teplyashin'
 let g:my_email_addr = 'platinumthinker@gmail.com'
 
-let g:ref_erlang_man_dir = "/usr/local/lib/erlang/man/"
-let g:ref_erlang_cmd = "/usr/local/lib/erlang/bin/erl"
+let g:ref_erlang_man_dir = "/usr/lib/erlang/man/"
+let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -235,6 +244,17 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 " autocmd FileType erlang :ErlangTags
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), l:modeline)
+endfunction
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+
 "================================KEY BINDINGS==================================
 inoremap jj <ESC>
 
@@ -295,7 +315,10 @@ function! ToggleVExplorer()
       let t:expl_buf_num = bufnr("%")
   endif
 endfunction
+
 map <silent> - :call ToggleVExplorer()<CR>
+
+command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
@@ -368,15 +391,6 @@ if empty($VIM_LIGHT_COLOR)
 else
     colorscheme lucius
 endif
-set background=dark
-let g:solarized_visibility = "normal"
-let g:solarized_contrast   = "normal"
-let g:solarized_termcolors = 16
-let g:solarized_underline = 1
-let g:solarized_hitrail    = 1
-let g:solarized_termtrans  = 0
-let g:solarized_degrade    = 0
-colorscheme solarized
 "====================================CTRL_P====================================
 let g:ctrlp_max_files = 10000
 let g:ctrlp_max_depth = 8
