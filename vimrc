@@ -320,7 +320,7 @@ endfunction
 
 map <silent> - :call ToggleVExplorer()<CR>
 
-command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 "===============================GOOGLE CALENDAR================================
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
