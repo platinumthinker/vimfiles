@@ -67,6 +67,7 @@ Bundle 'vim-erlang/vim-erlang-runtime'
 Bundle 'vim-erlang/vim-erlang-compiler'
 Bundle 'vim-erlang/vim-erlang-omnicomplete'
 Bundle 'vim-erlang/vim-erlang-tags'
+Bundle 'akalyaev/vim-erlang-spec'
 """For rebar
 Bundle 'fishcakez/vim-rebar'
 Bundle 'tpope/vim-dispatch'
@@ -292,6 +293,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>s :mksession<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <leader>sp :ErlangSpec<CR>
 
 vmap <Enter> <Plug>(EasyAlign)
 
