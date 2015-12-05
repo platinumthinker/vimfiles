@@ -231,7 +231,7 @@ let g:tagbar_autofocus = 1
 let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "release" --ignore "TAGS" --ignore "tags"'
 let g:ackhighlight = 1
 let g:snippets_dir = '~/.vim/snippets/'
-let g:snips_autor = 'andrey.teplyashin'
+let g:snips_author = 'platinumthinker'
 let g:my_email_addr = 'platinumthinker@gmail.com'
 
 let g:ref_erlang_man_dir = "/usr/lib/erlang/man/"

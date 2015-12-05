@@ -1,8 +1,18 @@
 # module and export all
 snippet mod
-	-module(${1:`vim_snippets#Filename('', 'my')`}).
+	%%% @author `g:snips_author` <`g:my_email_addr`>
+	%%% @doc
+	%%% ${1}
+	%%% @end
 
-	-export([]).
+	-module(`Filename()`).
+
+	-export([
+		${2:func}/${3:0}
+	]).
+
+	$2(${4:_Args}) ->
+		${5:ok.}
 
 # define directive
 snippet def
@@ -64,16 +74,16 @@ snippet %p
 	%% @private
 #header
 snippet head normal header
-%%% @author `g:snips_author` `g:my_email_addr`
-%%% @copyright (C) © `strftime("%Y")`, `g:snips_author`. All Rights Reserved.
-%%% @doc
-%%% ${1}
-%%% @end
--module(`Filename()`).
-${2}
+	%%% @author `g:snips_author` `g:my_email_addr`
+	%%% @copyright (C) © `strftime("%Y")`, `g:snips_author`. All Rights Reserved.
+	%%% @doc
+	%%% ${1}
+	%%% @end
+	-module(`Filename()`).
+	${2}
 # OTP application
 snippet application
-	-module(${1:`vim_snippets#Filename('', 'my')`}).
+	-module(`Filename()`).
 
 	-behaviour(application).
 
@@ -91,7 +101,7 @@ snippet application
 	    ok.
 # OTP supervisor
 snippet supervisor
-	-module(${1:`vim_snippets#Filename('', 'my')`}).
+	-module(`Filename(`}).
 
 	-behaviour(supervisor).
 
@@ -114,7 +124,7 @@ snippet supervisor
 	    {ok, {RestartStrategy, Children}}.
 # OTP gen_server
 snippet gen_server
-	-module(${0:`vim_snippets#Filename('', 'my')`}).
+	-module(`Filename()`).
 
 	-behaviour(gen_server).
 
@@ -170,7 +180,7 @@ snippet gen_server
 	%%%===================================================================
 # OTP gen_fsm
 snippet gen_fsm
-	-module(${0:`vim_snippets#Filename('', 'my')`}).
+	-module(`Filename()`}).
 
 	-behaviour(gen_fsm).
 
@@ -348,7 +358,7 @@ snippet gen_fsm
 	%%%===================================================================
 # OTP gen_event
 snippet gen_event
-	-module(${0:`vim_snippets#Filename('', 'my')`}).
+	-module(`Filename()`}).
 
 	-behaviour(gen_event).
 
@@ -484,24 +494,24 @@ snippet gen_event
 	%%%===================================================================
 # common_test test_SUITE
 snippet testsuite
-	-module(${0:`vim_snippets#Filename('', 'my')`}).
+	-module(`Filename()`).
 
-	-include_lib("common_test/include/ct.hrl").
-	
+	-include_lib("common_test/include/ct.hrl
+
 	%% Test server callbacks
 	-export([suite/0, all/0, groups/0,
 		 init_per_suite/1, end_per_suite/1,
 		 init_per_group/2, end_per_group/2,
 		 init_per_testcase/2, end_per_testcase/2]).
-	
+
 	%% Test cases
 	-export([
 		]).
-	
+
 	%%--------------------------------------------------------------------
 	%% COMMON TEST CALLBACK FUNCTIONS
 	%%--------------------------------------------------------------------
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: suite() -> Info
 	%%
@@ -516,7 +526,7 @@ snippet testsuite
 	%%--------------------------------------------------------------------
 	suite() ->
 	    [{timetrap,{minutes,10}}].
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: init_per_suite(Config0) ->
 	%%               Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
@@ -533,7 +543,7 @@ snippet testsuite
 	%%--------------------------------------------------------------------
 	init_per_suite(Config) ->
 	    Config.
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: end_per_suite(Config0) -> void() | {save_config,Config1}
 	%%
@@ -544,7 +554,7 @@ snippet testsuite
 	%%--------------------------------------------------------------------
 	end_per_suite(_Config) ->
 	    ok.
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: init_per_group(GroupName, Config0) ->
 	%%               Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
@@ -560,7 +570,7 @@ snippet testsuite
 	%%--------------------------------------------------------------------
 	init_per_group(_GroupName, Config) ->
 	    Config.
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: end_per_group(GroupName, Config0) ->
 	%%               void() | {save_config,Config1}
@@ -574,7 +584,7 @@ snippet testsuite
 	%%--------------------------------------------------------------------
 	end_per_group(_GroupName, _Config) ->
 	    ok.
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: init_per_testcase(TestCase, Config0) ->
 	%%               Config1 | {skip,Reason} | {skip_and_save,Reason,Config1}
@@ -593,7 +603,7 @@ snippet testsuite
 	%%--------------------------------------------------------------------
 	init_per_testcase(_TestCase, Config) ->
 	    Config.
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: end_per_testcase(TestCase, Config0) ->
 	%%               void() | {save_config,Config1} | {fail,Reason}
@@ -609,7 +619,7 @@ snippet testsuite
 	%%--------------------------------------------------------------------
 	end_per_testcase(_TestCase, _Config) ->
 	    ok.
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: groups() -> [Group]
 	%%
@@ -633,7 +643,7 @@ snippet testsuite
 	%%--------------------------------------------------------------------
 	groups() ->
 	    [].
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: all() -> GroupsAndTestCases | {skip,Reason}
 	%%
@@ -648,14 +658,14 @@ snippet testsuite
 	%% Description: Returns the list of groups and test cases that
 	%%              are to be executed.
 	%%--------------------------------------------------------------------
-	all() -> 
+	all() ->
 	    [].
-	
-	
+
+
 	%%--------------------------------------------------------------------
 	%% TEST CASES
 	%%--------------------------------------------------------------------
-	
+
 	%%--------------------------------------------------------------------
 	%% Function: TestCase(Config0) ->
 	%%               ok | exit() | {skip,Reason} | {comment,Comment} |
@@ -675,20 +685,20 @@ snippet testsuite
 
 # file template for .app file
 snippet .app
-{application, ${1:Application},
-[
-	{description, "${2:Description}"},
-	{id, "${3:Id}"},
-	{vsn, "${4:Vsn}"},
-	{modules, [${5:Modules}]},
-	{registered, [${6:Names}]},
-	{applications, [
-		kernel,
-		stdlib,
-		${8:Apps}
-		]},
-	{env, [{${9:par}, ${10:val}}]},
-	{mod, {$1_app, [${11:args}]}},
-	{start_phases, [{${11:Phase}, ${12:PhaseArgs}}]}
-]}.
+	{application, `Filename()`,
+	[
+		{description, "${2:Description}"},
+		{id, "${3:Id}"},
+		{vsn, "${4:Vsn}"},
+		{modules, [${5:Modules}]},
+		{registered, [${6:Names}]},
+		{applications, [
+			kernel,
+			stdlib,
+			${8:Apps}
+			]},
+		{env, [{${9:par}, ${10:val}}]},
+		{mod, {`Filename`_app, [${11:args}]}},
+		{start_phases, [{${11:Phase}, ${12:PhaseArgs}}]}
+	]}.
 %% vim: set et ts=2 sw=2
