@@ -41,6 +41,8 @@ Bundle 'troydm/easybuffer.vim'
 Bundle 'scrooloose/syntastic'
 """Status bar
 Bundle 'itchyny/lightline.vim'
+Plugin 'Wildog/airline-weather.vim'
+
 """Snippets engine
 Bundle 'msanders/snipmate.vim'
 """Snippets repo
@@ -77,7 +79,9 @@ Bundle 'edkolev/erlang-motions.vim'
 """" For readmine
 Bundle 'toritori0318/vim-redmine'
 Bundle 'mattn/webapi-vim'
->>>>>>> 7813af2... Add filetype in lightline and add bats plugins
+
+""" Start page with sessions, last files and others
+Bundle 'mhinz/vim-startify'
 "==================================VIM CONFIG==================================
 set shell=/bin/zsh
 filetype plugin indent on
@@ -181,6 +185,25 @@ let g:netrw_banner = 0
 " tree-view
 let g:netrw_liststyle = 3
 
+let g:weather#area = 'novosibirs,ru'
+let g:weather#unit = 'metric'
+let g:weather#appid = '8f424690e52df0c37cc628114d66b688'
+let g:weather#format = '%s %.0f'
+let g:weather#status_map = {
+            \ "01": "☀",
+            \ "02": "☁",
+            \ "03": "☁",
+            \ "04": "☁",
+            \ "09": "☂",
+            \ "10": "☔",
+            \ "11": "☇",
+            \ "13": "❄",
+            \ "50": "≡",
+            \}
+
+let g:weather#cache_file = '~/.cache/.weather'
+let g:weather#cache_ttl = '3600'
+
 ""Spelli cheker
 setlocal spell spelllang=en_us,ru_yo
 
@@ -236,6 +259,7 @@ let g:my_email_addr = 'platinumthinker@gmail.com'
 
 let g:ref_erlang_man_dir = "/usr/lib/erlang/man/"
 let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
+let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -262,10 +286,6 @@ inoremap jj <ESC>
 nnoremap <tab> <C-w><C-w>  
 map <silent><BS> :NERDTreeToggle<CR>
 
-""Toggle gundo
-nnoremap <silent><leader>u :GundoToggle<CR>
-inoremap <silent><leader>u :GundoToggle<CR>
-
 nnoremap <tab> <C-w><C-w>  
 nmap <leader>g :LAck <cword><CR>
 nmap <leader>bh :EasyBufferHorizontal<CR>
@@ -277,7 +297,6 @@ nmap <leader>t :ErlangTags<CR>
 nnoremap <silent> <F4> :lclose<CR>
 
 nnoremap <silent><F8> :TagbarToggle<CR>
-inoremap <silent><F8> :TagbarToggle<CR>
 
 call togglebg#map("<F5>")
 
@@ -292,7 +311,6 @@ nnoremap <leader>u :UndotreeToggle<CR>
 ""Save session (load: vim -S)
 nnoremap <leader>s :mksession<CR>
 
-nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>sp :ErlangSpec<CR>
 
 vmap <Enter> <Plug>(EasyAlign)
@@ -341,6 +359,7 @@ let g:syntastic_check_on_wq=0
 let g:syntastic_auto_loc_list=1
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_filetype_map = { 'latex': 'tex',
+            \ 'xsd': 'xml',
             \ 'gentoo-metadata': 'xml' }
 let g:syntastic_mode_map = { "mode": "active",
             \ "active_filetypes":  ["c", "cpp"],
