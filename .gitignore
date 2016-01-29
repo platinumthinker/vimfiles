@@ -2,3 +2,4 @@ bundle/*
 spell/*
 undodir/*
 .netrwhist
+session/*
