@@ -32,6 +32,10 @@ snippet mod
 # define directive
 snippet def
 	-define(${1:macro}, ${2:body}).
+# define tag
+snippet screen
+	-include_lib("chronica/include/chronica.hrl").
+	-chronica_tag(screen).
 # export directive
 snippet exp
 	-export([${1:function}/${0:arity}]).
@@ -40,7 +44,8 @@ snippet inc
 	-include("${1:file}").
 # include_lib directive
 snippet incl
-	-include_lib("${1:lib}/include/${1}.hrl").${2}
+	-include_lib("${1:lib}/include/$1.hrl").
+	${2}
 # behavior directive
 snippet beh
 	-behaviour(${1:behaviour}).
