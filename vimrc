@@ -7,6 +7,10 @@ call vundle#rc()
 """Vundle selfupdate
 Bundle 'gmarik/vundle'
 
+
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+
 """"""Tpope repos
 """Comment supports
 Bundle 'tpope/vim-commentary'
