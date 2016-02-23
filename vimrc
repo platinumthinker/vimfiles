@@ -86,6 +86,10 @@ Bundle 'mattn/webapi-vim'
 
 """ Start page with sessions, last files and others
 Bundle 'mhinz/vim-startify'
+
+""" Rfc
+Bundle 'mhinz/vim-rfc'
+Bundle 'rfc-syntax', { 'for': 'rfc' }
 "==================================VIM CONFIG==================================
 set shell=/bin/zsh
 filetype plugin indent on
