@@ -270,6 +270,8 @@ let g:my_email_addr = 'platinumthinker@gmail.com'
 let g:ref_erlang_man_dir = "/usr/lib/erlang/man/"
 let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
+"" Don't change dir for openning new file from start screen
+let g:startify_change_to_dir = 0
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
