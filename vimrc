@@ -158,6 +158,8 @@ let g:erlangManPath="/home/thinker/erlware/man"
 let g:erlangHighlightErrors=0
 
 
+let g:erlang_tags_ignore=['.git', '.svn', '.eunit', 'release']
+
 if version >= 700
     set history=256
     set undolevels=128
