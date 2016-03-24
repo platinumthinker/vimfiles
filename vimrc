@@ -80,9 +80,9 @@ Bundle 'tpope/vim-dispatch'
 """Erlang motions
 Bundle 'edkolev/erlang-motions.vim'
 
-"""" For readmine
-Bundle 'toritori0318/vim-redmine'
-Bundle 'mattn/webapi-vim'
+""""""Fot html/css
+Bundle 'mattn/emmet-vim'
+
 
 """ Start page with sessions, last files and others
 Bundle 'mhinz/vim-startify'
@@ -176,6 +176,8 @@ set backupskip=/tmp/*
 set directory=/var/tmp,/tmp
 set writebackup
 
+let g:user_emmet_mode='a'
+
 ""Set varible from my envirmoment
 " let &path = &path . "," . getcwd()
 " let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
@@ -223,6 +225,7 @@ set iminsert=0
 set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan
 
+let g:user_emmet_install_global = 0
 
 if has("autocmd")
     "Markdown fix
@@ -242,6 +245,10 @@ if has("autocmd")
     au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
     " au BufRead,BufNewFile *.{sh,bash} set iskeyword+=$
     au BufRead,BufNewFile *.{bats} set filetype=sh
+
+    au FileType html,css EmmetInstall
+
+    autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt,*.ods silent %!pandoc "%" -tplain -o /dev/stdout
 endif
 
 "Folds
