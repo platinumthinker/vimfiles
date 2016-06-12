@@ -91,8 +91,11 @@ Bundle 'mhinz/vim-startify'
 Bundle 'mhinz/vim-rfc'
 Bundle 'rfc-syntax', { 'for': 'rfc' }
 "==================================VIM CONFIG==================================
-set shell=/bin/zsh
-filetype plugin indent on
+if filereadable("/bin/zsh")
+    set shell=/bin/zsh
+elseif filereadable("/bin/bash")
+    set shell=/bin/bash
+endif
 
 set helplang=en
 set title
@@ -337,7 +340,7 @@ nnoremap <silent> <F4> :lclose<CR>
 
 nnoremap <silent><F8> :TagbarToggle<CR>
 
-call togglebg#map("<F5>")
+"" call togglebg#map("<F5>")
 
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight
 
@@ -431,27 +434,30 @@ let g:pymode_lint_write = 1
 " set lazyredraw
 set synmaxcol=128
 syntax sync minlines=256
-"==============================SOLORIZED THEME UP==============================
+"================================COLOR THEME UP================================
 syntax enable
-if empty($VIM_LIGHT_COLOR)
-    set background=dark
-    if !has('gui_running')
-        set t_Co=256
-        let g:Powerline_symbols = 'fancy'
-        let g:solarized_termcolors = 16
-        let g:solarized_termtrans  = 0
-        let g:solarized_degrade    = 0
+try
+    if empty($VIM_LIGHT_COLOR)
+        set background=dark
+        if !has('gui_running')
+            set t_Co=256
+            let g:Powerline_symbols = 'fancy'
+            let g:solarized_termcolors = 16
+            let g:solarized_termtrans  = 0
+            let g:solarized_degrade    = 0
+        else
+            let g:solarized_termcolors = 256
+            let g:solarized_contrast = 'hight'
+            let g:solarized_visibility = 'high'
+        endif
+        let g:solarized_underline = 1
+        let g:solarized_hitrail    = 1
+        colorscheme solarized
     else
-        let g:solarized_termcolors = 256
-        let g:solarized_contrast = 'hight'
-        let g:solarized_visibility = 'high'
+        colorscheme lucius
     endif
-    let g:solarized_underline = 1
-    let g:solarized_hitrail    = 1
-    colorscheme solarized
-else
-    colorscheme lucius
-endif
+catch /^Vim\%((\a\+)\)\=:E185/
+endtry
 "====================================CTRL_P====================================
 let g:ctrlp_max_files = 10000
 let g:ctrlp_max_depth = 8
