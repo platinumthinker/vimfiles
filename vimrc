@@ -7,16 +7,11 @@ call vundle#rc()
 """Vundle selfupdate
 Bundle 'gmarik/vundle'
 
-
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-
 """"""Tpope repos
 """Comment supports
 Bundle 'tpope/vim-commentary'
 """Git supports
 Bundle 'tpope/vim-fugitive'
-Bundle 'idanarye/vim-merginal'
 """Surround parenthese, brackets, quotes, XML tags and more
 Bundle 'tpope/vim-surround'
 """Mapping simply short normal mode aliases
@@ -26,15 +21,8 @@ Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-vinegar'
 
 """"""Vim-scripts repos
-"""LaTeX
-Bundle 'LaTeX-Suite-aka-Vim-LaTeX'
-Bundle 'LaTeX-Box'
 """Ctags supports
 Bundle 'ctags.vim'
-"""Ascii art
-Bundle 'DrawIt'
-"""Bats syntax highlight
-Bundle 'bats.vim'
 
 """"""Other repos
 """Draw undo tree
@@ -45,17 +33,14 @@ Bundle 'troydm/easybuffer.vim'
 Bundle 'scrooloose/syntastic'
 """Status bar
 Bundle 'itchyny/lightline.vim'
-Plugin 'Wildog/airline-weather.vim'
+" Plugin 'Wildog/airline-weather.vim'
 
 """Snippets engine
 Bundle 'msanders/snipmate.vim'
 """Snippets repo
 Bundle 'honza/vim-snippets'
-"""Google calendar
-Bundle 'itchyny/calendar.vim'
 """Color themes
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'jonathanfilip/vim-lucius'
 """Ack supports
 Bundle 'mileszs/ack.vim'
 """Bar of function in open file (from ctags)
@@ -77,12 +62,12 @@ Bundle 'akalyaev/vim-erlang-spec'
 """For rebar
 Bundle 'fishcakez/vim-rebar'
 Bundle 'tpope/vim-dispatch'
+Bundle 'rramsden/vim-eunit'
 """Erlang motions
 Bundle 'edkolev/erlang-motions.vim'
 
 """"""Fot html/css
 Bundle 'mattn/emmet-vim'
-
 
 """ Start page with sessions, last files and others
 Bundle 'mhinz/vim-startify'
@@ -90,6 +75,11 @@ Bundle 'mhinz/vim-startify'
 """ Rfc
 Bundle 'mhinz/vim-rfc'
 Bundle 'rfc-syntax', { 'for': 'rfc' }
+
+""" Syntax for DTL
+Bundle 'django.vim'
+
+Bundle 'mattn/gist-vim'
 "==================================VIM CONFIG==================================
 if filereadable("/bin/zsh")
     set shell=/bin/zsh
@@ -200,25 +190,6 @@ let g:netrw_banner = 0
 " tree-view
 let g:netrw_liststyle = 3
 
-let g:weather#area = 'novosibirs,ru'
-let g:weather#unit = 'metric'
-let g:weather#appid = '8f424690e52df0c37cc628114d66b688'
-let g:weather#format = '%s %.0f'
-let g:weather#status_map = {
-            \ "01": "☀",
-            \ "02": "☁",
-            \ "03": "☁",
-            \ "04": "☁",
-            \ "09": "☂",
-            \ "10": "☔",
-            \ "11": "☇",
-            \ "13": "❄",
-            \ "50": "≡",
-            \}
-
-let g:weather#cache_file = '~/.cache/.weather'
-let g:weather#cache_ttl = '3600'
-
 ""Spelli cheker
 setlocal spell spelllang=en_us,ru_yo
 
@@ -229,30 +200,6 @@ set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan
 
 let g:user_emmet_install_global = 0
-
-if has("autocmd")
-    "Markdown fix
-    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-    au BufRead,BufNewFile *.{tex} set filetype=tex
-
-    au BufRead,BufNewFile *.{appup,app} set filetype=erlang
-    au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
-
-    " au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
-
-
-    " Open file in last place
-    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-                \| exe "normal! g'\"" | endif
-
-    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-    " au BufRead,BufNewFile *.{sh,bash} set iskeyword+=$
-    au BufRead,BufNewFile *.{bats} set filetype=sh
-
-    au FileType html,css EmmetInstall
-
-    autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt,*.ods silent %!pandoc "%" -tplain -o /dev/stdout
-endif
 
 "Folds
 set foldmethod=syntax
@@ -279,9 +226,9 @@ let g:my_email_addr = 'platinumthinker@gmail.com'
 
 let g:ref_erlang_man_dir = "/usr/lib/erlang/man/"
 let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
-let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
+" let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 "" Don't change dir for openning new file from start screen
-let g:startify_change_to_dir = 0
+" let g:startify_change_to_dir = 0
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -290,10 +237,13 @@ fun! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfun
 autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+
+" autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 " autocmd FileType erlang :ErlangTags
 " Append modeline after last line in buffer.
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
 " files.
+
 function! AppendModeline()
   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
         \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
@@ -323,41 +273,28 @@ command! -range -nargs=1 Entities call HtmlEntities(<line1>, <line2>, <args>)
 noremap <silent> \h :Entities 0<CR>
 noremap <silent> \H :Entities 1<CR>
 "================================KEY BINDINGS==================================
+inoremap \fn <C-R>=expand("%:t:r")<CR>
 inoremap jj <ESC>
-
-nnoremap <tab> <C-w><C-w>  
 map <silent><BS> :NERDTreeToggle<CR>
-
-nnoremap <tab> <C-w><C-w>  
-nmap <leader>g :LAck <cword><CR>
+nmap <leader>b :EasyBuffer<CR>
 nmap <leader>bh :EasyBufferHorizontal<CR>
 nmap <leader>bv :EasyBufferVertical<CR>
-nmap <leader>b :EasyBuffer<CR>
+nmap <leader>g :LAck <cword><CR>
 nmap <leader>m :MerginalToogle<CR>
 nmap <leader>t :ErlangTags<CR>
-
-nnoremap <silent> <F4> :lclose<CR>
-
-nnoremap <silent><F8> :TagbarToggle<CR>
-
-"" call togglebg#map("<F5>")
-
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight
-
 ""Edit vimrc
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
-""Load vimrc
-nnoremap <leader>sv :source $MYVIMRC<CR>
-
-nnoremap <leader>u :UndotreeToggle<CR>
 ""Save session (load: vim -S)
 nnoremap <leader>s :mksession<CR>
-
 nnoremap <leader>sp :ErlangSpec<CR>
-
+""Load vimrc
+nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <silent> <F4> :lclose<CR>
+nnoremap <silent><F8> :TagbarToggle<CR>
+nnoremap <tab> <C-w><C-w>  
 vmap <Enter> <Plug>(EasyAlign)
-
-inoremap \fn <C-R>=expand("%:t:r")<CR>
 
 " Toggle netrw like NERDTree
 function! ToggleVExplorer()
@@ -381,20 +318,6 @@ endfunction
 map <silent> - :call ToggleVExplorer()<CR>
 
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
-"===============================GOOGLE CALENDAR================================
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-let g:calendar_first_day = "monday"
-let g:calendar_calendar= "russia"
-"====================================CTRL_P====================================
-let g:ctrlp_max_files = 10000
-let g:ctrlp_max_depth = 10
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-            \ 'file': '\v\.(so|pyc|pdf)$',
-            \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
-            \ }
-let g:calendar_frame = 'default'
 "==================================SYNTASTICS==================================
 let g:syntastic_check_on_openn=0
 let g:syntastic_check_on_wq=0
@@ -409,6 +332,8 @@ let g:syntastic_mode_map = { "mode": "active",
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 let g:syntastic_c_compiler_options = ' -std=c11 -I /usr/src/linux-headers-4.0.0-2-common/include/ '
+let g:syntastic_enable_r_lintr_checker = 1
+let g:syntastic_r_checkers = ['lintr']
 
 "let g:pymode_rope_complete_on_dot = 1
 "let g:pymode_lint_write = 1
@@ -431,31 +356,26 @@ augroup ps_nerdtree
 let g:pymode_rope_complete_on_dot = 1
 let g:pymode_lint_write = 1
 "===============================FIX SLOW SCROLL================================
-" set lazyredraw
 set synmaxcol=128
 syntax sync minlines=256
 "================================COLOR THEME UP================================
 syntax enable
 try
-    if empty($VIM_LIGHT_COLOR)
-        set background=dark
-        if !has('gui_running')
-            set t_Co=256
-            let g:Powerline_symbols = 'fancy'
-            let g:solarized_termcolors = 16
-            let g:solarized_termtrans  = 0
-            let g:solarized_degrade    = 0
-        else
-            let g:solarized_termcolors = 256
-            let g:solarized_contrast = 'hight'
-            let g:solarized_visibility = 'high'
-        endif
-        let g:solarized_underline = 1
-        let g:solarized_hitrail    = 1
-        colorscheme solarized
+    set background=dark
+    if !has('gui_running')
+        set t_Co=256
+        let g:Powerline_symbols = 'fancy'
+        let g:solarized_termcolors = 16
+        let g:solarized_termtrans  = 0
+        let g:solarized_degrade    = 0
     else
-        colorscheme lucius
+        let g:solarized_termcolors = 256
+        let g:solarized_contrast = 'hight'
+        let g:solarized_visibility = 'high'
     endif
+    let g:solarized_underline = 1
+    let g:solarized_hitrail    = 1
+    colorscheme solarized
 catch /^Vim\%((\a\+)\)\=:E185/
 endtry
 "====================================CTRL_P====================================
@@ -566,7 +486,7 @@ function! MyMode()
 endfunction
 
 function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP'
+  if expand('%:t') =~ '^ControlP$'
     call lightline#link('iR'[g:lightline.ctrlp_regex])
     return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
           \ , g:lightline.ctrlp_next], 0)
