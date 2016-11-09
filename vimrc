@@ -12,6 +12,7 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-commentary'
 """Git supports
 Bundle 'tpope/vim-fugitive'
+" Bundle 'idanarye/vim-merginal'
 """Surround parenthese, brackets, quotes, XML tags and more
 Bundle 'tpope/vim-surround'
 """Mapping simply short normal mode aliases
@@ -52,6 +53,8 @@ Bundle 'junegunn/vim-easy-align'
 """Doc
 Bundle 'thinca/vim-ref'
 
+Bundle 'gtags.vim'
+
 """"""For erlang
 """ Vim erlang collects
 Bundle 'vim-erlang/vim-erlang-runtime'
@@ -78,7 +81,6 @@ Bundle 'rfc-syntax', { 'for': 'rfc' }
 
 """ Syntax for DTL
 Bundle 'django.vim'
-
 Bundle 'mattn/gist-vim'
 "==================================VIM CONFIG==================================
 if filereadable("/bin/zsh")
@@ -201,6 +203,33 @@ highlight lCursor guifg=NONE guibg=Cyan
 
 let g:user_emmet_install_global = 0
 
+if has("autocmd")
+    "Markdown fix
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
+    au BufRead,BufNewFile *.{tex} set filetype=tex
+
+    au BufRead,BufNewFile *.{appup,app} set filetype=erlang
+    au BufRead,BufNewFile *.{appup.src,app.src} set filetype=erlang
+    au BufRead,BufNewFile *.{exs} set filetype=elixir
+    au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
+
+    " au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
+
+
+    " Open file in last place
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g'\"" | endif
+
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
+    au BufRead,BufNewFile *.{dtl,tmpl} set filetype=django
+    " au BufRead,BufNewFile *.{sh,bash} set iskeyword+=$
+    au BufRead,BufNewFile *.{bats} set filetype=sh
+
+    au FileType html,css EmmetInstall
+
+    autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt,*.ods silent %!pandoc "%" -tplain -o /dev/stdout
+endif
+
 "Folds
 set foldmethod=syntax
 
@@ -229,6 +258,8 @@ let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
 " let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 "" Don't change dir for openning new file from start screen
 " let g:startify_change_to_dir = 0
+
+setlocal omnifunc=syntaxcomplete#Complete
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -236,14 +267,13 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 " autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+"autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 " autocmd FileType erlang :ErlangTags
 " Append modeline after last line in buffer.
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
 " files.
-
 function! AppendModeline()
   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
         \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
@@ -296,6 +326,15 @@ nnoremap <silent><F8> :TagbarToggle<CR>
 nnoremap <tab> <C-w><C-w>  
 vmap <Enter> <Plug>(EasyAlign)
 
+inoremap \fn <C-R>=expand("%:t:r")<CR>
+
+"" Eunit
+map <Leader>e :call EunitCurrentFile()<CR>
+map <Leader>s :call EunitNearestTest()<CR>
+map <Leader>l :call EunitLastCommand()<CR>
+map <Leader>a :call EunitTestAll()<CR>
+map <Leader>v :call :Rebar compile skip_deps=true<CR>
+
 " Toggle netrw like NERDTree
 function! ToggleVExplorer()
   if exists("t:expl_buf_num")
@@ -318,6 +357,21 @@ endfunction
 map <silent> - :call ToggleVExplorer()<CR>
 
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+map @@x !%xmllint --format --recover -^M
+"================================== YCM ======================================
+let g:ycm_filetype_blacklist = {
+            \ 'erlang' : 1,
+            \ 'tagbar' : 1,
+            \ 'qf' : 1,
+            \ 'notes' : 1,
+            \ 'markdown' : 1,
+            \ 'unite' : 1,
+            \ 'text' : 1,
+            \ 'vimwiki' : 1,
+            \ 'pandoc' : 1,
+            \ 'infolog' : 1,
+            \ 'mail' : 1
+            \}
 "==================================SYNTASTICS==================================
 let g:syntastic_check_on_openn=0
 let g:syntastic_check_on_wq=0
@@ -329,6 +383,7 @@ let g:syntastic_filetype_map = { 'latex': 'tex',
 let g:syntastic_mode_map = { "mode": "active",
             \ "active_filetypes":  ["c", "cpp"],
             \ "passive_filetypes": ["erlang"] }
+let g:syntastic_erlangconfig_checkers = ["erl_script_checker"]
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 let g:syntastic_c_compiler_options = ' -std=c11 -I /usr/src/linux-headers-4.0.0-2-common/include/ '
