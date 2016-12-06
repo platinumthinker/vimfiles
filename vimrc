@@ -7,6 +7,11 @@ call vundle#rc()
 """Vundle selfupdate
 Bundle 'gmarik/vundle'
 
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+
+Plugin 'Valloric/YouCompleteMe'
+
 """"""Tpope repos
 """Comment supports
 Bundle 'tpope/vim-commentary'
@@ -24,6 +29,8 @@ Bundle 'tpope/vim-vinegar'
 """"""Vim-scripts repos
 """Ctags supports
 Bundle 'ctags.vim'
+"""Ascii art
+Bundle 'DrawIt'
 
 """"""Other repos
 """Draw undo tree
@@ -34,7 +41,6 @@ Bundle 'troydm/easybuffer.vim'
 Bundle 'scrooloose/syntastic'
 """Status bar
 Bundle 'itchyny/lightline.vim'
-" Plugin 'Wildog/airline-weather.vim'
 
 """Snippets engine
 Bundle 'msanders/snipmate.vim'
@@ -42,6 +48,7 @@ Bundle 'msanders/snipmate.vim'
 Bundle 'honza/vim-snippets'
 """Color themes
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'jonathanfilip/vim-lucius'
 """Ack supports
 Bundle 'mileszs/ack.vim'
 """Bar of function in open file (from ctags)
@@ -55,6 +62,7 @@ Bundle 'thinca/vim-ref'
 
 Bundle 'gtags.vim'
 
+Bundle 'Valloric/YouCompleteMe'
 """"""For erlang
 """ Vim erlang collects
 Bundle 'vim-erlang/vim-erlang-runtime'
@@ -68,6 +76,8 @@ Bundle 'tpope/vim-dispatch'
 Bundle 'rramsden/vim-eunit'
 """Erlang motions
 Bundle 'edkolev/erlang-motions.vim'
+Bundle 'elixir-lang/vim-elixir'
+Bundle 'mattreduce/vim-mix'
 
 """"""Fot html/css
 Bundle 'mattn/emmet-vim'
@@ -81,6 +91,7 @@ Bundle 'rfc-syntax', { 'for': 'rfc' }
 
 """ Syntax for DTL
 Bundle 'django.vim'
+
 Bundle 'mattn/gist-vim'
 "==================================VIM CONFIG==================================
 if filereadable("/bin/zsh")
@@ -212,6 +223,7 @@ if has("autocmd")
     au BufRead,BufNewFile *.{appup.src,app.src} set filetype=erlang
     au BufRead,BufNewFile *.{exs} set filetype=elixir
     au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
+    au BufRead,BufNewFile *.{exs} set filetype=elixir
 
     " au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
 
@@ -281,6 +293,9 @@ function! AppendModeline()
   call append(line("$"), l:modeline)
 endfunction
 nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+"================================ Gist ========================================
+let g:gist_detect_filetype = 1
+let g:gist_show_privates = 1
 "========================= Encode\Decode HTML =================================
 function! HtmlEntities(line1, line2, action)
   let search = @/
@@ -373,6 +388,9 @@ let g:ycm_filetype_blacklist = {
             \ 'mail' : 1
             \}
 "==================================SYNTASTICS==================================
+let g:ycm_server_python_interpreter = '/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
 let g:syntastic_check_on_openn=0
 let g:syntastic_check_on_wq=0
 let g:syntastic_auto_loc_list=1
