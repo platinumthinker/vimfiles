@@ -62,7 +62,6 @@ Bundle 'thinca/vim-ref'
 
 Bundle 'gtags.vim'
 
-Bundle 'Valloric/YouCompleteMe'
 """"""For erlang
 """ Vim erlang collects
 Bundle 'vim-erlang/vim-erlang-runtime'
@@ -267,9 +266,9 @@ let g:my_email_addr = 'platinumthinker@gmail.com'
 
 let g:ref_erlang_man_dir = "/usr/lib/erlang/man/"
 let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
-" let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
+let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 "" Don't change dir for openning new file from start screen
-" let g:startify_change_to_dir = 0
+let g:startify_change_to_dir = 0
 
 setlocal omnifunc=syntaxcomplete#Complete
 "=============================DELETE TRAILING SPACES===========================
@@ -387,6 +386,12 @@ let g:ycm_filetype_blacklist = {
             \ 'infolog' : 1,
             \ 'mail' : 1
             \}
+"===============================GOOGLE CALENDAR================================
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+let g:calendar_first_day = "monday"
+let g:calendar_calendar= "russia"
+let g:calendar_frame = 'default'
 "==================================SYNTASTICS==================================
 let g:ycm_server_python_interpreter = '/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
