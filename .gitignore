@@ -3,3 +3,4 @@ spell/*
 undodir/*
 .netrwhist
 session/*
+.ycm_extra_conf.py
