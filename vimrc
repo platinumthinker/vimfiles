@@ -373,6 +373,8 @@ map <silent> - :call ToggleVExplorer()<CR>
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 map @@x !%xmllint --format --recover -^M
 "================================== YCM ======================================
+let g:ycm_key_list_select_completion = ['<S-TAB>']
+let g:ycm_use_ultisnips_completer = 0
 let g:ycm_filetype_blacklist = {
             \ 'erlang' : 1,
             \ 'tagbar' : 1,
