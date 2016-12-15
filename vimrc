@@ -1,82 +1,90 @@
-"====================================VUNDLE====================================
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-filetype plugin indent on
-"=================================VUNDLE REPO==================================
+augroup load_ycm
+  autocmd!
+  autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
+                                \ | autocmd! load_ycm
+augroup END
+
+call plug#begin('~/.vim/plugged')
 """Vundle selfupdate
-Bundle 'gmarik/vundle'
+Plug 'junegunn/vim-plug'
 
 """"""Tpope repos
 """Comment supports
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-dispatch'
+Plug 'tpope/vim-commentary', {'on': '<Plug>Commentary'}
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-dispatch'
 """Git supports
-Bundle 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 """Date inc/dec (Alt-a/Alt-x)
-Bundle 'tpope/vim-speeddating'
+Plug 'tpope/vim-speeddating'
 """Surround parenthese, brackets, quotes, XML tags and more
-Bundle 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 """Mapping simply short normal mode aliases
-Bundle 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired'
 """Repeat for surround, speeddating, abolish, unimpaired, commentary
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-vinegar'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-vinegar', { 'on': 'ToggleVExplorer' }
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 """"""Vim-scripts repos
 """Sniplets
-Bundle 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 """Fast toggle commets
 " Bundle 'The-NERD-Commenter'
 """Ctags supports
-Bundle 'ctags.vim'
+Plug 'ctags.vim'
 """Ascii art
-Bundle 'DrawIt'
+Plug 'DrawIt'
 
 """"""Other repos
-Bundle 'mattn/webapi-vim'
+Plug 'mattn/webapi-vim'
 
 """Draw undo tree
-Bundle 'mbbill/undotree'
+Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeShow'] }
 """Super syntax
-Bundle 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 """Status bar
-Bundle 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 """Color themes
-Bundle 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 """Ack supports
-Bundle 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
 """Autocomplite
-Bundle 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer', 'for': ['erlang', 'c', 'cpp'] }
 """Dublicate character (quotes, brackets, ets)
-Bundle 'Raimondi/delimitMate'
-Bundle 'thinca/vim-ref'
+" Plug 'Raimondi/delimitMate'
+
+Plug 'thinca/vim-ref'
+" Plug 'thinca/vim-ref', { 'on': 'ref#K' }
 """Seacher
-Bundle 'kien/ctrlp.vim'
-"""Erlang motions
-Bundle 'edkolev/erlang-motions.vim'
+Plug 'kien/ctrlp.vim', { 'on': 'CtrlP' }
 """Align
-Bundle 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', '<Plug>(EasyAlign)'] }
 """ Start page with sessions, last files and others
-Bundle 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'
+Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'EasyBufferVertical'] }
 
 """"""For erlang
 """ Vim erlang collects
-Bundle 'ten0s/syntaxerl'
+"""Erlang motions
+Plug 'edkolev/erlang-motions.vim', { 'for': 'erlang' }
+Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
 " Bundle 'vim-erlang/vim-erlang-runtime'
-Bundle 'vim-erlang/vim-erlang-compiler'
-Bundle 'vim-erlang/vim-erlang-omnicomplete'
-Bundle 'vim-erlang/vim-erlang-tags'
-Bundle 'akalyaev/vim-erlang-spec'
+Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
+Plug 'akalyaev/vim-erlang-spec', { 'for': 'erlang' }
 
 """"""Fot html/css
-Bundle 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 """ Syntax for DTL
-Bundle 'django.vim'
+Plug 'django.vim', { 'for': 'django' }
 
-Bundle 'mattn/gist-vim'
+Plug 'mattn/gist-vim', { 'for': 'Gist' }
+
+" Add plugins to &runtimepath
+call plug#end()
 
 "==================================VIM CONFIG==================================
 let $BASH_ENV = "~/.bash_profile"
@@ -188,22 +196,22 @@ highlight lCursor guifg=NONE guibg=Cyan
 
 let g:user_emmet_install_global = 0
 
-"Markdown fix
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-au BufRead,BufNewFile *.{dtl,tmpl} set filetype=django
 au FileType html,css,django EmmetInstall
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-" Open file in last place
-au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-            \| exe "normal! g'\"" | endif
+" DTL for erlydtl
+au BufRead,BufNewFile *.{dtl,tmpl} set filetype=django
 au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
 au BufRead,BufNewFile *.{appup,app} set filetype=erlang
 au BufRead,BufNewFile *.{appup.src,app.src} set filetype=erlang
+" Open file in last place
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+            \| exe "normal! g'\"" | endif
 au FileType erlang let g:ycm_cache_omnifunc = 0
 
 "Folds
 set foldmethod=syntax
 let g:markdown_fold_style = 'nested'
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+let g:markdown_syntax_conceal = 0
 
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
@@ -238,7 +246,7 @@ let g:ycm_always_populate_location_list = 1
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_use_ultisnips_completer = 1
 
-let g:snippets_dir = '~/.vim/snippets/'
+" let g:snippets_dir = '~/.vim/snippets/'
 let g:snips_author = 'platinumthinker'
 let g:my_email_addr = 'platinumthinker@gmail.com'
 

@@ -3,3 +3,4 @@ spell/*
 undodir/*
 .netrwhist
 Session.vim
+plugged/*
