@@ -10,7 +10,7 @@ Plug 'junegunn/vim-plug'
 
 """"""Tpope repos
 """Comment supports
-Plug 'tpope/vim-commentary', {'on': '<Plug>Commentary'}
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-dispatch'
 """Git supports
@@ -51,7 +51,8 @@ Plug 'altercation/vim-colors-solarized'
 """Ack supports
 Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
 """Autocomplite
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer', 'for': ['erlang', 'c', 'cpp'] }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer', 'for': ['erlang', 'c', 'cpp'] }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer --tern-completer' }
 """Dublicate character (quotes, brackets, ets)
 " Plug 'Raimondi/delimitMate'
 
@@ -205,7 +206,6 @@ au BufRead,BufNewFile *.{appup.src,app.src} set filetype=erlang
 " Open file in last place
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
             \| exe "normal! g'\"" | endif
-au FileType erlang let g:ycm_cache_omnifunc = 0
 
 "Folds
 set foldmethod=syntax
@@ -241,10 +241,24 @@ let g:netrw_liststyle = 3
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "release"'
 let g:ackhighlight = 1
 
+au FileType erlang let g:ycm_cache_omnifunc = 0
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_always_populate_location_list = 1
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_use_ultisnips_completer = 1
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':', '.', 're!#^\{'],
+  \ }
 
 " let g:snippets_dir = '~/.vim/snippets/'
 let g:snips_author = 'platinumthinker'
