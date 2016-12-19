@@ -52,14 +52,15 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
 """Autocomplite
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer', 'for': ['erlang', 'c', 'cpp'] }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --racer-completer --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer --racer-completer --tern-completer' }
 """Dublicate character (quotes, brackets, ets)
 " Plug 'Raimondi/delimitMate'
 
 Plug 'thinca/vim-ref'
 " Plug 'thinca/vim-ref', { 'on': 'ref#K' }
 """Seacher
-Plug 'kien/ctrlp.vim', { 'on': 'CtrlP' }
+Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim', { 'on': 'CtrlP' }
 """Align
 Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', '<Plug>(EasyAlign)'] }
 """ Start page with sessions, last files and others
@@ -186,7 +187,6 @@ let g:user_emmet_mode='a'
 let &path = &path . "," . getcwd()
 let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
 
-""Spelli cheker
 setlocal spell spelllang=en_us,ru_yo
 
 ""Add russian keyboard for commands
@@ -244,7 +244,7 @@ let g:ackhighlight = 1
 au FileType erlang let g:ycm_cache_omnifunc = 0
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_always_populate_location_list = 1
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_use_ultisnips_completer = 1
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
