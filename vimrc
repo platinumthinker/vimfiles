@@ -240,7 +240,7 @@ let g:netrw_liststyle = 3
 
 
 
-let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "release"'
+let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "release" -U'
 let g:ackhighlight = 1
 
 au FileType erlang let g:ycm_cache_omnifunc = 0
