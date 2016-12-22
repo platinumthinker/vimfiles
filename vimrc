@@ -29,7 +29,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 """"""Vim-scripts repos
 """Sniplets
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 """Fast toggle commets
 " Bundle 'The-NERD-Commenter'
 """Ctags supports
@@ -152,6 +153,7 @@ set pumheight=15
 set wildmode=list:longest,full
 set wildmenu 
 set wildignore+=.git,.svn,_build
+set wildignore-=deps
 
 let g:erlang_folding=1
 "let g:erlangRefactoring=1
@@ -407,8 +409,10 @@ let g:solarized_termtrans  = 0
 let g:solarized_degrade    = 0
 colorscheme solarized
 "====================================CTRL_P====================================
+let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'
 let g:ctrlp_max_files = 10000
 let g:ctrlp_max_depth = 10
+let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|rebar|eunit)$',
     \ 'file': '\v\.(beam|exe|so|dll|dump|core)$',
