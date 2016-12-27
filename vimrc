@@ -29,7 +29,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 """"""Vim-scripts repos
 """Sniplets
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 """Fast toggle commets
 " Bundle 'The-NERD-Commenter'
