@@ -29,7 +29,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 """"""Vim-scripts repos
 """Sniplets
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 """Fast toggle commets
 " Bundle 'The-NERD-Commenter'
@@ -264,6 +264,7 @@ let g:ycm_semantic_triggers =  {
   \ }
 
 " let g:snippets_dir = '~/.vim/snippets/'
+" let g:UltiSnipsSnippetDirectories=$HOME.'/.vim/UltiSnips'
 let g:snips_author = 'platinumthinker'
 let g:my_email_addr = 'platinumthinker@gmail.com'
 
