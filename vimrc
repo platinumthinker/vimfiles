@@ -248,6 +248,7 @@ let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_always_populate_location_list = 1
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_use_ultisnips_completer = 1
+let g:ycm_server_python_interpreter = '/usr/bin/python3.5'
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
   \   'objc' : ['->', '.'],
