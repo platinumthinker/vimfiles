@@ -4,3 +4,5 @@ undodir/*
 .netrwhist
 Session.vim
 plugged/*
+plug8.log
+.ycm_extra_conf.py
