@@ -8,11 +8,6 @@ call plug#begin('~/.vim/plugged')
 """Vundle selfupdate
 Plug 'junegunn/vim-plug'
 
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-
-Plugin 'Valloric/YouCompleteMe'
-
 """"""Tpope repos
 """Comment supports
 Plug 'tpope/vim-commentary'
