@@ -3,4 +3,7 @@ spell/*
 undodir/*
 .netrwhist
 session/*
+Session.vim
+plugged/*
+plug8.log
 .ycm_extra_conf.py

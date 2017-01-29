@@ -1,11 +1,12 @@
-"====================================VUNDLE====================================
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-"=================================VUNDLE REPO==================================
+augroup load_ycm
+  autocmd!
+  autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
+                                \ | autocmd! load_ycm
+augroup END
+
+call plug#begin('~/.vim/plugged')
 """Vundle selfupdate
-Bundle 'gmarik/vundle'
+Plug 'junegunn/vim-plug'
 
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
@@ -14,84 +15,85 @@ Plugin 'Valloric/YouCompleteMe'
 
 """"""Tpope repos
 """Comment supports
-Bundle 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-dispatch'
 """Git supports
-Bundle 'tpope/vim-fugitive'
-" Bundle 'idanarye/vim-merginal'
+Plug 'tpope/vim-fugitive'
+"""Date inc/dec (Alt-a/Alt-x)
+Plug 'tpope/vim-speeddating'
 """Surround parenthese, brackets, quotes, XML tags and more
-Bundle 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 """Mapping simply short normal mode aliases
-Bundle 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired'
 """Repeat for surround, speeddating, abolish, unimpaired, commentary
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-vinegar'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-vinegar', { 'on': 'ToggleVExplorer' }
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 """"""Vim-scripts repos
+"""Sniplets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+"""Fast toggle commets
+" Bundle 'The-NERD-Commenter'
 """Ctags supports
-Bundle 'ctags.vim'
+Plug 'ctags.vim'
 """Ascii art
-Bundle 'DrawIt'
+Plug 'DrawIt'
 
 """"""Other repos
+Plug 'mattn/webapi-vim'
+
 """Draw undo tree
-Bundle 'mbbill/undotree'
-"""Easy change buffers
-Bundle 'troydm/easybuffer.vim'
+Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeShow'] }
 """Super syntax
-Bundle 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 """Status bar
-Bundle 'itchyny/lightline.vim'
-
-"""Snippets engine
-Bundle 'msanders/snipmate.vim'
-"""Snippets repo
-Bundle 'honza/vim-snippets'
+Plug 'itchyny/lightline.vim'
 """Color themes
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'jonathanfilip/vim-lucius'
+Plug 'altercation/vim-colors-solarized'
 """Ack supports
-Bundle 'mileszs/ack.vim'
-"""Bar of function in open file (from ctags)
-Bundle 'majutsushi/tagbar'
-"""Searcher
-Bundle 'kien/ctrlp.vim'
-"""Align
-Bundle 'junegunn/vim-easy-align'
-"""Doc
-Bundle 'thinca/vim-ref'
+Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
+"""Autocomplite
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer', 'for': ['erlang', 'c', 'cpp'] }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer --racer-completer --tern-completer' }
+"""Dublicate character (quotes, brackets, ets)
+" Plug 'Raimondi/delimitMate'
 
-Bundle 'gtags.vim'
+Plug 'thinca/vim-ref'
+" Plug 'thinca/vim-ref', { 'on': 'ref#K' }
+"""Seacher
+Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim', { 'on': 'CtrlP' }
+"""Align
+Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', '<Plug>(EasyAlign)'] }
+""" Start page with sessions, last files and others
+Plug 'mhinz/vim-startify'
+Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'EasyBufferVertical'] }
 
 """"""For erlang
 """ Vim erlang collects
-Bundle 'vim-erlang/vim-erlang-runtime'
-Bundle 'vim-erlang/vim-erlang-compiler'
-Bundle 'vim-erlang/vim-erlang-omnicomplete'
-Bundle 'vim-erlang/vim-erlang-tags'
-Bundle 'akalyaev/vim-erlang-spec'
-"""For rebar
-Bundle 'fishcakez/vim-rebar'
-Bundle 'tpope/vim-dispatch'
-Bundle 'rramsden/vim-eunit'
 """Erlang motions
-Bundle 'edkolev/erlang-motions.vim'
-Bundle 'elixir-lang/vim-elixir'
-Bundle 'mattreduce/vim-mix'
+Plug 'edkolev/erlang-motions.vim', { 'for': 'erlang' }
+Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
+" Bundle 'vim-erlang/vim-erlang-runtime'
+Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
+Plug 'akalyaev/vim-erlang-spec', { 'for': 'erlang' }
 
 """"""Fot html/css
-Bundle 'mattn/emmet-vim'
-
-""" Start page with sessions, last files and others
-Bundle 'mhinz/vim-startify'
-
-""" Rfc
-Bundle 'mhinz/vim-rfc'
-Bundle 'rfc-syntax', { 'for': 'rfc' }
-
+Plug 'mattn/emmet-vim'
 """ Syntax for DTL
-Bundle 'django.vim'
+Plug 'django.vim', { 'for': 'django' }
 
-Bundle 'mattn/gist-vim'
+Plug 'mattn/gist-vim', { 'for': 'Gist' }
+
+" Add plugins to &runtimepath
+call plug#end()
+
 "==================================VIM CONFIG==================================
 if filereadable("/bin/zsh")
     set shell=/bin/zsh
@@ -132,7 +134,6 @@ set linebreak
 set dy=lastline
 "" Show line number
 set number
-set nu
 "" Wrap lines by 80 char 
 set wrap
 set textwidth=80
@@ -145,12 +146,16 @@ set mouse=a
 " Yanks go on clipboard instead
 set clipboard+=unnamed
 
-set completeopt=menu,menuone,longest
+set modeline
+set modelines=5 " default numbers of lines to read for modeline instructions
+
+set completeopt=longest,menuone
 set pumheight=15
 
 set wildmode=list:longest,full
 set wildmenu 
-set wildignore+=.git,.svn,_build,release,.eunit
+set wildignore+=.git,.svn,_build
+set wildignore-=deps
 
 let g:erlang_folding=1
 "let g:erlangRefactoring=1
@@ -159,9 +164,8 @@ let	g:erlangHighlightBif=1
 let g:erlangCompletionDisplayDoc = 0
 let g:erlangCompletitionGrep = 'ag'
 let g:erlangFoldSplitFunction=1
-let g:erlangManPath="/home/thinker/erlware/man"
+"let g:erlangManPath="/home/thinker/erlware/man"
 let g:erlangHighlightErrors=0
-
 
 let g:erlang_tags_ignore=['.git', '.svn', '.eunit', 'release']
 
@@ -202,7 +206,6 @@ let g:netrw_banner = 0
 " tree-view
 let g:netrw_liststyle = 3
 
-""Spelli cheker
 setlocal spell spelllang=en_us,ru_yo
 
 ""Add russian keyboard for commands
@@ -213,54 +216,72 @@ highlight lCursor guifg=NONE guibg=Cyan
 
 let g:user_emmet_install_global = 0
 
-if has("autocmd")
-    "Markdown fix
-    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-    au BufRead,BufNewFile *.{tex} set filetype=tex
-
-    au BufRead,BufNewFile *.{appup,app} set filetype=erlang
-    au BufRead,BufNewFile *.{appup.src,app.src} set filetype=erlang
-    au BufRead,BufNewFile *.{exs} set filetype=elixir
-    au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
-    au BufRead,BufNewFile *.{exs} set filetype=elixir
-
-    " au BufReadPost * if line("'\"") > 0 && line ("'\"") <= line("$") \| exe "normal! g'\"" | endif
-
-
-    " Open file in last place
-    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-                \| exe "normal! g'\"" | endif
-
-    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-    au BufRead,BufNewFile *.{dtl,tmpl} set filetype=django
-    " au BufRead,BufNewFile *.{sh,bash} set iskeyword+=$
-    au BufRead,BufNewFile *.{bats} set filetype=sh
-
-    au FileType html,css EmmetInstall
-
-    autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt,*.ods silent %!pandoc "%" -tplain -o /dev/stdout
-endif
+au FileType html,css,django EmmetInstall
+" DTL for erlydtl
+au BufRead,BufNewFile *.{dtl,tmpl} set filetype=django
+au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
+au BufRead,BufNewFile *.{appup,app} set filetype=erlang
+au BufRead,BufNewFile *.{appup.src,app.src} set filetype=erlang
+" Open file in last place
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+            \| exe "normal! g'\"" | endif
 
 "Folds
 set foldmethod=syntax
+let g:markdown_fold_style = 'nested'
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+let g:markdown_syntax_conceal = 0
+
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=0
+let g:syntastic_auto_loc_list=1
+let g:syntastic_aggregate_errors=1
+let g:syntastic_loc_list_height=4
 
 let g:tagbar_autofocus = 1
-let g:ycm_confirm_extra_conf = 0
+
+""netrw default vertical split
+let g:netrw_preview = 1
+" Hit enter in the file browser to open the selected
+" file with :vsplit to the right of the browser.
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+" Recursed delete directory in netrw
+let g:netrw_localrmdir='rm -r'
+" absolute width of netrw window
+let g:netrw_winsize = -23
+" do not display info on the top of window
+let g:netrw_banner = 0
+" tree-view
+let g:netrw_liststyle = 3
+
+
+
+let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "release" -U'
+let g:ackhighlight = 1
+
+au FileType erlang let g:ycm_cache_omnifunc = 0
 let g:ycm_min_num_identifier_candidate_chars = 3
 let g:ycm_always_populate_location_list = 1
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_use_ultisnips_completer = 1
+let g:ycm_server_python_interpreter = '/usr/bin/python3.5'
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':', '.', 're!#^\{'],
+  \ }
 
-let g:UltiSnipsExpandTrigger = "<c-j>"
-
-"let g:UltiSnipsJumpForwardTrigger
-"let g:UltiSnipsJumpBackwardTrigger
-let g:markdown_fold_style = 'nested'
-
-let g:tagbar_autofocus = 1
-
-let g:ackprg = 'ag -U --nogroup --nocolor --column --ignore-dir "release" --ignore "TAGS" --ignore "tags"'
-let g:ackhighlight = 1
-let g:snippets_dir = '~/.vim/snippets/'
+" let g:snippets_dir = '~/.vim/snippets/'
+" let g:UltiSnipsSnippetDirectories=$HOME.'/.vim/UltiSnips'
 let g:snips_author = 'platinumthinker'
 let g:my_email_addr = 'platinumthinker@gmail.com'
 
@@ -269,8 +290,6 @@ let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 "" Don't change dir for openning new file from start screen
 let g:startify_change_to_dir = 0
-
-setlocal omnifunc=syntaxcomplete#Complete
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
@@ -278,13 +297,7 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-
-" autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-"autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-" autocmd FileType erlang :ErlangTags
-" Append modeline after last line in buffer.
-" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
-" files.
+autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 function! AppendModeline()
   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
         \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
@@ -317,15 +330,29 @@ command! -range -nargs=1 Entities call HtmlEntities(<line1>, <line2>, <args>)
 noremap <silent> \h :Entities 0<CR>
 noremap <silent> \H :Entities 1<CR>
 "================================KEY BINDINGS==================================
-inoremap \fn <C-R>=expand("%:t:r")<CR>
 inoremap jj <ESC>
-map <silent><BS> :NERDTreeToggle<CR>
+"Open/close folds
+nnoremap <Space> za 
+
+nmap <leader>g :LAck <cword><CR>
+
+nnoremap <silent> <F4> :lclose<CR>
+
+nnoremap <silent><F8> :TagbarToggle<CR>
+inoremap <silent><F8> :TagbarToggle<CR>
+
+call togglebg#map("<F5>")
+
 nmap <leader>b :EasyBuffer<CR>
 nmap <leader>bh :EasyBufferHorizontal<CR>
 nmap <leader>bv :EasyBufferVertical<CR>
-nmap <leader>g :LAck <cword><CR>
 nmap <leader>m :MerginalToogle<CR>
 nmap <leader>t :ErlangTags<CR>
+nnoremap <leader>sp :ErlangSpec<CR>
+
+vmap <Enter> <Plug>(EasyAlign)
+inoremap \fn <C-R>=expand("%:t:r")<CR>
+
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight
 ""Edit vimrc
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
@@ -334,20 +361,20 @@ nnoremap <leader>s :mksession<CR>
 nnoremap <leader>sp :ErlangSpec<CR>
 ""Load vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
+""Save session (load: vim -S)
+nnoremap <leader>s :mksession<CR>
+
 nnoremap <leader>u :UndotreeToggle<CR>
-nnoremap <silent> <F4> :lclose<CR>
-nnoremap <silent><F8> :TagbarToggle<CR>
-nnoremap <tab> <C-w><C-w>  
-vmap <Enter> <Plug>(EasyAlign)
 
-inoremap \fn <C-R>=expand("%:t:r")<CR>
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
-"" Eunit
-map <Leader>e :call EunitCurrentFile()<CR>
-map <Leader>s :call EunitNearestTest()<CR>
-map <Leader>l :call EunitLastCommand()<CR>
-map <Leader>a :call EunitTestAll()<CR>
-map <Leader>v :call :Rebar compile skip_deps=true<CR>
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Toggle netrw like NERDTree
 function! ToggleVExplorer()
@@ -369,31 +396,8 @@ function! ToggleVExplorer()
 endfunction
 
 map <silent> - :call ToggleVExplorer()<CR>
-
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 map @@x !%xmllint --format --recover -^M
-"================================== YCM ======================================
-let g:ycm_key_list_select_completion = ['<S-TAB>']
-let g:ycm_use_ultisnips_completer = 0
-let g:ycm_filetype_blacklist = {
-            \ 'erlang' : 1,
-            \ 'tagbar' : 1,
-            \ 'qf' : 1,
-            \ 'notes' : 1,
-            \ 'markdown' : 1,
-            \ 'unite' : 1,
-            \ 'text' : 1,
-            \ 'vimwiki' : 1,
-            \ 'pandoc' : 1,
-            \ 'infolog' : 1,
-            \ 'mail' : 1
-            \}
-"===============================GOOGLE CALENDAR================================
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
-let g:calendar_first_day = "monday"
-let g:calendar_calendar= "russia"
-let g:calendar_frame = 'default'
 "==================================SYNTASTICS==================================
 let g:ycm_server_python_interpreter = '/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
@@ -415,24 +419,6 @@ let g:syntastic_c_compiler_options = ' -std=c11 -I /usr/src/linux-headers-4.0.0-
 let g:syntastic_enable_r_lintr_checker = 1
 let g:syntastic_r_checkers = ['lintr']
 
-"let g:pymode_rope_complete_on_dot = 1
-"let g:pymode_lint_write = 1
-"===================================NERDTREE===================================
-let NERDTreeHighlightCursorline = 1
-let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
-                    \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
-                    \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
-                    \ '.*\.midi$']
-
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-augroup ps_nerdtree
-    au!
-    au Filetype nerdtree setlocal nolist
-    au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
-    au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
-    " au Filety
 let g:pymode_rope_complete_on_dot = 1
 let g:pymode_lint_write = 1
 "===============================FIX SLOW SCROLL================================
@@ -440,34 +426,30 @@ set synmaxcol=128
 syntax sync minlines=256
 "================================COLOR THEME UP================================
 syntax enable
-try
-    set background=dark
-    if !has('gui_running')
-        set t_Co=256
-        let g:Powerline_symbols = 'fancy'
-        let g:solarized_termcolors = 16
-        let g:solarized_termtrans  = 0
-        let g:solarized_degrade    = 0
-    else
-        let g:solarized_termcolors = 256
-        let g:solarized_contrast = 'hight'
-        let g:solarized_visibility = 'high'
-    endif
-    let g:solarized_underline = 1
-    let g:solarized_hitrail    = 1
-    colorscheme solarized
-catch /^Vim\%((\a\+)\)\=:E185/
-endtry
+if !has('gui_running')
+    set t_Co=256
+    let g:solarized_termcolors = 256
+endif
+set background=dark
+let g:solarized_termcolors = 16
+let g:solarized_contrast = 'hight'
+let g:solarized_visibility = 'high'
+let g:solarized_underline = 1
+let g:solarized_hitrail    = 1
+let g:solarized_termtrans  = 0
+let g:solarized_degrade    = 0
+colorscheme solarized
 "====================================CTRL_P====================================
+let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'
 let g:ctrlp_max_files = 10000
-let g:ctrlp_max_depth = 8
-let g:ctrlp_lazy_update = 1
-let g:ctrlp_working_path_mode=0
+let g:ctrlp_max_depth = 10
+let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|_build|release|eunit)$',
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rebar|eunit)$',
     \ 'file': '\v\.(beam|exe|so|dll|dump|core)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
     \ }
+let g:Powerline_symbols = 'fancy'
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
