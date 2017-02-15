@@ -411,7 +411,7 @@ let g:solarized_termtrans  = 0
 let g:solarized_degrade    = 0
 colorscheme solarized
 "====================================CTRL_P====================================
-let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'
+" let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'
 let g:ctrlp_max_files = 10000
 let g:ctrlp_max_depth = 10
 let g:ctrlp_working_path_mode = 'rw'
