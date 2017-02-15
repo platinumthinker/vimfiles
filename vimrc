@@ -99,8 +99,7 @@ set cursorline
 set cursorcolumn
 " Time to wait after ESC (default causes an annoying delay)
 set timeoutlen=250 
-" игнорировать регистр при поиске
-set ignorecase
+set smartcase
 " подсвечивать поиск
 set hlsearch
 " show matches while typing
