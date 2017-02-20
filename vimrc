@@ -73,7 +73,7 @@ Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'Ea
 """Erlang motions
 Plug 'edkolev/erlang-motions.vim', { 'for': 'erlang' }
 Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
-Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
+Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
