@@ -90,8 +90,11 @@ Plug 'mattn/gist-vim', { 'for': 'Gist' }
 call plug#end()
 
 "==================================VIM CONFIG==================================
-let $BASH_ENV = "~/.bash_profile"
-set shell=/bin/zsh
+if filereadable("/bin/zsh")
+    set shell=/bin/zsh
+elseif filereadable("/bin/bash")
+    set shell=/bin/bash
+endif
 
 set helplang=en
 set title
@@ -117,12 +120,6 @@ set smarttab
 set showmatch " Show matching brackets.
 
 set autoindent
-set cindent
-set indentkeys-=0# " do not break indent on #
-set cinkeys-=0#
-set cinoptions=:s,ps,ts,cs
-set cinwords=if,else,while,do
-set cinwords+=for,switch,case
 
 "" Show command in bottom bar
 set showcmd 
@@ -185,8 +182,23 @@ set writebackup
 let g:user_emmet_mode='a'
 
 ""Set varible from my envirmoment
-let &path = &path . "," . getcwd()
-let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
+" let &path = &path . "," . getcwd()
+" let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
+
+""netrw default vertical split
+let g:netrw_preview = 1
+" Hit enter in the file browser to open the selected
+" file with :vsplit to the right of the browser.
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+" Recursed delete directory in netrw
+let g:netrw_localrmdir='rm -r'
+" absolute width of netrw window
+let g:netrw_winsize = -23
+" do not display info on the top of window
+let g:netrw_banner = 0
+" tree-view
+let g:netrw_liststyle = 3
 
 setlocal spell spelllang=en_us,ru_yo
 
@@ -336,9 +348,11 @@ vmap <Enter> <Plug>(EasyAlign)
 inoremap \fn <C-R>=expand("%:t:r")<CR>
 
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight
-
 ""Edit vimrc
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
+""Save session (load: vim -S)
+nnoremap <leader>s :mksession<CR>
+nnoremap <leader>sp :ErlangSpec<CR>
 ""Load vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
 ""Save session (load: vim -S)
@@ -379,22 +393,32 @@ map <silent> - :call ToggleVExplorer()<CR>
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 map @@x !%xmllint --format --recover -^M
 "==================================SYNTASTICS==================================
-let g:syntastic_check_on_open=0
+let g:ycm_server_python_interpreter = '/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
+let g:syntastic_check_on_openn=0
 let g:syntastic_check_on_wq=0
-let g:syntastic_mode_map = { 'mode': 'active',
-            \'active_filetypes': ['erl', 'hs'],
-            \'passive_filetypes': ['h', 'c', 'cpp'] }
+let g:syntastic_auto_loc_list=1
+let g:syntastic_always_populate_loc_list=1
 let g:syntastic_filetype_map = { 'latex': 'tex',
+            \ 'xsd': 'xml',
             \ 'gentoo-metadata': 'xml' }
-let g:syntastic_disabled_filetypes = ['c', 'cpp']
+let g:syntastic_mode_map = { "mode": "active",
+            \ "active_filetypes":  ["c", "cpp"],
+            \ "passive_filetypes": ["erlang"] }
+let g:syntastic_erlangconfig_checkers = ["erl_script_checker"]
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+let g:syntastic_c_compiler_options = ' -std=c11 -I /usr/src/linux-headers-4.0.0-2-common/include/ '
+let g:syntastic_enable_r_lintr_checker = 1
+let g:syntastic_r_checkers = ['lintr']
 
 let g:pymode_rope_complete_on_dot = 1
 let g:pymode_lint_write = 1
 "===============================FIX SLOW SCROLL================================
-set lazyredraw
 set synmaxcol=128
 syntax sync minlines=256
-"==============================SOLORIZED THEME UP==============================
+"================================COLOR THEME UP================================
 syntax enable
 if !has('gui_running')
     set t_Co=256
@@ -423,30 +447,55 @@ let g:Powerline_symbols = 'fancy'
 "============================STATUS BAR SETTINGS UP============================
 set laststatus=2
 
-let g:lightline = {
-      \ 'colorscheme': 'solarized',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
-      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'MyFugitive',
-      \   'filename': 'MyFilename',
-      \   'fileformat': 'MyFileformat',
-      \   'filetype': 'MyFiletype',
-      \   'fileencoding': 'MyFileencoding',
-      \   'mode': 'MyMode',
-      \   'ctrlpmark': 'CtrlPMark',
-      \ },
-      \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag',
-      \ },
-      \ 'component_type': {
-      \   'syntastic': 'error',
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
-      \ }
+if $SSH_CONNECTION
+    let g:lightline = {
+                \ 'colorscheme': 'default',
+                \ 'active': {
+                \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+                \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
+                \ },
+                \ 'component_function': {
+                \   'fugitive': 'MyFugitive',
+                \   'filename': 'MyFilename',
+                \   'fileformat': 'MyFileformat',
+                \   'filetype': 'MyFiletype',
+                \   'fileencoding': 'MyFileencoding',
+                \   'mode': 'MyMode',
+                \   'ctrlpmark': 'CtrlPMark',
+                \ },
+                \ 'component_expand': {
+                \   'syntastic': 'SyntasticStatuslineFlag',
+                \ },
+                \ 'component_type': {
+                \   'syntastic': 'error',
+                \ }
+                \ }
+else
+    let g:lightline = {
+                \ 'colorscheme': 'solarized',
+                \ 'active': {
+                \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+                \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
+                \ },
+                \ 'component_function': {
+                \   'fugitive': 'MyFugitive',
+                \   'filename': 'MyFilename',
+                \   'fileformat': 'MyFileformat',
+                \   'filetype': 'MyFiletype',
+                \   'fileencoding': 'MyFileencoding',
+                \   'mode': 'MyMode',
+                \   'ctrlpmark': 'CtrlPMark',
+                \ },
+                \ 'component_expand': {
+                \   'syntastic': 'SyntasticStatuslineFlag',
+                \ },
+                \ 'component_type': {
+                \   'syntastic': 'error',
+                \ },
+                \ 'separator': { 'left': '', 'right': '' },
+                \ 'subseparator': { 'left': '', 'right': '' }
+                \ }
+endif
 
 function! MyModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -493,7 +542,7 @@ function! MyMode()
 endfunction
 
 function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP'
+  if expand('%:t') =~ '^ControlP$'
     call lightline#link('iR'[g:lightline.ctrlp_regex])
     return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
           \ , g:lightline.ctrlp_next], 0)

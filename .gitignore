@@ -2,6 +2,7 @@ bundle/*
 spell/*
 undodir/*
 .netrwhist
+session/*
 Session.vim
 plugged/*
 plug8.log
