@@ -29,7 +29,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 """"""Vim-scripts repos
 """Sniplets
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 """Fast toggle commets
 " Bundle 'The-NERD-Commenter'
@@ -73,7 +73,7 @@ Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'Ea
 """Erlang motions
 Plug 'edkolev/erlang-motions.vim', { 'for': 'erlang' }
 Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
-" Bundle 'vim-erlang/vim-erlang-runtime'
+Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
