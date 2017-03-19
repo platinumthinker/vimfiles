@@ -148,7 +148,7 @@ set pumheight=15
 
 set wildmode=list:longest,full
 set wildmenu 
-set wildignore+=.git,.svn,_build
+set wildignore+=.git,.svn
 set wildignore-=deps
 
 let g:erlang_folding=1
@@ -256,7 +256,7 @@ let g:ackhighlight = 1
 
 au FileType erlang let g:ycm_cache_omnifunc = 0
 let g:ycm_min_num_identifier_candidate_chars = 3
-let g:ycm_always_populate_location_list = 1
+" let g:ycm_always_populate_location_list = 1
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_use_ultisnips_completer = 1
 let g:ycm_server_python_interpreter = '/usr/bin/python3.5'
@@ -398,8 +398,6 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 
 let g:syntastic_check_on_openn=0
 let g:syntastic_check_on_wq=0
-let g:syntastic_auto_loc_list=1
-let g:syntastic_always_populate_loc_list=1
 let g:syntastic_filetype_map = { 'latex': 'tex',
             \ 'xsd': 'xml',
             \ 'gentoo-metadata': 'xml' }
@@ -434,7 +432,6 @@ let g:solarized_termtrans  = 0
 let g:solarized_degrade    = 0
 colorscheme solarized
 "====================================CTRL_P====================================
-" let g:ctrlp_reuse_window = 'netrw\|help\|quickfix'
 let g:ctrlp_max_files = 10000
 let g:ctrlp_max_depth = 10
 let g:ctrlp_working_path_mode = 'rw'
