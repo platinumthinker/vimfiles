@@ -53,7 +53,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
 """Autocomplite
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer', 'for': ['erlang', 'c', 'cpp'] }
-Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer --racer-completer --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' }
 """Dublicate character (quotes, brackets, ets)
 " Plug 'Raimondi/delimitMate'
 
