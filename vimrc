@@ -25,6 +25,8 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar', { 'on': 'ToggleVExplorer' }
 
+""" Showing function signature and inline doc.
+Plug 'Shougo/echodoc.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 """"""Vim-scripts repos
@@ -32,7 +34,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 """Fast toggle commets
-" Bundle 'The-NERD-Commenter'
 """Ctags supports
 Plug 'ctags.vim'
 """Ascii art
@@ -44,7 +45,7 @@ Plug 'mattn/webapi-vim'
 """Draw undo tree
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeShow'] }
 """Super syntax
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
 """Status bar
 Plug 'itchyny/lightline.vim'
 """Color themes
@@ -58,10 +59,8 @@ Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' 
 " Plug 'Raimondi/delimitMate'
 
 Plug 'thinca/vim-ref'
-" Plug 'thinca/vim-ref', { 'on': 'ref#K' }
 """Seacher
 Plug 'kien/ctrlp.vim'
-" Plug 'kien/ctrlp.vim', { 'on': 'CtrlP' }
 """Align
 Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', '<Plug>(EasyAlign)'] }
 """ Start page with sessions, last files and others
@@ -178,6 +177,9 @@ set backupdir=/var/tmp,/tmp
 set backupskip=/tmp/*
 set directory=/var/tmp,/tmp
 set writebackup
+
+" Required for operations modifying multiple buffers like rename.
+set hidden
 
 let g:user_emmet_mode='a'
 
