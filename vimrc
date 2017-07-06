@@ -33,11 +33,12 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 """Sniplets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-"""Fast toggle commets
 """Ctags supports
 Plug 'vim-scripts/ctags.vim'
 """Ascii art
 Plug 'vim-scripts/DrawIt'
+"""Show marks
+Plug 'kshenoy/vim-signature'
 
 """"""Other repos
 Plug 'mattn/webapi-vim'
@@ -77,6 +78,7 @@ Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
 Plug 'akalyaev/vim-erlang-spec', { 'for': 'erlang' }
+
 
 """"""Fot html/css
 Plug 'mattn/emmet-vim'
