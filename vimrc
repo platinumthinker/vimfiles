@@ -35,9 +35,9 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 """Fast toggle commets
 """Ctags supports
-Plug 'ctags.vim'
+Plug 'vim-scripts/ctags.vim'
 """Ascii art
-Plug 'DrawIt'
+Plug 'vim-scripts/DrawIt'
 
 """"""Other repos
 Plug 'mattn/webapi-vim'
@@ -81,9 +81,10 @@ Plug 'akalyaev/vim-erlang-spec', { 'for': 'erlang' }
 """"""Fot html/css
 Plug 'mattn/emmet-vim'
 """ Syntax for DTL
-Plug 'django.vim', { 'for': 'django' }
+Plug 'vim-scripts/django.vim', { 'for': 'django' }
 
-Plug 'mattn/gist-vim', { 'for': 'Gist' }
+" Plug 'mattn/gist-vim', { 'for': 'Gist' }
+Plug 'mattn/gist-vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -253,12 +254,12 @@ let g:netrw_liststyle = 3
 
 
 
-let g:ackprg = 'ag --nogroup --nocolor --column --ignore-dir "release" -U'
+let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags --ignore-dir "release" -U'
 let g:ackhighlight = 1
 
 au FileType erlang let g:ycm_cache_omnifunc = 0
 let g:ycm_min_num_identifier_candidate_chars = 3
-" let g:ycm_always_populate_location_list = 1
+let g:ycm_always_populate_location_list = 1
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_use_ultisnips_completer = 1
 let g:ycm_server_python_interpreter = '/usr/bin/python3.5'
