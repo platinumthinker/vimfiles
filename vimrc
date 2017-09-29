@@ -77,11 +77,14 @@ Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
-Plug 'akalyaev/vim-erlang-spec', { 'for': 'erlang' }
+" Plug 'akalyaev/vim-erlang-spec', { 'for': 'erlang' }
+
+Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim'
 
 
 """"""Fot html/css
-Plug 'mattn/emmet-vim'
+" Plug 'mattn/emmet-vim'
 """ Syntax for DTL
 Plug 'vim-scripts/django.vim', { 'for': 'django' }
 
@@ -164,6 +167,7 @@ let g:erlangFoldSplitFunction=1
 let g:erlangHighlightErrors=0
 
 let g:erlang_tags_ignore=['.git', '.svn', '.eunit', 'release']
+" let g:alchemist_tag_disable = 1
 
 if version >= 700
     set history=256
@@ -277,6 +281,7 @@ let g:ycm_semantic_triggers =  {
   \   'ruby' : ['.', '::'],
   \   'lua' : ['.', ':'],
   \   'erlang' : [':', '.', 're!#^\{'],
+  \   'elixir' : [':', '.', 're!#^\{'],
   \ }
 
 let g:snippets_dir = '~/.vim/snippets/'
@@ -290,13 +295,13 @@ let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 "" Don't change dir for openning new file from start screen
 let g:startify_change_to_dir = 0
 "=============================DELETE TRAILING SPACES===========================
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+" fun! <SID>StripTrailingWhitespaces()
+"     let l = line(".")
+"     let c = col(".")
+"     %s/\s\+$//e
+"     call cursor(l, c)
+" endfun
+" autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 function! AppendModeline()
   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
         \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
@@ -364,6 +369,7 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>s :mksession<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <leader>j :%!python -m json.tool<CR>
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
