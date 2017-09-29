@@ -91,6 +91,8 @@ Plug 'vim-scripts/django.vim', { 'for': 'django' }
 " Plug 'mattn/gist-vim', { 'for': 'Gist' }
 Plug 'mattn/gist-vim'
 
+Plug 'fatih/vim-go'
+
 " Add plugins to &runtimepath
 call plug#end()
 
@@ -282,6 +284,7 @@ let g:ycm_semantic_triggers =  {
   \   'lua' : ['.', ':'],
   \   'erlang' : [':', '.', 're!#^\{'],
   \   'elixir' : [':', '.', 're!#^\{'],
+  \   'go' : ['.'],
   \ }
 
 let g:snippets_dir = '~/.vim/snippets/'
