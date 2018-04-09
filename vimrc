@@ -18,6 +18,7 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-dispatch'
 """Git supports
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 """Date inc/dec (Alt-a/Alt-x)
 Plug 'tpope/vim-speeddating'
 """Surround parenthese, brackets, quotes, XML tags and more
