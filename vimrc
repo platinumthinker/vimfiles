@@ -1,12 +1,15 @@
-augroup load_ycm
-  autocmd!
-  autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
-                                \ | autocmd! load_ycm
-augroup END
-
 call plug#begin('~/.vim/plugged')
 """Vundle selfupdate
 Plug 'junegunn/vim-plug'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim', { 'do': 'pip3 install -upgrade neovim' }
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
 
 """"""Tpope repos
 """Comment supports
@@ -34,30 +37,24 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 """Ctags supports
-Plug 'vim-scripts/ctags.vim'
+Plug 'ludovicchabant/vim-gutentags'
+" Plug 'vim-scripts/ctags.vim'
 """Ascii art
 Plug 'vim-scripts/DrawIt'
 """Show marks
 Plug 'kshenoy/vim-signature'
 
-""""""Other repos
+"""""Other repos
 Plug 'mattn/webapi-vim'
 
 """Draw undo tree
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeShow'] }
-"""Super syntax
-" Plug 'scrooloose/syntastic'
 """Status bar
 Plug 'itchyny/lightline.vim'
 """Color themes
 Plug 'altercation/vim-colors-solarized'
 """Ack supports
 Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
-"""Autocomplite
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer', 'for': ['erlang', 'c', 'cpp'] }
-Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py --clang-completer' }
-"""Dublicate character (quotes, brackets, ets)
-" Plug 'Raimondi/delimitMate'
 
 Plug 'thinca/vim-ref'
 """Seacher
@@ -77,10 +74,9 @@ Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-omnicomplete', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
-" Plug 'akalyaev/vim-erlang-spec', { 'for': 'erlang' }
 
-Plug 'elixir-lang/vim-elixir'
-Plug 'slashmili/alchemist.vim'
+Plug 'elixir-lang/vim-elixir',  { 'for': 'elixir' }
+Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 
 
 """"""Fot html/css
@@ -88,10 +84,10 @@ Plug 'slashmili/alchemist.vim'
 """ Syntax for DTL
 Plug 'vim-scripts/django.vim', { 'for': 'django' }
 
-" Plug 'mattn/gist-vim', { 'for': 'Gist' }
 Plug 'mattn/gist-vim'
 
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -159,13 +155,10 @@ set wildignore+=.git,.svn
 set wildignore-=deps
 
 let g:erlang_folding=1
-"let g:erlangRefactoring=1
-"let erlang_show_errors=0
 let	g:erlangHighlightBif=1 
 let g:erlangCompletionDisplayDoc = 0
 let g:erlangCompletitionGrep = 'ag'
 let g:erlangFoldSplitFunction=1
-"let g:erlangManPath="/home/thinker/erlware/man"
 let g:erlangHighlightErrors=0
 
 let g:erlang_tags_ignore=['.git', '.svn', '.eunit', 'release']
@@ -191,10 +184,6 @@ set writebackup
 set hidden
 
 let g:user_emmet_mode='a'
-
-""Set varible from my envirmoment
-" let &path = &path . "," . getcwd()
-" let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
 
 ""netrw default vertical split
 let g:netrw_preview = 1
@@ -226,7 +215,7 @@ au FileType html,css,django EmmetInstall
 au BufRead,BufNewFile *.{dtl,tmpl} set filetype=django
 au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
 au BufRead,BufNewFile *.{appup,app} set filetype=erlang
-au BufRead,BufNewFile *.{appup.src,app.src} set filetype=erlang
+au BufRead,BufNewFile *.{config,appup.src,app.src} set filetype=erlang
 " Open file in last place
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
             \| exe "normal! g'\"" | endif
@@ -236,12 +225,6 @@ set foldmethod=syntax
 let g:markdown_fold_style = 'nested'
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 let g:markdown_syntax_conceal = 0
-
-let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq=0
-let g:syntastic_auto_loc_list=1
-let g:syntastic_aggregate_errors=1
-let g:syntastic_loc_list_height=4
 
 let g:tagbar_autofocus = 1
 
@@ -261,16 +244,9 @@ let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 
 
-
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags --ignore-dir "release" -U'
 let g:ackhighlight = 1
 
-au FileType erlang let g:ycm_cache_omnifunc = 0
-let g:ycm_min_num_identifier_candidate_chars = 3
-let g:ycm_always_populate_location_list = 1
-" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-let g:ycm_use_ultisnips_completer = 1
-let g:ycm_server_python_interpreter = '/usr/bin/python3.5'
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
   \   'objc' : ['->', '.'],
@@ -374,11 +350,6 @@ nnoremap <leader>s :mksession<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>j :%!python -m json.tool<CR>
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
@@ -406,27 +377,6 @@ endfunction
 map <silent> - :call ToggleVExplorer()<CR>
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 map @@x !%xmllint --format --recover -^M
-"==================================SYNTASTICS==================================
-let g:ycm_server_python_interpreter = '/usr/bin/python3'
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-
-let g:syntastic_check_on_openn=0
-let g:syntastic_check_on_wq=0
-let g:syntastic_filetype_map = { 'latex': 'tex',
-            \ 'xsd': 'xml',
-            \ 'gentoo-metadata': 'xml' }
-let g:syntastic_mode_map = { "mode": "active",
-            \ "active_filetypes":  ["c", "cpp"],
-            \ "passive_filetypes": ["erlang"] }
-let g:syntastic_erlangconfig_checkers = ["erl_script_checker"]
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-let g:syntastic_c_compiler_options = ' -std=c11 -I /usr/src/linux-headers-4.0.0-2-common/include/ '
-let g:syntastic_enable_r_lintr_checker = 1
-let g:syntastic_r_checkers = ['lintr']
-
-let g:pymode_rope_complete_on_dot = 1
-let g:pymode_lint_write = 1
 "===============================FIX SLOW SCROLL================================
 set synmaxcol=128
 syntax sync minlines=256
@@ -451,7 +401,7 @@ let g:ctrlp_max_depth = 10
 let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|rebar|eunit)$',
-    \ 'file': '\v\.(beam|exe|so|dll|dump|core)$',
+    \ 'file': '\v\.(beam|exe|so|dll|dump|core|class)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
     \ }
 let g:Powerline_symbols = 'fancy'
@@ -463,7 +413,7 @@ if $SSH_CONNECTION
                 \ 'colorscheme': 'default',
                 \ 'active': {
                 \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
-                \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
+                \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
                 \ },
                 \ 'component_function': {
                 \   'fugitive': 'MyFugitive',
@@ -474,19 +424,13 @@ if $SSH_CONNECTION
                 \   'mode': 'MyMode',
                 \   'ctrlpmark': 'CtrlPMark',
                 \ },
-                \ 'component_expand': {
-                \   'syntastic': 'SyntasticStatuslineFlag',
-                \ },
-                \ 'component_type': {
-                \   'syntastic': 'error',
-                \ }
                 \ }
 else
     let g:lightline = {
                 \ 'colorscheme': 'solarized',
                 \ 'active': {
                 \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
-                \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'filetype' ] ]
+                \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
                 \ },
                 \ 'component_function': {
                 \   'fugitive': 'MyFugitive',
@@ -496,12 +440,6 @@ else
                 \   'fileencoding': 'MyFileencoding',
                 \   'mode': 'MyMode',
                 \   'ctrlpmark': 'CtrlPMark',
-                \ },
-                \ 'component_expand': {
-                \   'syntastic': 'SyntasticStatuslineFlag',
-                \ },
-                \ 'component_type': {
-                \   'syntastic': 'error',
                 \ },
                 \ 'separator': { 'left': '', 'right': '' },
                 \ 'subseparator': { 'left': '', 'right': '' }
@@ -577,16 +515,6 @@ endfunction
 
 function! CtrlPStatusFunc_2(str)
   return lightline#statusline(0)
-endfunction
-
-augroup AutoSyntastic
-  autocmd!
-  autocmd BufWritePost *.c,*.cpp call s:syntastic()
-augroup END
-
-function! s:syntastic()
-  SyntasticCheck
-  call lightline#update()
 endfunction
 
 let g:tagbar_status_func = 'TagbarStatusFunc'
