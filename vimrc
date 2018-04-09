@@ -11,6 +11,9 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 
+""" Asynchronous Lint Engine
+Plug 'w0rp/ale'
+
 """"""Tpope repos
 """Comment supports
 Plug 'tpope/vim-commentary'
@@ -18,7 +21,6 @@ Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-dispatch'
 """Git supports
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 """Date inc/dec (Alt-a/Alt-x)
 Plug 'tpope/vim-speeddating'
 """Surround parenthese, brackets, quotes, XML tags and more
@@ -89,6 +91,9 @@ Plug 'mattn/gist-vim'
 
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+
+""" Need to disable others indent/syntax plugins
+Plug 'sheerun/vim-polyglot'
 
 " Add plugins to &runtimepath
 call plug#end()
