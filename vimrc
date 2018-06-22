@@ -206,6 +206,8 @@ let g:netrw_banner = 0
 " tree-view
 let g:netrw_liststyle = 3
 
+let g:gutentags_exclude_project_root = [ '/usr/local', '/usr/lib' ]
+
 setlocal spell spelllang=en_us,ru_yo
 
 ""Add russian keyboard for commands
@@ -392,7 +394,6 @@ if !has('gui_running')
     set t_Co=256
     let g:solarized_termcolors = 256
 endif
-set background=dark
 let g:solarized_termcolors = 16
 let g:solarized_contrast = 'hight'
 let g:solarized_visibility = 'high'
@@ -533,3 +534,29 @@ endfunction
 let g:unite_force_overwrite_statusline = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
+
+function! BCloseCb(channel, exit_status)
+    if a:exit_status == 0
+        echom 'File close correctly'
+        call RunBackgroundCommand()
+    else
+        echom 'Error '.a:exit_status
+    endif
+endfunction
+
+function! RunBackgroundCommand()
+    let l:color_file = $HOME . '/.color'
+    let l:color = readfile(l:color_file, 1)[0]
+    if l:color == 'light'
+        set background=light
+    else
+        set background=dark
+    endif
+    let l:command = 'inotifywait -e close_write ' . l:color_file
+    " " Launch the job.
+    " " Notice that we're only capturing out, and not err here. This is because, for some reason, the callback
+    " " will not actually get hit if we write err out to the same file. Not sure if I'm doing this wrong or?
+    call job_start(l:command, {'exit_cb': 'BCloseCb', "in_io": "null", "out_io": "null", "err_io": "null"})
+endfunction
+
+call RunBackgroundCommand()
