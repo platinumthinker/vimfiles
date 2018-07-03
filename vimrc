@@ -408,7 +408,7 @@ let g:ctrlp_max_depth = 10
 let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|rebar|eunit)$',
-    \ 'file': '\v\.(beam|exe|so|dll|dump|core|class)$',
+    \ 'file': '\v\.(beam|exe|so|dll|dump|core|class|o)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS'
     \ }
 let g:Powerline_symbols = 'fancy'
