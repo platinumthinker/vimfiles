@@ -537,10 +537,7 @@ let g:vimshell_force_overwrite_statusline = 0
 
 function! BCloseCb(channel, exit_status)
     if a:exit_status == 0
-        echom 'File close correctly'
         call RunBackgroundCommand()
-    else
-        echom 'Error '.a:exit_status
     endif
 endfunction
 
