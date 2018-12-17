@@ -81,6 +81,11 @@ Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
 Plug 'elixir-lang/vim-elixir',  { 'for': 'elixir' }
 Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 
+Plug 'ElmCast/elm-vim', { 'for': 'elm' }
+
+
+""""""For python
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 
 """"""Fot html/css
 " Plug 'mattn/emmet-vim'
