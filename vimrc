@@ -2,6 +2,7 @@ call plug#begin('~/.vim/plugged')
 """Vundle selfupdate
 Plug 'junegunn/vim-plug'
 
+
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -9,16 +10,20 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+" set pyxversion=3
+" set encoding=utf-8
+" let g:python_host_prog = "/usr/bin/python2"
+" let g:python3_host_prog = "/usr/bin/python3"
 let g:deoplete#enable_at_startup = 1
 
-""" Asynchronous Lint Engine
-Plug 'w0rp/ale'
+Plug 'Shougo/deoplete.nvim', { 'do': 'pip3 install --user --upgrade neovim' }
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 
 """"""Tpope repos
 """Comment supports
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-dispatch'
 """Git supports
 Plug 'tpope/vim-fugitive'
 """Date inc/dec (Alt-a/Alt-x)
@@ -31,17 +36,12 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar', { 'on': 'ToggleVExplorer' }
 
-""" Showing function signature and inline doc.
-Plug 'Shougo/echodoc.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
 """"""Vim-scripts repos
 """Sniplets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 """Ctags supports
 Plug 'ludovicchabant/vim-gutentags'
-" Plug 'vim-scripts/ctags.vim'
 """Ascii art
 Plug 'vim-scripts/DrawIt'
 """Show marks
@@ -59,6 +59,7 @@ Plug 'altercation/vim-colors-solarized'
 """Ack supports
 Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
 
+""" Docs on Shift-K 
 Plug 'thinca/vim-ref'
 """Seacher
 Plug 'kien/ctrlp.vim'
@@ -99,6 +100,9 @@ Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 
 """ Need to disable others indent/syntax plugins
 Plug 'sheerun/vim-polyglot'
+""" Asynchronous Lint Engine
+Plug 'w0rp/ale'
+
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -276,6 +280,27 @@ let g:ycm_semantic_triggers =  {
   \   'go' : ['.'],
   \ }
 
+call deoplete#custom#option('auto_complete_delay', 20)
+call deoplete#custom#option('smart_case', v:true)
+call deoplete#custom#option('omni_patterns', {
+            \  'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+            \  'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+            \  'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+            \  'c' : ['->', '.'],
+            \  'objc' : ['->', '.'],
+            \  'ocaml' : ['.', '#'],
+            \  'cpp,objcpp' : ['->', '.', '::'],
+            \  'perl' : ['->'],
+            \  'php' : ['->', '::'],
+            \  'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \  'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+            \  'ruby' : ['.', '::'],
+            \  'lua' : ['.', ':'],
+            \  'erlang' : [':', '.', 're!#^\{'],
+            \  'elixir' : [':', '.', 're!#^\{'],
+            \  'go' : ['.'],
+            \})
+
 let g:snippets_dir = '~/.vim/snippets/'
 " let g:UltiSnipsSnippetDirectories=$HOME.'/.vim/UltiSnips'
 let g:snips_author = 'platinumthinker'
@@ -390,6 +415,10 @@ endfunction
 map <silent> - :call ToggleVExplorer()<CR>
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 map @@x !%xmllint --format --recover -^M
+
+"" system clipboard
+vnoremap <C-c> y: call system("xclip -i", getreg("\""))<CR>
+noremap <C-V> :r !xclip -o <CR>
 "===============================FIX SLOW SCROLL================================
 set synmaxcol=128
 syntax sync minlines=256
