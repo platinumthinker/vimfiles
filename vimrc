@@ -74,7 +74,7 @@ Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'Ea
 """Erlang motions
 Plug 'edkolev/erlang-motions.vim', { 'for': 'erlang' }
 Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
-Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
+Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'platinumthinker/vim-erlang-omnicomplete', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
@@ -264,7 +264,7 @@ let g:netrw_liststyle = 3
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags --ignore-dir "release" -U'
 let g:ackhighlight = 1
 
-let g:ycm_semantic_triggers =  {
+let g:ycm_semantic_triggers = {
   \   'c' : ['->', '.'],
   \   'objc' : ['->', '.'],
   \   'ocaml' : ['.', '#'],
@@ -300,6 +300,17 @@ call deoplete#custom#option('omni_patterns', {
             \  'elixir' : [':', '.', 're!#^\{'],
             \  'go' : ['.'],
             \})
+
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
+let g:ale_open_list = 1
+" Set this if you want to.
+" " This can be useful if you are combining ALE with
+" " some other plugin which sets quickfix errors, etc.
+let g:ale_keep_list_window_open = 1
+let g:ale_linters = {
+  \   'erlang': ['syntaxerl'],
+  \ }
 
 let g:snippets_dir = '~/.vim/snippets/'
 " let g:UltiSnipsSnippetDirectories=$HOME.'/.vim/UltiSnips'
