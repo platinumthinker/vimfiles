@@ -16,10 +16,6 @@ endif
 " let g:python3_host_prog = "/usr/bin/python3"
 let g:deoplete#enable_at_startup = 1
 
-Plug 'Shougo/deoplete.nvim', { 'do': 'pip3 install --user --upgrade neovim' }
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-
 """"""Tpope repos
 """Comment supports
 Plug 'tpope/vim-commentary'
@@ -72,36 +68,36 @@ Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'Ea
 """"""For erlang
 """ Vim erlang collects
 """Erlang motions
-Plug 'edkolev/erlang-motions.vim', { 'for': 'erlang' }
-Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
-Plug 'vim-erlang/vim-erlang-runtime', { 'for': 'erlang' }
-Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
+" Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
+Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
+" Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'platinumthinker/vim-erlang-omnicomplete', { 'for': 'erlang' }
 Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
 
-Plug 'elixir-lang/vim-elixir',  { 'for': 'elixir' }
-Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
+" Plug 'elixir-lang/vim-elixir',  { 'for': 'elixir' }
+" Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 
-Plug 'ElmCast/elm-vim', { 'for': 'elm' }
+" Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 
 
 """"""For python
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 
 """"""Fot html/css
 " Plug 'mattn/emmet-vim'
 """ Syntax for DTL
-Plug 'vim-scripts/django.vim', { 'for': 'django' }
+" Plug 'vim-scripts/django.vim', { 'for': 'django' }
 
 Plug 'mattn/gist-vim'
 
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+" Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 
 """ Need to disable others indent/syntax plugins
 Plug 'sheerun/vim-polyglot'
 """ Asynchronous Lint Engine
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
+
 
 
 " Add plugins to &runtimepath
@@ -169,14 +165,14 @@ set wildmenu
 set wildignore+=.git,.svn
 set wildignore-=deps
 
-let g:erlang_folding=1
-let	g:erlangHighlightBif=1 
-let g:erlangCompletionDisplayDoc = 0
-let g:erlangCompletitionGrep = 'ag'
-let g:erlangFoldSplitFunction=1
-let g:erlangHighlightErrors=0
+" let g:erlang_folding=1
+" let	g:erlangHighlightBif=1 
+" let g:erlangCompletionDisplayDoc = 0
+" let g:erlangCompletitionGrep = 'ag'
+" let g:erlangFoldSplitFunction=1
+" let g:erlangHighlightErrors=0
 
-let g:erlang_tags_ignore=['.git', '.svn', '.eunit', 'release']
+" let g:erlang_tags_ignore=['.git', '.svn', '.eunit', 'release']
 " let g:alchemist_tag_disable = 1
 
 if version >= 700
@@ -308,27 +304,51 @@ let g:ale_open_list = 1
 " " This can be useful if you are combining ALE with
 " " some other plugin which sets quickfix errors, etc.
 let g:ale_keep_list_window_open = 1
-let g:ale_linters = {
-  \   'erlang': ['syntaxerl'],
-  \ }
 
-let g:snippets_dir = '~/.vim/snippets/'
-" let g:UltiSnipsSnippetDirectories=$HOME.'/.vim/UltiSnips'
+let g:ale_lint_on_save = 1
+let g:ale_completion_enabled = 1
+let g:ale_linters = {
+            \ 'go': ['gobuild', 'govet', 'gofmt', 'golint'],
+            \ 'zsh': ['shell', 'shellcheck'],
+            \ 'sh': ['shell', 'shellcheck'],
+            \ 'bash': ['shell', 'shellcheck'],
+            \   'erlang': ['syntaxerl'],
+            \}
+  " \   'elixir': ['credo', 'dialyxir', 'dogma'],
+  " \   'go': ['gofmt', 'golint', 'go vet'],
+  " \   'hack': ['hack'],
+  " \   'help': [],
+  " \   'perl': ['perlcritic'],
+  " \   'perl6': [],
+  " \   'python': ['flake8', 'mypy', 'pylint'],
+  " \   'rust': ['cargo'],
+  " \   'spec': [],
+  " \   'text': [],
+  " \   'vue': ['eslint', 'vls'],
+  " \   'zsh': ['shell'],
+
+
+let g:go_code_completion_enabled = 0
+let g:go_snippet_engine = "ultisnips"
+
+
+
+let g:snippets_dir = '~/.vim/plugged/vim-snippets/UltiSnips'
 let g:snips_author = 'platinumthinker'
 let g:my_email_addr = 'platinumthinker@gmail.com'
 
-let g:ref_erlang_man_dir = "/usr/lib/erlang/man/"
-let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
+" let g:ref_erlang_man_dir = "/usr/lib/erlang/man/"
+" let g:ref_erlang_cmd = "/usr/lib/erlang/bin/erl"
 let g:startify_list_order = ['sessions', 'files', 'dir', 'bookmarks']
 "" Don't change dir for openning new file from start screen
 let g:startify_change_to_dir = 0
 "=============================DELETE TRAILING SPACES===========================
-" fun! <SID>StripTrailingWhitespaces()
-"     let l = line(".")
-"     let c = col(".")
-"     %s/\s\+$//e
-"     call cursor(l, c)
-" endfun
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
 " autocmd FileType c,cpp,java,erlang,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 function! AppendModeline()
   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
