@@ -91,6 +91,7 @@ Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
 Plug 'mattn/gist-vim'
 
 Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
 " Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 
 """ Need to disable others indent/syntax plugins
