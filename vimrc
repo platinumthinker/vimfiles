@@ -10,10 +10,6 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-" set pyxversion=3
-" set encoding=utf-8
-" let g:python_host_prog = "/usr/bin/python2"
-" let g:python3_host_prog = "/usr/bin/python3"
 let g:deoplete#enable_at_startup = 1
 
 """"""Tpope repos
@@ -65,7 +61,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', '<Plug>(EasyAlign)'] }
 Plug 'mhinz/vim-startify'
 Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'EasyBufferVertical'] }
 
-""""""For erlang
+"""""" For erlang
 """ Vim erlang collects
 """Erlang motions
 " Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
@@ -80,16 +76,18 @@ Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
 " Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 
 
-""""""For python
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+"""""" For python
+Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 
-""""""Fot html/css
+"""""" For html/css
 " Plug 'mattn/emmet-vim'
 """ Syntax for DTL
 " Plug 'vim-scripts/django.vim', { 'for': 'django' }
 
 Plug 'mattn/gist-vim'
 
+"""""" For Golang
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
 " Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
@@ -261,22 +259,6 @@ let g:netrw_liststyle = 3
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags --ignore-dir "release" -U'
 let g:ackhighlight = 1
 
-let g:ycm_semantic_triggers = {
-  \   'c' : ['->', '.'],
-  \   'objc' : ['->', '.'],
-  \   'ocaml' : ['.', '#'],
-  \   'cpp,objcpp' : ['->', '.', '::'],
-  \   'perl' : ['->'],
-  \   'php' : ['->', '::'],
-  \   'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-  \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
-  \   'ruby' : ['.', '::'],
-  \   'lua' : ['.', ':'],
-  \   'erlang' : [':', '.', 're!#^\{'],
-  \   'elixir' : [':', '.', 're!#^\{'],
-  \   'go' : ['.'],
-  \ }
-
 call deoplete#custom#option('auto_complete_delay', 20)
 call deoplete#custom#option('smart_case', v:true)
 call deoplete#custom#option('omni_patterns', {
@@ -331,8 +313,6 @@ let g:ale_linters = {
 
 let g:go_code_completion_enabled = 0
 let g:go_snippet_engine = "ultisnips"
-
-
 
 let g:snippets_dir = '~/.vim/plugged/vim-snippets/UltiSnips'
 let g:snips_author = 'platinumthinker'
