@@ -602,4 +602,9 @@ function! RunBackgroundCommand()
     call job_start(l:command, {'exit_cb': 'BCloseCb', "in_io": "null", "out_io": "null", "err_io": "null"})
 endfunction
 
-call RunBackgroundCommand()
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname != "Darwin\n"
+      call RunBackgroundCommand()
+  endif
+endif
