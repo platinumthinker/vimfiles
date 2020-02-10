@@ -64,7 +64,6 @@ Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'Ea
 """""" For erlang
 """ Vim erlang collects
 """Erlang motions
-" Plug 'ten0s/syntaxerl', { 'for': 'erlang' }
 Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
 " Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
 Plug 'platinumthinker/vim-erlang-omnicomplete', { 'for': 'erlang' }
@@ -88,12 +87,10 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'mattn/gist-vim'
 
 """""" For Golang
-Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoUpdateBinaries' }
 Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
 " Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 
-""" Need to disable others indent/syntax plugins
-Plug 'sheerun/vim-polyglot'
 """ Asynchronous Lint Engine
 Plug 'dense-analysis/ale'
 
@@ -216,6 +213,7 @@ setlocal spell spelllang=en_us,ru_yo
 
 ""Add russian keyboard for commands
 set keymap=russian-jcukenwin
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 set iminsert=0
 set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan
@@ -276,8 +274,7 @@ call deoplete#custom#option('omni_patterns', {
             \  'ruby' : ['.', '::'],
             \  'lua' : ['.', ':'],
             \  'erlang' : [':', '.', 're!#^\{'],
-            \  'elixir' : [':', '.', 're!#^\{'],
-            \  'go' : ['.'],
+            \  'elixir' : [':', '.', 're!#^\{']
             \})
 
 let g:ale_set_loclist = 1
@@ -290,13 +287,18 @@ let g:ale_keep_list_window_open = 1
 
 let g:ale_lint_on_save = 1
 let g:ale_completion_enabled = 1
+
+" \ 'go': ['gobuild', 'govet', 'gofmt', 'golint'],
+"
 let g:ale_linters = {
-            \ 'go': ['gobuild', 'govet', 'gofmt', 'golint'],
-            \ 'zsh': ['shell', 'shellcheck'],
-            \ 'sh': ['shell', 'shellcheck'],
-            \ 'bash': ['shell', 'shellcheck'],
-            \   'erlang': ['syntaxerl'],
+            \ 'go': ['golangci-lint'],
+            \ 'zsh': ['shellcheck'],
+            \ 'sh': ['shellcheck'],
+            \ 'bash': ['shellcheck'],
+            \ 'erlang': ['syntaxerl'],
             \}
+
+let g:ale_go_golangci_lint_package = 1
   " \   'elixir': ['credo', 'dialyxir', 'dogma'],
   " \   'go': ['gofmt', 'golint', 'go vet'],
   " \   'hack': ['hack'],
@@ -311,8 +313,12 @@ let g:ale_linters = {
   " \   'zsh': ['shell'],
 
 
-let g:go_code_completion_enabled = 0
+let g:go_code_completion_enabled = 1
+" let g:go_auto_type_info = 1
+" let g:go_doc_keywordprg_enabled = 1
 let g:go_snippet_engine = "ultisnips"
+let g:go_fmt_command = "goimports"
+
 
 let g:snippets_dir = '~/.vim/plugged/vim-snippets/UltiSnips'
 let g:snips_author = 'platinumthinker'
@@ -428,9 +434,6 @@ map <silent> - :call ToggleVExplorer()<CR>
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 map @@x !%xmllint --format --recover -^M
 
-"" system clipboard
-vnoremap <C-c> y: call system("xclip -i", getreg("\""))<CR>
-noremap <C-V> :r !xclip -o <CR>
 "===============================FIX SLOW SCROLL================================
 set synmaxcol=128
 syntax sync minlines=256

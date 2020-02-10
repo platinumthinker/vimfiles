@@ -1,1 +1,1 @@
-autocmd BufWritePost * :GoImports
+" autocmd BufWritePost * :GoImports
