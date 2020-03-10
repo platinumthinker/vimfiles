@@ -232,6 +232,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 
 "Folds
 set foldmethod=syntax
+set foldlevel=3
 let g:markdown_fold_style = 'nested'
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 let g:markdown_syntax_conceal = 0
@@ -286,9 +287,9 @@ let g:ale_lint_on_save = 1
 let g:ale_completion_enabled = 1
 
 " \ 'go': ['gobuild', 'govet', 'gofmt', 'golint'],
-"
+" \ 'go': ['golangci-lint'],
 let g:ale_linters = {
-            \ 'go': ['golangci-lint'],
+            \ 'go': ['staticcheck'],
             \ 'zsh': ['shellcheck'],
             \ 'sh': ['shellcheck'],
             \ 'bash': ['shellcheck'],
