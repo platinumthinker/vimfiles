@@ -265,31 +265,31 @@ call deoplete#custom#option('omni_patterns', {
             \  'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
             \  'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
             \  'c' : ['->', '.'],
+            \  'go': '[^. *\t]\.\w*',
             \  'objc' : ['->', '.'],
             \  'ocaml' : ['.', '#'],
             \  'cpp,objcpp' : ['->', '.', '::'],
             \  'perl' : ['->'],
             \  'php' : ['->', '::'],
-            \  'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+            \  'cs,java,javascript,d,python,perl6,scala,vb,elixir' : ['.'],
             \  'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
             \  'ruby' : ['.', '::'],
             \  'lua' : ['.', ':'],
             \  'erlang' : [':', '.', 're!#^\{'],
             \  'elixir' : [':', '.', 're!#^\{']
             \})
+let deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
 let g:ale_keep_list_window_open = 0
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
 let g:ale_open_list = 1
 
 let g:ale_lint_on_save = 1
-let g:ale_completion_enabled = 1
+" let g:ale_completion_enabled = 1
 
-" \ 'go': ['gobuild', 'govet', 'gofmt', 'golint'],
-" \ 'go': ['golangci-lint'],
 let g:ale_linters = {
-            \ 'go': ['staticcheck'],
+            \ 'go': ['gobuild', 'golangci-lint'],
             \ 'zsh': ['shellcheck'],
             \ 'sh': ['shellcheck'],
             \ 'bash': ['shellcheck'],
@@ -297,19 +297,20 @@ let g:ale_linters = {
             \}
 
 let g:ale_go_golangci_lint_package = 1
-" let g:ale_go_golangci_lint_options = ''
-  " \   'elixir': ['credo', 'dialyxir', 'dogma'],
-  " \   'go': ['gofmt', 'golint', 'go vet'],
-  " \   'hack': ['hack'],
-  " \   'help': [],
-  " \   'perl': ['perlcritic'],
-  " \   'perl6': [],
-  " \   'python': ['flake8', 'mypy', 'pylint'],
-  " \   'rust': ['cargo'],
-  " \   'spec': [],
-  " \   'text': [],
-  " \   'vue': ['eslint', 'vls'],
-  " \   'zsh': ['shell'],
+let g:ale_go_golangci_lint_options = '--no-config
+            \ --disable-all
+            \ --fast
+            \ --exclude-use-default
+            \ --tests=false
+            \ --enable=deadcode
+            \ --enable=errcheck
+            \ --enable=unused
+            \ --enable=bodyclose
+            \ --enable=dupl
+            \ --enable=gosec
+            \ --enable=interfacer
+            \ --enable=rowserrcheck
+            \ --enable=staticcheck'
 
 
 let g:go_code_completion_enabled = 1
@@ -318,6 +319,8 @@ let g:go_code_completion_enabled = 1
 let g:go_snippet_engine = "ultisnips"
 let g:go_fmt_command = "goimports"
 let g:go_gopls_complete_unimported = 1
+let g:go_list_type = "quickfix"
+
 
 
 let g:snippets_dir = '~/.vim/plugged/vim-snippets/UltiSnips'
