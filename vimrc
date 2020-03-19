@@ -281,8 +281,8 @@ call deoplete#custom#option('omni_patterns', {
 let deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
 let g:ale_keep_list_window_open = 0
-let g:ale_set_loclist = 1
-let g:ale_set_quickfix = 0
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 let g:ale_open_list = 1
 
 let g:ale_lint_on_save = 1
@@ -319,7 +319,7 @@ let g:go_code_completion_enabled = 1
 let g:go_snippet_engine = "ultisnips"
 let g:go_fmt_command = "goimports"
 let g:go_gopls_complete_unimported = 1
-let g:go_list_type = "quickfix"
+" let g:go_list_type = "quickfix"
 
 
 
