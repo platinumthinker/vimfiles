@@ -46,10 +46,12 @@ Plug 'mattn/webapi-vim'
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeShow'] }
 """Status bar
 Plug 'itchyny/lightline.vim'
-"""Color themes
-Plug 'altercation/vim-colors-solarized'
 """Ack supports
 Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
+
+"""""Color themes
+Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
 
 """ Docs on Shift-K 
 Plug 'thinca/vim-ref'
@@ -87,7 +89,9 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'mattn/gist-vim'
 
 """""" For Golang
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'for': 'go',
+                     \ 'do': ':GoUpdateBinaries',
+                     \ 'on': ['GoUpdateBinaries'] }
 Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
 " Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
 
@@ -220,7 +224,7 @@ highlight lCursor guifg=NONE guibg=Cyan
 
 let g:user_emmet_install_global = 0
 
-au FileType html,css,django EmmetInstall
+" au FileType html,css,django EmmetInstall
 " DTL for erlydtl
 au BufRead,BufNewFile *.{dtl,tmpl} set filetype=django
 au BufRead,BufNewFile *{relx,rebar,sys}.config* set filetype=erlang
@@ -310,7 +314,8 @@ let g:ale_go_golangci_lint_options = '--no-config
             \ --enable=gosec
             \ --enable=interfacer
             \ --enable=rowserrcheck
-            \ --enable=staticcheck'
+            \ --enable=staticcheck
+            \ --enable=goerr113'
 
 
 let g:go_code_completion_enabled = 1
@@ -442,18 +447,25 @@ set synmaxcol=128
 syntax sync minlines=256
 "================================COLOR THEME UP================================
 syntax enable
+" if !has('gui_running')
+"     set t_Co=256
+"     let g:solarized_termcolors = 256
+" endif
+" let g:solarized_termcolors = 16
+" let g:solarized_contrast = 'hight'
+" let g:solarized_visibility = 'high'
+" let g:solarized_underline = 1
+" let g:solarized_hitrail    = 1
+" let g:solarized_termtrans  = 0
+" let g:solarized_degrade    = 0
+" colorscheme solarized
+set background=light
 if !has('gui_running')
-    set t_Co=256
-    let g:solarized_termcolors = 256
+     set t_Co=256
+     let g:gruvbox_italic = 1
 endif
-let g:solarized_termcolors = 16
-let g:solarized_contrast = 'hight'
-let g:solarized_visibility = 'high'
-let g:solarized_underline = 1
-let g:solarized_hitrail    = 1
-let g:solarized_termtrans  = 0
-let g:solarized_degrade    = 0
-colorscheme solarized
+let g:gruvbox_contrast_light = 'hard'
+colorscheme gruvbox
 "====================================CTRL_P====================================
 let g:ctrlp_max_files = 10000
 let g:ctrlp_max_depth = 10
@@ -486,7 +498,7 @@ if $SSH_CONNECTION
                 \ }
 else
     let g:lightline = {
-                \ 'colorscheme': 'solarized',
+                \ 'colorscheme': 'gruvbox',
                 \ 'active': {
                 \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
                 \   'right': [ [ 'lineinfo' ], ['percent'], [ 'filetype' ] ]
@@ -601,6 +613,7 @@ function! RunBackgroundCommand()
     else
         set background=dark
     endif
+    " call gruvbox#hls_toggle()
     let l:command = 'inotifywait -e close_write ' . l:color_file
     " " Launch the job.
     " " Notice that we're only capturing out, and not err here. This is because, for some reason, the callback
