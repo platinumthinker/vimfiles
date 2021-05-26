@@ -41,6 +41,9 @@ Plug 'kshenoy/vim-signature'
 
 """""Other repos
 Plug 'mattn/webapi-vim'
+""" Tests for most languages and test systems
+Plug 'janko/vim-test'
+Plug 'rcarriga/vim-ultest'
 
 """Draw undo tree
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeShow'] }
@@ -66,10 +69,10 @@ Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'Ea
 """""" For erlang
 """ Vim erlang collects
 """Erlang motions
-Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
+" Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
 " Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
-Plug 'platinumthinker/vim-erlang-omnicomplete', { 'for': 'erlang' }
-Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
+" Plug 'platinumthinker/vim-erlang-omnicomplete', { 'for': 'erlang' }
+" Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
 
 " Plug 'elixir-lang/vim-elixir',  { 'for': 'elixir' }
 " Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
@@ -92,8 +95,7 @@ Plug 'mattn/gist-vim'
 Plug 'fatih/vim-go', { 'for': 'go',
                      \ 'do': ':GoUpdateBinaries',
                      \ 'on': ['GoUpdateBinaries'] }
-Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
-" Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
+" Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
 
 """ Asynchronous Lint Engine
 Plug 'dense-analysis/ale'
@@ -262,7 +264,7 @@ let g:netrw_liststyle = 3
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags --ignore-dir "release" -U'
 let g:ackhighlight = 1
 
-call deoplete#custom#option('auto_complete_delay', 20)
+call deoplete#custom#option('auto_complete_delay', 10)
 call deoplete#custom#option('smart_case', v:true)
 call deoplete#custom#option('omni_patterns', {
             \  'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
@@ -282,6 +284,7 @@ call deoplete#custom#option('omni_patterns', {
             \  'erlang' : [':', '.', 're!#^\{'],
             \  'elixir' : [':', '.', 're!#^\{']
             \})
+let deoplete#sources#sort_class = ['ale', 'func', 'type', 'var', 'const']
 let deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
 let g:ale_keep_list_window_open = 0
@@ -290,7 +293,7 @@ let g:ale_set_quickfix = 1
 let g:ale_open_list = 1
 
 let g:ale_lint_on_save = 1
-" let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
 
 let g:ale_linters = {
             \ 'go': ['gobuild', 'golangci-lint'],
@@ -317,13 +320,24 @@ let g:ale_go_golangci_lint_options = '--no-config
             \ --enable=staticcheck
             \ --enable=goerr113'
 
+let g:ale_c_parse_makefile = 1
+let g:ale_c_parse_compile_commands = 1
 
 let g:go_code_completion_enabled = 1
-" let g:go_auto_type_info = 1
-" let g:go_doc_keywordprg_enabled = 1
+let g:go_auto_type_info = 1
+let g:go_doc_keywordprg_enabled = 1
 let g:go_snippet_engine = "ultisnips"
 let g:go_fmt_command = "goimports"
 let g:go_gopls_complete_unimported = 1
+let g:go_gopls_enabled = 1
+let g:go_gopls_deep_completion = 1
+let g:go_gopls_local = 1
+let g:go_fold_enable = ['import', 'varconst', 'package_comment']
+let g:go_highlight_array_whitespace_error = 1
+let g:go_highlight_string_spellcheck = 0
+let g:go_highlight_format_strings = 1
+let g:go_highlight_diagnostic_errors = 0
+let g:go_highlight_diagnostic_warnings = 0
 " let g:go_list_type = "quickfix"
 
 
@@ -337,6 +351,17 @@ let g:my_email_addr = 'platinumthinker@gmail.com'
 let g:startify_list_order = ['sessions', 'dir', 'files', 'bookmarks']
 "" Don't change dir for openning new file from start screen
 let g:startify_change_to_dir = 0
+"=====================================TESTS====================================
+let g:ultest_pass_sign = '✅'
+let g:ultest_fail_sign = '🔥'
+let g:ultest_running_sign = '🔄'
+let g:ultest_not_run_sign = '🪧'
+augroup UltestRunner
+    au!
+    au BufWritePost * UltestNearest
+augroup END
+nmap ]t <Plug>(ultest-next-fail)
+nmap [t <Plug>(ultest-prev-fail)
 "=============================DELETE TRAILING SPACES===========================
 fun! <SID>StripTrailingWhitespaces()
     let l = line(".")
