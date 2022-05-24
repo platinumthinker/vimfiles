@@ -1,16 +1,20 @@
+let g:python_host_prog  = '/usr/bin/python2'
+let g:python3_host_prog  = '/usr/bin/python3'
+
 call plug#begin('~/.vim/plugged')
 """Vundle selfupdate
 Plug 'junegunn/vim-plug'
 
-
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/deoplete.nvim', { 'do': 'pip3 install --upgrade neovim' }
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
+  " Plug 'Shougo/deoplete.nvim', { 'do': 'pip3 install --upgrade neovim' }
 endif
+" Plug 'Shougo/echodoc.vim'
 let g:deoplete#enable_at_startup = 1
+" let g:echodoc#enable_at_startup = 1
 
 """"""Tpope repos
 """Comment supports
@@ -53,13 +57,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'mileszs/ack.vim', { 'on': ['LAck', 'Ack'] }
 
 """""Color themes
-Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 
 """ Docs on Shift-K 
 Plug 'thinca/vim-ref'
 """Seacher
-Plug 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim', { 'on': ['CtrlP']}
 """Align
 Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', '<Plug>(EasyAlign)'] }
 """ Start page with sessions, last files and others
@@ -81,8 +84,8 @@ Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'Ea
 
 
 """""" For python
-Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 
 """""" For html/css
 " Plug 'mattn/emmet-vim'
@@ -95,12 +98,10 @@ Plug 'mattn/gist-vim'
 Plug 'fatih/vim-go', { 'for': 'go',
                      \ 'do': ':GoUpdateBinaries',
                      \ 'on': ['GoUpdateBinaries'] }
-" Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
+Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
 
 """ Asynchronous Lint Engine
 Plug 'dense-analysis/ale'
-
-
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -144,10 +145,10 @@ set linebreak
 set dy=lastline
 "" Show line number
 set number
-"" Wrap lines by 80 char 
+"" Wrap lines by 200 char 
 set wrap
-set textwidth=80
-set colorcolumn=80
+set textwidth=200
+set colorcolumn=200
 
 set shiftwidth=4
 " round indent to multiple of 'shiftwidth'
@@ -180,7 +181,11 @@ set wildignore-=deps
 if version >= 700
     set history=256
     set undolevels=128
-    set undodir=~/.vim/undodir/
+    if has('nvim')
+        set undodir=~/.config/nvim/undodir/
+    else
+        set undodir=~/.vim/undodir/
+    endif
     set undofile
     set undolevels=1000
     set undoreload=10000
@@ -264,7 +269,14 @@ let g:netrw_liststyle = 3
 let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags --ignore-dir "release" -U'
 let g:ackhighlight = 1
 
-call deoplete#custom#option('auto_complete_delay', 10)
+
+" set noshowmode
+" let g:echodoc#type = 'floating'
+" To use a custom highlight for the float window,
+" change Pmenu to your highlight group
+" highlight link EchoDocFloat Pmenu
+
+call deoplete#custom#option('auto_complete_delay', 1)
 call deoplete#custom#option('smart_case', v:true)
 call deoplete#custom#option('omni_patterns', {
             \  'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
@@ -284,61 +296,88 @@ call deoplete#custom#option('omni_patterns', {
             \  'erlang' : [':', '.', 're!#^\{'],
             \  'elixir' : [':', '.', 're!#^\{']
             \})
-let deoplete#sources#sort_class = ['ale', 'func', 'type', 'var', 'const']
-let deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#sort_class = ['ale', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+
+let g:deoplete#sources#go#gocode_binary = ''
+let g:deoplete#sources#go#source_importer = 1
+let g:deoplete#sources#go#builtin_objects = 1
+let g:deoplete#sources#go#unimported_packages = 1
 
 let g:ale_keep_list_window_open = 0
-let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
-let g:ale_open_list = 1
+let g:ale_open_list = 0
 
 let g:ale_lint_on_save = 1
 let g:ale_completion_enabled = 0
 
 let g:ale_linters = {
-            \ 'go': ['gobuild', 'golangci-lint'],
+            \ 'go': ['golangci-lint'],
             \ 'zsh': ['shellcheck'],
             \ 'sh': ['shellcheck'],
             \ 'bash': ['shellcheck'],
             \ 'erlang': ['syntaxerl'],
+            \ 'python': ['pyright', 'flake8'],
+            \}
+
+let g:ale_fixers = {
+            \ 'python': ['black'],
             \}
 
 let g:ale_go_golangci_lint_package = 1
-let g:ale_go_golangci_lint_options = '--no-config
+let g:ale_go_golangci_lint_options = '
             \ --disable-all
-            \ --fast
             \ --exclude-use-default
             \ --tests=false
             \ --enable=deadcode
-            \ --enable=errcheck
-            \ --enable=unused
-            \ --enable=bodyclose
-            \ --enable=dupl
+            \ --enable=goconst
+            \ --enable=gocritic
+            \ --enable=gocyclo
+            \ --enable=gofmt
+            \ --enable=goimports
             \ --enable=gosec
+            \ --enable=gosimple
+            \ --enable=govet
+            \ --enable=ineffassign
             \ --enable=interfacer
-            \ --enable=rowserrcheck
+            \ --enable=lll
+            \ --enable=misspell
+            \ --enable=nakedret
+            \ --enable=scopelint
             \ --enable=staticcheck
-            \ --enable=goerr113'
+            \ --enable=structcheck
+            \ --enable=stylecheck
+            \ --enable=typecheck
+            \ --enable=unconvert
+            \ --enable=unparam
+            \ --enable=unused
+            \ --enable=varcheck
+            \ --enable=dupl
+            \ --enable=golint
+            \ --enable=errcheck
+            \ --enable=errorlint
+            \ --enable=revive
+            \ --enable=exportloopref'
 
 let g:ale_c_parse_makefile = 1
 let g:ale_c_parse_compile_commands = 1
 
 let g:go_code_completion_enabled = 1
-let g:go_auto_type_info = 1
+let g:go_auto_type_info = 0
 let g:go_doc_keywordprg_enabled = 1
 let g:go_snippet_engine = "ultisnips"
 let g:go_fmt_command = "goimports"
 let g:go_gopls_complete_unimported = 1
 let g:go_gopls_enabled = 1
 let g:go_gopls_deep_completion = 1
-let g:go_gopls_local = 1
+let g:go_gopls_local = "local"
 let g:go_fold_enable = ['import', 'varconst', 'package_comment']
 let g:go_highlight_array_whitespace_error = 1
-let g:go_highlight_string_spellcheck = 0
+let g:go_highlight_string_spellcheck = 1
 let g:go_highlight_format_strings = 1
 let g:go_highlight_diagnostic_errors = 0
 let g:go_highlight_diagnostic_warnings = 0
-" let g:go_list_type = "quickfix"
+let g:go_list_type = ""
 
 
 
@@ -351,6 +390,15 @@ let g:my_email_addr = 'platinumthinker@gmail.com'
 let g:startify_list_order = ['sessions', 'dir', 'files', 'bookmarks']
 "" Don't change dir for openning new file from start screen
 let g:startify_change_to_dir = 0
+let g:startify_custom_header = [
+            \ '                                 ________  __ __        ',
+            \ '            __                  /\_____  \/\ \\ \       ',
+            \ '    __  __ /\_\    ___ ___      \/___//''/''\ \ \\ \    ',
+            \ '   /\ \/\ \\/\ \ /'' __` __`\        /'' /''  \ \ \\ \_ ',
+            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \      /'' /''__  \ \__ ,__\',
+            \ '    \ \___/  \ \_\ \_\ \_\ \_\    /\_/ /\_\  \/_/\_\_/  ',
+            \ '     \/__/    \/_/\/_/\/_/\/_/    \//  \/_/     \/_/    ',
+            \ ]
 "=====================================TESTS====================================
 let g:ultest_pass_sign = '✅'
 let g:ultest_fail_sign = '🔥'
@@ -377,6 +425,8 @@ function! AppendModeline()
   call append(line("$"), l:modeline)
 endfunction
 nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+"================================ UUID ========================================
+nnoremap <silent><leader>ig "=system('python -c "import uuid; print(uuid.uuid4(), end=\"\");"')<CR>P
 "================================ Gist ========================================
 let g:gist_detect_filetype = 1
 let g:gist_show_privates = 1
@@ -406,6 +456,8 @@ inoremap jj <ESC>
 "Open/close folds
 nnoremap <Space> za 
 
+nmap <C-p> :CtrlP<CR>
+
 nmap <leader>g :LAck <cword><CR>
 
 nnoremap <silent> <F4> :lclose<CR>
@@ -413,8 +465,7 @@ nnoremap <silent> <F4> :lclose<CR>
 nnoremap <silent><F8> :TagbarToggle<CR>
 inoremap <silent><F8> :TagbarToggle<CR>
 
-call togglebg#map("<F5>")
-
+" call togglebg#map("<F5>")
 nmap <leader>b :EasyBuffer<CR>
 nmap <leader>bh :EasyBufferHorizontal<CR>
 nmap <leader>bv :EasyBufferVertical<CR>
@@ -643,12 +694,17 @@ function! RunBackgroundCommand()
     " " Launch the job.
     " " Notice that we're only capturing out, and not err here. This is because, for some reason, the callback
     " " will not actually get hit if we write err out to the same file. Not sure if I'm doing this wrong or?
-    call job_start(l:command, {'exit_cb': 'BCloseCb', "in_io": "null", "out_io": "null", "err_io": "null"})
+    if has('nvim')
+        call jobstart(l:command, {'exit_cb': 'BCloseCb', "in_io": "null", "out_io": "null", "err_io": "null"})
+    else
+        call job_start(l:command, {'exit_cb': 'BCloseCb', "in_io": "null", "out_io": "null", "err_io": "null"})
+    endif
 endfunction
 
 if has("unix")
   let s:uname = system("uname")
-  if s:uname != "Darwin\n"
+  if s:uname != "Darwin\n" && has('job')
       call RunBackgroundCommand()
   endif
 endif
+
