@@ -1,20 +1,22 @@
 let g:python_host_prog  = '/usr/bin/python2'
 let g:python3_host_prog  = '/usr/bin/python3'
+if filereadable("/bin/zsh")
+    set shell=/bin/zsh
+elseif filereadable("/bin/bash")
+    set shell=/bin/bash
+endif
 
 call plug#begin('~/.vim/plugged')
-"""Vundle selfupdate
+"""Vim-plug selfupdate
 Plug 'junegunn/vim-plug'
 
 if has('nvim')
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
-  " Plug 'Shougo/deoplete.nvim', { 'do': 'pip3 install --upgrade neovim' }
+  Plug 'Shougo/deoplete.nvim', { 'do': 'pip3 install --upgrade neovim' }
 endif
-" Plug 'Shougo/echodoc.vim'
-let g:deoplete#enable_at_startup = 1
-" let g:echodoc#enable_at_startup = 1
 
 """"""Tpope repos
 """Comment supports
@@ -25,7 +27,7 @@ Plug 'tpope/vim-fugitive'
 """Date inc/dec (Alt-a/Alt-x)
 Plug 'tpope/vim-speeddating'
 """Surround parenthese, brackets, quotes, XML tags and more
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
 """Mapping simply short normal mode aliases
 Plug 'tpope/vim-unimpaired'
 """Repeat for surround, speeddating, abolish, unimpaired, commentary
@@ -34,8 +36,8 @@ Plug 'tpope/vim-vinegar', { 'on': 'ToggleVExplorer' }
 
 """"""Vim-scripts repos
 """Sniplets
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 """Ctags supports
 Plug 'ludovicchabant/vim-gutentags'
 """Ascii art
@@ -46,8 +48,10 @@ Plug 'kshenoy/vim-signature'
 """""Other repos
 Plug 'mattn/webapi-vim'
 """ Tests for most languages and test systems
-Plug 'janko/vim-test'
-Plug 'rcarriga/vim-ultest'
+" Plug 'janko/vim-test'
+" Plug 'rcarriga/vim-ultest'
+""" Show hex colors
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 """Draw undo tree
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeShow'] }
@@ -83,9 +87,9 @@ Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'Ea
 " Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 
 
-"""""" For python
-" Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+"""" For python
+Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 
 """""" For html/css
 " Plug 'mattn/emmet-vim'
@@ -98,7 +102,13 @@ Plug 'mattn/gist-vim'
 Plug 'fatih/vim-go', { 'for': 'go',
                      \ 'do': ':GoUpdateBinaries',
                      \ 'on': ['GoUpdateBinaries'] }
-Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
+" Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
+
+"""""" For C, C++
+Plug 'shougo/deoplete-clangx'
+" Plug 'tweekmonster/deoplete-clang2' "" very old
+" Plug 'deoplete-plugins/deoplete-clang',
+" Plug 'deoplete-plugins/deoplete-clang', { 'for': ['c', 'cpp'] }
 
 """ Asynchronous Lint Engine
 Plug 'dense-analysis/ale'
@@ -133,6 +143,9 @@ set softtabstop=4
 "" Tabs replaced on spaces
 set expandtab
 set smarttab
+
+"" Show unprintable symbols with set list
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
 set showmatch " Show matching brackets.
 
@@ -193,9 +206,10 @@ endif
 
 ""Backup
 set backup
-set backupdir=/var/tmp,/tmp
-set backupskip=/tmp/*
-set directory=/var/tmp,/tmp
+" set with '^=' prepends the directory name to the head of the list (check for exists)
+" the '//' at the end of the directory name tells vim to use absolute path
+set backupdir^=/tmp//,/var/tmp//
+set directory^=/tmp//,/var/tmp//
 set writebackup
 
 " Required for operations modifying multiple buffers like rename.
@@ -270,13 +284,8 @@ let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags --ignore-dir "rele
 let g:ackhighlight = 1
 
 
-" set noshowmode
-" let g:echodoc#type = 'floating'
-" To use a custom highlight for the float window,
-" change Pmenu to your highlight group
-" highlight link EchoDocFloat Pmenu
-
-call deoplete#custom#option('auto_complete_delay', 1)
+call deoplete#custom#option("min_pattern_length", 2)
+call deoplete#custom#option('auto_complete_delay', 50)
 call deoplete#custom#option('smart_case', v:true)
 call deoplete#custom#option('omni_patterns', {
             \  'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
@@ -299,10 +308,18 @@ call deoplete#custom#option('omni_patterns', {
 let g:deoplete#sources#sort_class = ['ale', 'func', 'type', 'var', 'const']
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
-let g:deoplete#sources#go#gocode_binary = ''
+let g:deoplete#sources#go#gocode_binary = '$HOME/bin/gocode'
 let g:deoplete#sources#go#source_importer = 1
 let g:deoplete#sources#go#builtin_objects = 1
 let g:deoplete#sources#go#unimported_packages = 1
+call deoplete#custom#var('clangx', 'clang_binary', '/usr/bin/clang')
+call deoplete#custom#var('clangx', 'default_c_options', '-Wall -std=c11')
+
+autocmd InsertEnter * ++once call deoplete#enable()
+autocmd InsertEnter go ++once call plug#load('vim-go')
+" autocmd InsertEnter * ++once call plug#load('ultisnips')
+" autocmd InsertEnter * ++once call plug#load('vim-snippets')
+autocmd InsertEnter * ++once call plug#load('ale')
 
 let g:ale_keep_list_window_open = 0
 let g:ale_set_quickfix = 1
@@ -362,24 +379,21 @@ let g:ale_go_golangci_lint_options = '
 let g:ale_c_parse_makefile = 1
 let g:ale_c_parse_compile_commands = 1
 
-let g:go_code_completion_enabled = 1
-let g:go_auto_type_info = 0
+" let g:go_code_completion_enabled = 1
+let g:go_auto_type_info = 1
 let g:go_doc_keywordprg_enabled = 1
 let g:go_snippet_engine = "ultisnips"
 let g:go_fmt_command = "goimports"
-let g:go_gopls_complete_unimported = 1
-let g:go_gopls_enabled = 1
-let g:go_gopls_deep_completion = 1
-let g:go_gopls_local = "local"
+" let g:go_gopls_complete_unimported = 1
+" let g:go_gopls_enabled = 1
+" let g:go_gopls_deep_completion = 1
+" let g:go_gopls_local = "local"
 let g:go_fold_enable = ['import', 'varconst', 'package_comment']
 let g:go_highlight_array_whitespace_error = 1
 let g:go_highlight_string_spellcheck = 1
 let g:go_highlight_format_strings = 1
 let g:go_highlight_diagnostic_errors = 0
 let g:go_highlight_diagnostic_warnings = 0
-let g:go_list_type = ""
-
-
 
 let g:snippets_dir = '~/.vim/plugged/vim-snippets/UltiSnips'
 let g:snips_author = 'platinumthinker'
@@ -404,10 +418,10 @@ let g:ultest_pass_sign = '✅'
 let g:ultest_fail_sign = '🔥'
 let g:ultest_running_sign = '🔄'
 let g:ultest_not_run_sign = '🪧'
-augroup UltestRunner
-    au!
-    au BufWritePost * UltestNearest
-augroup END
+" augroup UltestRunner
+"     au!
+"     au BufWritePost * UltestNearest
+" augroup END
 nmap ]t <Plug>(ultest-next-fail)
 nmap [t <Plug>(ultest-prev-fail)
 "=============================DELETE TRAILING SPACES===========================
@@ -462,39 +476,20 @@ nmap <leader>g :LAck <cword><CR>
 
 nnoremap <silent> <F4> :lclose<CR>
 
-nnoremap <silent><F8> :TagbarToggle<CR>
-inoremap <silent><F8> :TagbarToggle<CR>
-
-" call togglebg#map("<F5>")
 nmap <leader>b :EasyBuffer<CR>
-nmap <leader>bh :EasyBufferHorizontal<CR>
-nmap <leader>bv :EasyBufferVertical<CR>
-nmap <leader>m :MerginalToogle<CR>
-nmap <leader>t :ErlangTags<CR>
-nnoremap <leader>sp :ErlangSpec<CR>
-
 vmap <Enter> <Plug>(EasyAlign)
-inoremap \fn <C-R>=expand("%:t:r")<CR>
-
+inoremap <leader>fn <C-R>=expand("%:t:r")<CR>
 nnoremap <leader><space> :nohlsearch<CR> " turn off search highlight
 ""Edit vimrc
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
-""Save session (load: vim -S)
-nnoremap <leader>s :mksession<CR>
-nnoremap <leader>sp :ErlangSpec<CR>
 ""Load vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
-""Save session (load: vim -S)
-nnoremap <leader>s :mksession<CR>
 
 nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>j :%!python -m json.tool<CR>
 
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
+"" Open test file
+autocmd FileType go nnoremap gt :e %:r_test.go<CR>
 " Toggle netrw like NERDTree
 function! ToggleVExplorer()
   if exists("t:expl_buf_num")
@@ -518,10 +513,13 @@ map <silent> - :call ToggleVExplorer()<CR>
 command! W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 map @@x !%xmllint --format --recover -^M
 
-"===============================FIX SLOW SCROLL================================
-set synmaxcol=128
-syntax sync minlines=256
+function! GoToGolangTest()
+    let test_file = %:p
+endfunction
+
+map <silent> <leader> t :call GoToGolangTest()<CR>
 "================================COLOR THEME UP================================
+set termguicolors
 syntax enable
 " if !has('gui_running')
 "     set t_Co=256
@@ -707,4 +705,3 @@ if has("unix")
       call RunBackgroundCommand()
   endif
 endif
-
