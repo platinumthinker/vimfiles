@@ -10,14 +10,6 @@ call plug#begin('~/.vim/plugged')
 """Vim-plug selfupdate
 Plug 'junegunn/vim-plug'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-  Plug 'Shougo/deoplete.nvim', { 'do': 'pip3 install --upgrade neovim' }
-endif
-
 """"""Tpope repos
 """Comment supports
 Plug 'tpope/vim-commentary'
@@ -27,31 +19,32 @@ Plug 'tpope/vim-fugitive'
 """Date inc/dec (Alt-a/Alt-x)
 Plug 'tpope/vim-speeddating'
 """Surround parenthese, brackets, quotes, XML tags and more
-" Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 """Mapping simply short normal mode aliases
 Plug 'tpope/vim-unimpaired'
 """Repeat for surround, speeddating, abolish, unimpaired, commentary
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar', { 'on': 'ToggleVExplorer' }
+Plug 'tpope/vim-dadbod'
 
 """"""Vim-scripts repos
 """Sniplets
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 """Ctags supports
-Plug 'ludovicchabant/vim-gutentags'
-"""Ascii art
-Plug 'vim-scripts/DrawIt'
-"""Show marks
-Plug 'kshenoy/vim-signature'
+" Plug 'ludovicchabant/vim-gutentags'
 
 """""Other repos
 Plug 'mattn/webapi-vim'
 """ Tests for most languages and test systems
 " Plug 'janko/vim-test'
 " Plug 'rcarriga/vim-ultest'
+
+"""" Some slow and rarely needed plugins
+"""Show marks
+Plug 'kshenoy/vim-signature'
 """ Show hex colors
-Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase', 'on': [ 'HexokinaseToggle', 'HexokinaseOn' ] }
 
 """Draw undo tree
 Plug 'mbbill/undotree', { 'on': ['UndotreeToggle', 'UndotreeShow'] }
@@ -73,45 +66,25 @@ Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', '<Plug>(EasyAlign)'] }
 Plug 'mhinz/vim-startify'
 Plug 'troydm/easybuffer.vim', { 'on': ['EasyBuffer', 'EasyBufferHorizontal', 'EasyBufferVertical'] }
 
-"""""" For erlang
-""" Vim erlang collects
-"""Erlang motions
-" Plug 'platinumthinker/vim-erlang-runtime', { 'for': 'erlang' }
-" Plug 'vim-erlang/vim-erlang-compiler', { 'for': 'erlang' }
-" Plug 'platinumthinker/vim-erlang-omnicomplete', { 'for': 'erlang' }
-" Plug 'vim-erlang/vim-erlang-tags', { 'for': 'erlang' }
-
-" Plug 'elixir-lang/vim-elixir',  { 'for': 'elixir' }
-" Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
-
-" Plug 'ElmCast/elm-vim', { 'for': 'elm' }
-
-
-"""" For python
-Plug 'deoplete-plugins/deoplete-jedi', { 'for': 'python' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-
-"""""" For html/css
-" Plug 'mattn/emmet-vim'
-""" Syntax for DTL
-" Plug 'vim-scripts/django.vim', { 'for': 'django' }
-
 Plug 'mattn/gist-vim'
 
 """""" For Golang
 Plug 'fatih/vim-go', { 'for': 'go',
                      \ 'do': ':GoUpdateBinaries',
                      \ 'on': ['GoUpdateBinaries'] }
-" Plug 'deoplete-plugins/deoplete-go', { 'for': 'go', 'do': 'make'}
-
-"""""" For C, C++
-Plug 'shougo/deoplete-clangx'
-" Plug 'tweekmonster/deoplete-clang2' "" very old
-" Plug 'deoplete-plugins/deoplete-clang',
-" Plug 'deoplete-plugins/deoplete-clang', { 'for': ['c', 'cpp'] }
 
 """ Asynchronous Lint Engine
 Plug 'dense-analysis/ale'
+
+""" Asynchronous Language Server Protocol
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+
+""" Multilanguage debugger
+Plug 'puremourning/vimspector'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -180,6 +153,7 @@ set wildmode=list:longest,full
 set wildmenu 
 set wildignore+=.git,.svn
 set wildignore-=deps
+set wildoptions=fuzzy
 
 " let g:erlang_folding=1
 " let	g:erlangHighlightBif=1 
@@ -190,6 +164,7 @@ set wildignore-=deps
 
 " let g:erlang_tags_ignore=['.git', '.svn', '.eunit', 'release']
 " let g:alchemist_tag_disable = 1
+let g:vimspector_enable_mappings = 'HUMAN'
 
 if version >= 700
     set history=256
@@ -257,7 +232,10 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 
 "Folds
 set foldmethod=syntax
-set foldlevel=3
+" set foldmethod=expr
+"   \ foldexpr=lsp#ui#vim#folding#foldexpr()
+"   \ foldtext=lsp#ui#vim#folding#foldtext()
+" set foldlevel=3
 let g:markdown_fold_style = 'nested'
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
 let g:markdown_syntax_conceal = 0
@@ -284,42 +262,42 @@ let g:ackprg = 'ag --nogroup --nocolor --column --ignore tags --ignore-dir "rele
 let g:ackhighlight = 1
 
 
-call deoplete#custom#option("min_pattern_length", 2)
-call deoplete#custom#option('auto_complete_delay', 50)
-call deoplete#custom#option('smart_case', v:true)
-call deoplete#custom#option('omni_patterns', {
-            \  'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-            \  'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-            \  'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
-            \  'c' : ['->', '.'],
-            \  'go': '[^. *\t]\.\w*',
-            \  'objc' : ['->', '.'],
-            \  'ocaml' : ['.', '#'],
-            \  'cpp,objcpp' : ['->', '.', '::'],
-            \  'perl' : ['->'],
-            \  'php' : ['->', '::'],
-            \  'cs,java,javascript,d,python,perl6,scala,vb,elixir' : ['.'],
-            \  'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
-            \  'ruby' : ['.', '::'],
-            \  'lua' : ['.', ':'],
-            \  'erlang' : [':', '.', 're!#^\{'],
-            \  'elixir' : [':', '.', 're!#^\{']
-            \})
-let g:deoplete#sources#sort_class = ['ale', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+" call deoplete#custom#option("min_pattern_length", 2)
+" call deoplete#custom#option('auto_complete_delay', 50)
+" call deoplete#custom#option('smart_case', v:true)
+" call deoplete#custom#option('omni_patterns', {
+"             \  'html': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+"             \  'xhtml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+"             \  'xml': ['<', '</', '<[^>]*\s[[:alnum:]-]*'],
+"             \  'c' : ['->', '.'],
+"             \  'go': '[^. *\t]\.\w*',
+"             \  'objc' : ['->', '.'],
+"             \  'ocaml' : ['.', '#'],
+"             \  'cpp,objcpp' : ['->', '.', '::'],
+"             \  'perl' : ['->'],
+"             \  'php' : ['->', '::'],
+"             \  'cs,java,javascript,d,python,perl6,scala,vb,elixir' : ['.'],
+"             \  'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+"             \  'ruby' : ['.', '::'],
+"             \  'lua' : ['.', ':'],
+"             \  'erlang' : [':', '.', 're!#^\{'],
+"             \  'elixir' : [':', '.', 're!#^\{']
+"             \})
+" let g:deoplete#sources#sort_class = ['ale', 'func', 'type', 'var', 'const']
+" let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
-let g:deoplete#sources#go#gocode_binary = '$HOME/bin/gocode'
-let g:deoplete#sources#go#source_importer = 1
-let g:deoplete#sources#go#builtin_objects = 1
-let g:deoplete#sources#go#unimported_packages = 1
-call deoplete#custom#var('clangx', 'clang_binary', '/usr/bin/clang')
-call deoplete#custom#var('clangx', 'default_c_options', '-Wall -std=c11')
+" let g:deoplete#sources#go#gocode_binary = '$HOME/bin/gocode'
+" let g:deoplete#sources#go#source_importer = 1
+" let g:deoplete#sources#go#builtin_objects = 1
+" let g:deoplete#sources#go#unimported_packages = 1
+" " call deoplete#custom#var('clangx', 'clang_binary', '/usr/bin/clang')
+" " call deoplete#custom#var('clangx', 'default_c_options', '-Wall -std=c11')
 
-autocmd InsertEnter * ++once call deoplete#enable()
+" autocmd InsertEnter * ++once call deoplete#enable()
 autocmd InsertEnter go ++once call plug#load('vim-go')
-" autocmd InsertEnter * ++once call plug#load('ultisnips')
-" autocmd InsertEnter * ++once call plug#load('vim-snippets')
-autocmd InsertEnter * ++once call plug#load('ale')
+" " autocmd InsertEnter * ++once call plug#load('ultisnips')
+" " autocmd InsertEnter * ++once call plug#load('vim-snippets')
+" autocmd InsertEnter * ++once call plug#load('ale')
 
 let g:ale_keep_list_window_open = 0
 let g:ale_set_quickfix = 1
@@ -333,13 +311,9 @@ let g:ale_linters = {
             \ 'zsh': ['shellcheck'],
             \ 'sh': ['shellcheck'],
             \ 'bash': ['shellcheck'],
-            \ 'erlang': ['syntaxerl'],
-            \ 'python': ['pyright', 'flake8'],
+            \ 'python': [],
             \}
 
-let g:ale_fixers = {
-            \ 'python': ['black'],
-            \}
 
 let g:ale_go_golangci_lint_package = 1
 let g:ale_go_golangci_lint_options = '
@@ -379,21 +353,19 @@ let g:ale_go_golangci_lint_options = '
 let g:ale_c_parse_makefile = 1
 let g:ale_c_parse_compile_commands = 1
 
-" let g:go_code_completion_enabled = 1
-let g:go_auto_type_info = 1
-let g:go_doc_keywordprg_enabled = 1
-let g:go_snippet_engine = "ultisnips"
+let g:go_code_completion_enabled = 0
+let g:go_auto_type_info = 0
+let g:go_doc_keywordprg_enabled = 0
 let g:go_fmt_command = "goimports"
-" let g:go_gopls_complete_unimported = 1
-" let g:go_gopls_enabled = 1
-" let g:go_gopls_deep_completion = 1
-" let g:go_gopls_local = "local"
+let g:go_gopls_enabled = 0
+let g:go_gopls_deep_completion = 0
 let g:go_fold_enable = ['import', 'varconst', 'package_comment']
 let g:go_highlight_array_whitespace_error = 1
 let g:go_highlight_string_spellcheck = 1
 let g:go_highlight_format_strings = 1
 let g:go_highlight_diagnostic_errors = 0
 let g:go_highlight_diagnostic_warnings = 0
+let g:go_def_mapping_enabled = 0
 
 let g:snippets_dir = '~/.vim/plugged/vim-snippets/UltiSnips'
 let g:snips_author = 'platinumthinker'
@@ -488,8 +460,11 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>j :%!python -m json.tool<CR>
 
+autocmd FileType go nnoremap <leader>n :GoReferrers<CR>
+
 "" Open test file
 autocmd FileType go nnoremap gt :e %:r_test.go<CR>
+
 " Toggle netrw like NERDTree
 function! ToggleVExplorer()
   if exists("t:expl_buf_num")
@@ -517,7 +492,8 @@ function! GoToGolangTest()
     let test_file = %:p
 endfunction
 
-map <silent> <leader> t :call GoToGolangTest()<CR>
+let g:lsp_diagnostics_enabled = 0         " disable diagnostics support in LSP side, using ALE instead
+" map <silent> <leader> t :call GoToGolangTest()<CR>
 "================================COLOR THEME UP================================
 set termguicolors
 syntax enable
@@ -679,14 +655,14 @@ let g:vimshell_force_overwrite_statusline = 0
 "     endif
 " endfunction
 
-" function! RunBackgroundCommand()
-"     let l:color_file = $HOME . '/.color'
-"     let l:color = readfile(l:color_file, 1)[0]
-"     if l:color == 'light'
-"         set background=light
-"     else
-"         set background=dark
-"     endif
+function! RunBackgroundCommand()
+    let l:color_file = $HOME . '/.color'
+    let l:color = readfile(l:color_file, 1)[0]
+    if l:color == 'light'
+        set background=light
+    else
+        set background=dark
+    endif
 "     " call gruvbox#hls_toggle()
 "     let l:command = 'inotifywait -e close_write ' . l:color_file
 "     " " Launch the job.
@@ -697,11 +673,89 @@ let g:vimshell_force_overwrite_statusline = 0
 "     else
 "         call job_start(l:command, {'exit_cb': 'BCloseCb', "in_io": "null", "out_io": "null", "err_io": "null"})
 "     endif
-" endfunction
+endfunction
 
-" if has("unix")
-"   let s:uname = system("uname")
-"   if s:uname != "Darwin\n" && has('job')
-"       call RunBackgroundCommand()
-"   endif
-" endif
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname != "Darwin\n" && has('job')
+      call RunBackgroundCommand()
+  endif
+endif
+
+
+setlocal signcolumn=no
+
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'allowlist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+        autocmd FileType c setlocal omnifunc=lsp#complete
+        autocmd FileType cpp setlocal omnifunc=lsp#complete
+        autocmd FileType objc setlocal omnifunc=lsp#complete
+        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    augroup end
+endif
+
+if executable('gopls')
+    augroup lsp_gopls
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'gopls',
+                    \ 'cmd': {server_info->['gopls']},
+                    \ 'allowlist': ['go'],
+                    \ })
+        autocmd BufWritePre *.go LspDocumentFormatSync
+        autocmd FileType go setlocal omnifunc=lsp#complete
+        autocmd FileType go nnoremap <silent> gd :LspDefinition<CR>
+        autocmd FileType go nnoremap <silent> gr :LspReferences<CR>
+        autocmd FileType go nnoremap K :LspHover<CR>
+    augroup end
+endif
+
+if executable('jedi-language-server')
+    augroup lsp_jedi
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'jedi-language-server',
+                    \ 'cmd': {server_info->['jedi-language-server']},
+                    \ 'allowlist': ['python'],
+                    \ })
+        autocmd FileType python setlocal omnifunc=lsp#complete
+        autocmd FileType python nnoremap <silent> gd :LspDefinition<CR>
+        autocmd FileType python nnoremap <silent> gr :LspReferences<CR>
+        autocmd FileType python nnoremap K :LspHover<CR>
+    augroup end
+endif
+
+" https://github.com/erlang-ls/erlang_ls.git
+if executable('erlang_ls')
+    augroup lsp_erlang_ls
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'erlang-language-server',
+                    \ 'cmd': {server_info->['erlang_ls']},
+                    \ 'allowlist': ['erlang'],
+                    \ })
+        autocmd FileType erlang setlocal omnifunc=lsp#complete
+        autocmd FileType erlang nnoremap <silent> gd :LspDefinition<CR>
+        autocmd FileType erlang nnoremap <silent> gr :LspReferences<CR>
+        autocmd FileType erlang nnoremap K :LspHover<CR>
+    augroup end
+endif
+
+if executable('clojure-lsp')
+    augroup lsp_clojure_lsp
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clojure-language-server',
+                    \ 'cmd': {server_info->['clojure-lsp']},
+                    \ 'allowlist': ['clojure'],
+                    \ })
+        autocmd FileType clojure setlocal omnifunc=lsp#complete
+        autocmd FileType clojure nnoremap <silent> gd :LspDefinition<CR>
+        autocmd FileType clojure nnoremap <silent> gr :LspReferences<CR>
+        autocmd FileType clojure nnoremap K :LspHover<CR>
+    augroup end
+endif
+
+" let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript']
